@@ -2,12 +2,7 @@
 
 namespace Modules\User\Entities;
 
-use App\Events\NewUserRegistered;
 use App\Models\Model;
-use App\Notifications\SMSNotification;
-use Bavix\Wallet\Interfaces\Wallet;
-use Bavix\Wallet\Traits\HasWallet;
-use Bavix\Wallet\Traits\HasWallets;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -20,18 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Modules\Business\Entities\Business;
 use Modules\Comments\Entities\Comment;
-use Modules\Inquiry\Entities\Inquiry;
-use Modules\Payment\Entities\Invoice;
-use Modules\Payment\Entities\Payment;
 use Modules\Rating\Entities\Rating;
-use Modules\Report\Entities\Report;
 use Modules\Setting\Entities\Setting;
-use Modules\Ticket\Entities\Ticket;
-use Modules\Ticket\Entities\TicketDepartment;
-use Modules\Ticket\Entities\TicketReply;
-use Modules\Todo\Entities\Task;
-use Modules\Voucher\Traits\CanRedeemVouchers;
-use Modules\Wishlist\Traits\HasWishlists;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Model implements
@@ -44,7 +29,6 @@ class User extends Model implements
     use Authorizable;
     use CanResetPassword;
     use MustVerifyEmail;
-    use HasWishlists;
     use Notifiable;
     use HasRoles;
 
@@ -69,41 +53,13 @@ class User extends Model implements
         'updated_at',
     ];
 
-    protected $dispatchesEvents = [
-        'creating' => NewUserRegistered::class,
-    ];
-
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('transaction_id', 'like', '%' . $query . '%')
-                ->orWhere('user_id', 'like', '%' . $query . '%')
-                ->orWhere('price', 'like', '%' . $query . '%')
-                ->orWhere('order_id', 'like', '%' . $query . '%')
-                ->orWhere('card_number', 'like', '%' . $query . '%')
-                ->orWhere('track_id', 'like', '%' . $query . '%');
-    }
-
-    protected static function booted()
-    {
-        static::created(function ($model) {
-            $model->update([
-                'marketing_code' => 'SHAGO'.random_code(4),
-            ]);
-            $model->update([
-                'md5' => md5($model->id),
-            ]);
-        });
-        static::retrieved(function ($model) {
-            if (empty($model->marketing_code)) {
-                $model->update([
-                    'marketing_code' => 'SHAGO'.random_code(4),
-                ]);
-            }
-//            $model->update([
-//                'md5' => md5($model->id),
-//            ]);
-        });
+            : static::where('name', 'like', '%' . $query . '%')
+                ->orWhere('first_name', 'like', '%' . $query . '%')
+                ->orWhere('last_name', 'like', '%' . $query . '%')
+                ->orWhere('mobile', 'like', '%' . $query . '%');
     }
 
     public function generateRandomString($length = 10, $only_characters = false)
@@ -190,8 +146,6 @@ class User extends Model implements
             return 'ادمین';
         } elseif ($this->hasRole('seller')) {
             return 'فروشنده';
-        } elseif ($this->hasRole('marketer')) {
-            return 'بازاریاب';
         } elseif ($this->hasRole('member')) {
             return 'خریدار';
         }
@@ -257,15 +211,6 @@ EOD
         return $this->hasMany(Business::class, 'manager_id', 'id');
     }
 
-    public function inquiries()
-    {
-        return $this->hasMany(Inquiry::class);
-    }
-
-    public function reports()
-    {
-        return $this->hasMany(Report::class);
-    }
 
     public function payments()
     {
