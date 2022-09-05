@@ -1,0 +1,616 @@
+<?php
+
+namespace Modules\Seo\Traits;
+
+use Exception;
+use GuzzleHttp\Client;
+use Symfony\Component\DomCrawler\Crawler;
+
+// use Goutte\Client;
+
+trait SEO
+{
+    private $client = null;
+
+//    private $stopWords = [
+//        //NL
+//        'we', 'en', 'van', 'een', 'je', 'bij', 'voor', 'het', 'met', 'kan', 'dat', 'in', 'is', 'de', 'of', 'kunnen', 'door', 'alle', 'ons', 'gaan', 'leuke', 'op', 'nu', 'daarnaast',
+//        'dit', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'terecht', 'de', 'la', 'get', 'aan',
+//        'wij', 'hoe', 'touch', 'enkele', 'te', 'om', 'ook', 'die', 'niet', 'manier', 'naar', 'ontmoet', 'heb', 'deze', 'nog', 'al', 'zijn', 'wel', '-', 'wat', 'wordt',
+//
+//        //EN
+//        'able', 'about', 'above', 'abroad', 'according', 'accordingly', 'across', 'actually', 'after', 'afterwards', 'again', 'against', 'ago', 'ahead', 'ain\'t', 'all', 'allow',
+//        'allows', 'almost', 'alone', 'along', 'alongside', 'already', 'also', 'although', 'always', 'am', 'amid', 'amidst', 'among', 'amongst', 'an', 'and', 'another', 'any', 'anybody',
+//        'anyhow', 'anyone', 'anything', 'anyway', 'anyways', 'anywhere', 'apart', 'appear', 'appreciate', 'appropriate', 'are', 'aren\'t', 'around', 'as', 'aside', 'ask', 'asking',
+//        'associated', 'at', 'available', 'away', 'awfully', 'back', 'backward', 'backwards', 'be', 'became', 'because', 'become', 'becomes', 'becoming', 'been', 'before', 'beforehand',
+//        'begin', 'behind', 'being', 'believe', 'below', 'beside', 'besides', 'best', 'better', 'between', 'beyond', 'both', 'brief', 'but', 'by', 'came', 'can', 'cannot', 'cant', 'can\'t',
+//        'caption', 'cause', 'causes', 'certain', 'certainly', 'changes', 'clearly', 'c\'mon', 'come', 'comes', 'concerning', 'consequently', 'consider', 'considering', 'contain', 'containing',
+//        'contains', 'corresponding', 'could', 'couldn\'t', 'course', 'currently', 'dare', 'daren\'t', 'definitely', 'described', 'despite', 'does', 'doesn\'t', 'doing', 'done', 'don\'t',
+//        'did', 'didn\'t', 'different', 'directly', 'do', 'down', 'downwards', 'during', 'each', 'eight', 'eighty', 'either', 'else', 'elsewhere', 'end', 'ending', 'enough', 'entirely',
+//        'especially', 'etc', 'even', 'ever', 'evermore', 'every', 'everybody', 'everyone', 'everything', 'everywhere', 'ex', 'exactly', 'example', 'except', 'fairly', 'far', 'farther',
+//        'few', 'fewer', 'fifth', 'first', 'five', 'followed', 'following', 'follows', 'for', 'found', 'four', 'from', 'forever', 'former', 'formerly', 'forth', 'forward', 'further',
+//        'furthermore', 'get', 'gets', 'getting', 'given', 'gives', 'go', 'gotten', 'greetings', 'goes', 'going', 'gone', 'got', 'had', 'hadn\'t', 'half', 'happens', 'hardly', 'has',
+//        'hasn\'t', 'have', 'haven\'t', 'having', 'he', 'he\'d', 'he\'ll', 'hello', 'help', 'hence', 'her', 'here', 'hereafter', 'hereby', 'herein', 'here\'s', 'hereupon', 'hers',
+//        'herself', 'he\'s', 'hi', 'him', 'himself', 'his', 'hither', 'hopefully', 'how', 'however', 'hudred', 'i\'d', 'if', 'ignored', 'i\'ll', 'i\'m', 'immediate', 'in', 'inc.',
+//        'indeed', 'indicate', 'indicated', 'indicates', 'inner', 'inside', 'instead', 'into', 'inward', 'is', 'isn\'t', 'it', 'it\'d', 'it\'ll', 'its', 'it\'s', 'itself', 'i\'ve',
+//        'just', 'keep', 'keeps', 'kept', 'know', 'known', 'knows', 'last', 'lately', 'later', 'latter', 'latterly', 'least', 'less', 'lest', 'let', 'let\'s', 'like', 'liked', 'likely',
+//        'likewise', 'little', 'look', 'looking', 'looks', 'low', 'lower', 'made', 'mainly', 'make', 'makes', 'many', 'may', 'maybe', 'mayn\'t', 'me', 'mean', 'meantime', 'meanwhile',
+//        'merely', 'might', 'mine', 'minus', 'miss', 'more', 'moreover', 'most', 'mostly', 'mr', 'mrs', 'much', 'must', 'mustn\'t', 'my', 'myself', 'name', 'namely', 'near', 'nearly',
+//        'necessary', 'ne', 'needn\'t', 'needs', 'neither', 'never', 'neverf', 'neverless', 'nevertheless', 'new', 'next', 'nine', 'ninety', 'no', 'nobody', 'non', 'none', 'nonetheless',
+//        'nor', 'normally', 'not', 'nothing', 'notwithstanding', 'novel', 'now', 'nowhere', 'obviously', 'of', 'off', 'often', 'oh', 'ok', 'okay', 'old', 'on', 'once', 'one', 'ones',
+//        'one\'s', 'only', 'onto', 'opposite', 'or', 'other', 'others', 'otherwise', 'ought', 'oughtn\'t', 'our', 'ours', 'ourselves', 'out', 'outside', 'over', 'overall', 'own',
+//        'particular', 'particularly', 'past', 'per', 'perhaps', 'placed', 'please', 'plus', 'possible', 'presumably', 'probably', 'provided', 'provides', 'que', 'quite', 'rather',
+//        'really', 'reasonably', 'recent', 'recently', 'regarding', 'regardless', 'regards', 'relatively', 'respectively', 'right', 'round', 'said', 'same', 'saw', 'say', 'saying',
+//        'says', 'second', 'secondly', 'see', 'seeing', 'seem', 'seemed', 'seeming', 'seems', 'seen', 'self', 'selves', 'sensible', 'sent', 'serious', 'seriously', 'seven', 'several',
+//        'shall', 'shan\'t', 'she', 'she\'d', 'she\'ll', 'she\'s', 'should', 'shouldn\'t', 'since', 'six', 'so', 'some', 'somebody', 'someday', 'somehow', 'someone', 'something', 'sometime',
+//        'sometimes', 'somewhat', 'somewhere', 'soon', 'sorry', 'specified', 'specify', 'specifying', 'still', 'sub', 'such', 'sure', 'take', 'taken', 'taking', 'tell', 'tends', 'than', 'thank',
+//        'thanks', 'thanx', 'that', 'that\'ll', 'thats', 'that\'s', 'that\'ve', 'the', 'their', 'theirs', 'them', 'themselves', 'then', 'thence', 'there', 'thereafter', 'thereby', 'there\'d',
+//        'therefore', 'therein', 'there\'ll', 'there\'re', 'theres', 'there\'s', 'thereupon', 'there\'ve', 'these', 'they', 'they\'d', 'they\'ll', 'they\'re', 'they\'ve', 'thing', 'things',
+//        'think', 'third', 'thirty', 'this', 'thorough', 'thoroughly', 'those', 'though', 'three', 'through', 'throughout', 'thru', 'thus', 'till', 'to', 'together', 'too', 'took', 'toward',
+//        'towards', 'tried', 'tries', 'truly', 'try', 'trying', 'twice', 'two', 'under', 'underneath', 'undoing', 'unfortunately', 'unless', 'unlike', 'unlikely', 'until', 'unto', 'up', 'upon',
+//        'upwards', 'us', 'use', 'used', 'useful', 'uses', 'using', 'usually', 'value', 'various', 'versus', 'very', 'via', 'vs', 'vs.', 'want', 'wants', 'was', 'wasn\'t', 'way', 'we', 'we\'d',
+//        'welcome', 'well', 'we\'ll', 'went', 'were', 'we\'re', 'weren\'t', 'we\'ve', 'what', 'whatever', 'what\'ll', 'what\'s', 'what\'ve', 'when', 'whence', 'whenever', 'where', 'whereafter',
+//        'whereas', 'whereby', 'wherein', 'where\'s', 'whereupon', 'wherever', 'whether', 'which', 'whichever', 'while', 'whilst', 'whither', 'who', 'who\'d', 'whoever', 'whole', 'who\'ll', 'whom',
+//        'whomever', 'who\'s', 'whose', 'why', 'will', 'willing', 'wish', 'with', 'within', 'without', 'wonder', 'won\'t', 'would', 'wouldn\'t', 'yes', 'yet', 'you', 'you\'d', 'you\'ll', 'your',
+//        'you\'re', 'yours', 'yourself', 'yourselves', 'you\'ve', 'zero',
+//
+//        //FA
+//        '﻿آباد', 'آخ', 'آخر', 'آخرها', 'آخه', 'آدمهاست', 'آرام', 'آرام آرام', 'آره', 'آری', 'آزادانه', 'آسان', 'آسیب پذیرند', 'آشنایند', 'آشکارا', 'آقا', 'آقای', 'آقایان', 'آمد', 'آمدن', 'آمده', 'آمرانه',
+//        'آن', 'آن گاه', 'آنان', 'آنانی', 'آنجا', 'آنرا', 'آنطور', 'آنقدر', 'آنها', 'آنهاست', 'آنچنان', 'آنچنان که', 'آنچه', 'آنکه', 'آنگاه', 'آن‌ها', 'آهان', 'آهای', 'آور', 'آورد', 'آوردن', 'آورده', 'آوه',
+//        'آی', 'آیا', 'آید', 'آیند', 'ا', 'اتفاقا', 'اثرِ', 'اجراست', 'احتراما', 'احتمالا', 'احیاناً', 'اخیر', 'اخیراً', 'اری', 'از', 'از آن پس', 'از جمله', 'ازاین رو', 'ازجمله', 'ازش', 'اساسا', 'اساساً', 'است',
+//        'اسلامی اند', 'اش', 'اشتباها', 'اشکارا', 'اصلا', 'اصلاً', 'اصولا', 'اصولاً', 'اعلام', 'اغلب', 'افزود', 'افسوس', 'اقل', 'اقلیت', 'الا', 'الان', 'البته', 'البتّه', 'الهی', 'الی', 'ام', 'اما', 'امروز', 'امروزه',
+//        'تعمدا', 'تقریبا', 'تقریباً', 'تلویحا', 'تلویحاً', 'تمام', 'تمام قد', 'تماما', 'تمامشان', 'تمامی', 'تند تند', 'تنها', 'تو', 'توؤماً', 'توان', 'تواند', 'توانست', 'توانستم', 'توانستن', 'توانستند', 'توانسته',
+//        'و', 'در', 'به', 'از', 'كه', 'مي', 'اين', 'است', 'را', 'با', 'هاي', 'براي', 'آن', 'يك', 'شود', 'شده', 'خود', 'ها', 'كرد', 'شد', 'اي', 'تا', 'كند', 'بر', 'بود', 'گفت', 'نيز', 'وي', 'هم', 'كنند',
+//        'دارد', 'ما', 'كرده', 'يا', 'اما', 'بايد', 'دو', 'اند', 'هر', 'خواهد', 'او', 'مورد', 'آنها', 'باشد', 'ديگر', 'مردم', 'نمي', 'بين', 'پيش', 'پس', 'اگر',
+//        'همه', 'صورت', 'يكي', 'هستند', 'بي', 'من', 'دهد', 'هزار', 'نيست', 'استفاده', 'داد', 'داشته', 'راه', 'داشت', 'چه', 'همچنين', 'كردند', 'داده', 'بوده', 'دارند', 'همين', 'ميليون', 'سوي', 'شوند',
+//        'بيشتر', 'بسيار', 'روي', 'گرفته', 'هايي', 'تواند', 'اول', 'نام', 'هيچ', 'چند', 'جديد', 'بيش', 'شدن', 'كردن', 'كنيم', 'نشان', 'حتي', 'اينكه', 'ولی', 'توسط', 'چنين', 'برخي', 'نه', 'ديروز', 'دوم',
+//        'درباره', 'بعد', 'مختلف', 'گيرد', 'شما', 'گفته', 'آنان', 'بار', 'طور', 'گرفت', 'دهند', 'گذاري', 'بسياري', 'طي', 'بودند', 'ميليارد', 'بدون', 'تمام', 'كل', 'تر براساس', 'شدند', 'ترين', 'امروز',
+//        'باشند', 'ندارد', 'چون', 'قابل', 'گويد', 'ديگري', 'همان', 'خواهند', 'قبل', 'آمده', 'اكنون', 'تحت', 'طريق', 'گيري', 'جاي', 'هنوز', 'چرا', 'البته', 'كنيد', 'سازي', 'سوم', 'كنم', 'بلكه', 'زير',
+//        'توانند', 'ضمن', 'فقط', 'بودن', 'حق', 'آيد', 'وقتي', 'اش', 'يابد', 'نخستين', 'مقابل', 'خدمات', 'امسال', 'تاكنون', 'مانند', 'تازه', 'آورد', 'فكر', 'آنچه', 'نخست', 'نشده', 'شايد', 'چهار', 'جريان',
+//        'پنج', 'ساخته', 'زيرا', 'نزديك', 'برداري', 'كسي', 'ريزي', 'رفت', 'گردد', 'مثل', 'آمد', 'ام', 'بهترين', 'دانست', 'كمتر', 'دادن', 'تمامي', 'جلوگيري', 'بيشتري', 'ايم', 'ناشي', 'چيزي', 'آنكه', 'بالا',
+//        'بنابراين', 'ايشان', 'بعضي', 'دادند', 'داشتند', 'برخوردار', 'نخواهد', 'هنگام', 'نبايد', 'غير', 'نبود', 'ديده', 'وگو', 'داريم', 'چگونه', 'بندي', 'خواست', 'فوق', 'ده', 'نوعي', 'هستيم', 'ديگران', 'همچنان',
+//        'سراسر', 'ندارند', 'گروهي', 'سعي', 'روزهاي', 'آنجا', 'يكديگر', 'كردم', 'بيست', 'بروز', 'سپس', 'رفته', 'آورده', 'نمايد', 'باشيم', 'گويند', 'زياد', 'خويش', 'همواره', 'گذاشته', 'شش نداشته', 'شناسي', 'خواهيم',
+//        'آباد', 'داشتن', 'نظير', 'همچون', 'باره', 'نكرده', 'شان', 'سابق', 'هفت', 'دانند', 'جايي', 'بی', 'جز', 'زیرِ', 'رویِ', 'سریِ', 'تویِ', 'جلویِ', 'پیشِ', 'عقبِ', 'بالایِ', 'خارجِ', 'وسطِ', 'بیرونِ', 'سویِ', 'کنارِ',
+//        'پاعینِ', 'نزدِ', 'نزدیکِ', 'دنبالِ', 'حدودِ', 'برابرِ', 'طبقِ', 'مانندِ', 'ضدِّ', 'هنگامِ', 'برایِ', 'مثلِ', 'بارة', 'اثرِ', 'تولِ', 'علّتِ', 'سمتِ', 'عنوانِ', 'قصدِ', 'روب', 'جدا', 'کی', 'که', 'چیست', 'هست', 'کجا',
+//        'کجاست', 'کَی', 'چطور', 'کدام', 'آیا', 'مگر', 'چندین', 'یک', 'چیزی', 'دیگر', 'کسی', 'بعری', 'هیچ', 'چیز', 'جا', 'کس', 'هرگز', 'یا', 'تنها', 'بلکه', 'خیاه', 'بله', 'بلی', 'آره', 'آری', 'مرسی', 'البتّه',
+//        'لطفاً', 'ّه', 'انکه', 'وقتیکه', 'همین', 'پیش', 'مدّتی', 'هنگامی', 'مان', 'تان', 'تر', 'های', 'باما',
+//    ];
+
+    private $baseUrl;
+    private $domainUrl;
+    private $domainname;
+    private $loadtime = 0;
+    private $language = null;
+
+    public function __construct($client = null)
+    {
+        if (null === $client) {
+            $this->client = new Client([
+                'timeout' => 10.0,
+                'headers' => [
+                    'User-Agent' => 'Vandad Soft Seo Analyzer',
+                ],
+                'verify' => true,
+            ]);
+        } else {
+            $this->client = $client;
+        }
+    }
+
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
+
+    function url_exists($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_NOBODY, 1);
+        curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        if (curl_exec($ch) !== FALSE) {
+            return true;
+        }
+            return false;
+
+    }
+
+    function virus_total($domain)
+    {
+        // $vt_scan = Http::post('https://www.virustotal.com/vtapi/v2/url/scan?apikey=c97a5372aa4bda90ef6cffe2f069122df972427c4ef7d6521f0b023164001385&url=shago.ir');
+        // $vt_permalink = $vt_scan['permalink'];
+        $vt_permalink = "https://www.virustotal.com/gui/url/cbba2804b2a0f4f2a8bea2ec8116964d341a52ceefe3058638e4f331c6d1e600/detection/u-cbba2804b2a0f4f2a8bea2ec8116964d341a52ceefe3058638e4f331c6d1e600-1594544832";
+        $client = new Client();
+        return $response = $client->request('GET', $vt_permalink);
+        $content = $response->getBody()->getContents();
+
+        $document = new Crawler($content);
+
+
+        $table = $document->filter('div[class="sub-section"]')->filter('div[class="detection"]')->filter('p[class="engine"]')->filter('span[class="engine-name"]')->each(function ($node) {
+            return $node->text();
+        });
+        return response()->json($table);
+    }
+
+    public function analyze($url, $content = null)
+    {
+
+
+        $description = '';
+        $metaNodes = $document->querySelectorAll('meta');
+        foreach ($metaNodes as $node) {
+            $attributes = $node->getAttributes();
+            if (isset($attributes['name']) && isset($attributes['content']) && $attributes['name'] === 'description') {
+                $description = $attributes['content'];
+            }
+        }
+
+        //Full page result
+        $usableSource = $content;
+        $usableText = $this->getTextContent($usableSource);
+
+        $htmlTxtRatio = 0;
+        if (strlen($usableSource) > 0) {
+            $htmlTxtRatio = strlen($usableText) / strlen($usableSource) * 100;
+        }
+
+        $fullPageResult = [
+            'codeToTxtRatio' => [
+                'total_length' => strlen($usableSource),
+                'text_length' => strlen($usableText),
+                'ratio' => $htmlTxtRatio,
+            ],
+            'word_count' => $this->countWords($usableText),
+            'keywords' => $this->findKeywords($usableText),
+            'longTailKeywords' => $this->getLongTailKeywords($usableText),
+            'headers' => $this->doHeaderResult($document),
+            'links' => $this->doLinkResult($document),
+            'images' => $this->doImageResult($document),
+        ];
+
+        //Usable Node result
+        if ($nodes !== null) {
+            $node = $this->getWebsiteUsabelNode($nodes);
+            if (!isset($node['node'])) {
+                throw new Exception($url);
+            }
+            $node = $node['node'];
+            $usableSource = $node->outerHTML;
+            $usableText = $this->getTextContent($usableSource);
+        } else {
+            $node = $document->querySelector('body');
+            if ($node === null) {
+                $node = $document->querySelector('html');
+            }
+            if ($node !== null) {
+                $usableSource = $node->outerHTML;
+                $usableText = $this->getTextContent($usableSource);
+            } else {
+                $usableSource = '';
+                $usableText = '';
+            }
+        }
+
+        $htmlTxtRatio = 0;
+        if (strlen($usableSource) > 0) {
+            $htmlTxtRatio = strlen($usableText) / strlen($usableSource) * 100;
+        }
+
+        $mainTxtResult = [
+            'text' => $usableText,
+            'codeToTxtRatio' => [
+                'total_length' => strlen($usableSource),
+                'text_length' => strlen($usableText),
+                'ratio' => $htmlTxtRatio,
+            ],
+            'word_count' => $this->countWords($usableText),
+            'keywords' => $this->findKeywords($usableText),
+            'longTailKeywords' => $this->getLongTailKeywords($usableText),
+            'headers' => $node !== null ? $this->doHeaderResult($node) : null,
+            'links' => $node !== null ? $this->doLinkResult($node) : null,
+            'images' => $node !== null ? $this->doImageResult($node) : null,
+        ];
+
+        $result = [
+            'url' => $url,
+            'canonical' => $canonical,
+            'baseUrl' => $this->baseUrl,
+            'domainUrl' => $this->domainUrl,
+            'domainname' => $this->domainname,
+            'title' => $title,
+            'description' => $description,
+            'language' => $this->language,
+            'loadtime' => $this->loadtime,
+            'full_page' => $fullPageResult,
+            'main_text' => $mainTxtResult,
+        ];
+
+        return $result;
+    }
+
+    private function getTextContent($text)
+    {
+        $text = preg_replace(
+            [
+                // Remove invisible content
+                '@<head[^>]*?>.*?</head>@siu',
+                '@<style[^>]*?>.*?</style>@siu',
+                '@<script[^>]*?.*?</script>@siu',
+                '@<object[^>]*?.*?</object>@siu',
+                '@<embed[^>]*?.*?</embed>@siu',
+                '@<applet[^>]*?.*?</applet>@siu',
+                '@<noframes[^>]*?.*?</noframes>@siu',
+                '@<noscript[^>]*?.*?</noscript>@siu',
+                '@<noembed[^>]*?.*?</noembed>@siu',
+
+                // Add line breaks before & after blocks
+                '@<((br)|(hr))@iu', '@</?((address)|(blockquote)|(center)|(del))@iu'
+                , '@</?((div)|(h[1-9])|(ins)|(isindex)|(p)|(pre))@iu'
+                , '@</?((dir)|(dl)|(dt)|(dd)|(li)|(menu)|(ol)|(ul))@iu'
+                , '@</?((table)|(th)|(td)|(caption))@iu'
+                , '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu'
+                , '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu'
+                , '@</?((frameset)|(frame)|(iframe))@iu',], [' ', ' ', ' ', ' ', ' ', ' '
+            , ' ', ' ', ' ', "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0"
+            , "\n\$0", "\n\$0",], $text); // Remove all remaining tags and comments and
+         return strip_tags($text); }
+
+    private function countWords($content)
+    {
+        return count(str_word_count(strtolower($content), 1));
+    }
+
+    private function findKeywords($content, $min = 3)
+    {
+        if ($this->language == 'fa-IR') {
+            $words = $this->mb_str_word_count($content, 1);
+        } else {
+            $words = str_word_count(strtolower($content), 1);
+        }
+
+        $word_count = array_count_values($words);
+        arsort($word_count);
+
+        foreach ($this->stopWords as $s) {
+            unset($word_count[$s]);
+        }
+
+        $word_count = array_filter($word_count, function ($value) use ($min) {
+            return $value >= $min;
+        });
+
+        return $word_count;
+    }
+
+    private function mb_str_word_count($string, $format = 0)
+    {
+        mb_internal_encoding('UTF-8');
+        mb_regex_encoding('UTF-8');
+
+        $string = str_replace(["\n", "\r"], '', $string);
+        $words = array_filter(mb_split('[^\x{0600}-\x{06FF}]', $string));
+
+        switch ($format) {
+            case 0:
+                return count($words);
+                break;
+            case 1:
+                break;
+            case 2:
+                return $words;
+                break;
+            default:
+                return $words;
+                break;
+        }
+    }
+
+    private function getLongTailKeywords($strs, $len = 3, $min = 2)
+    {
+        $keywords = [];
+        if (!is_array($strs)) {
+            $strs = [$strs];
+        }
+
+        foreach ($strs as $str) {
+            $str = preg_replace('/[^a-z0-9\s-]+/', '', strtolower($str));
+            $str = preg_split('/\s+-\s+|\s+/', $str, -1, PREG_SPLIT_NO_EMPTY);
+            while (0 < $len--) {
+                for ($i = 0; $i < count($str) - $len; $i++) {
+                    $word = array_slice($str, $i, $len + 1);
+                    if (in_array($word[0], $this->
+                        stopWords) || in_array(end($word), $this->stopWords)) {
+                        continue;
+                    }
+
+                    $word = implode(' ', $word);
+
+                    if (!isset($keywords[$len][$word])) {
+                        $keywords[$len][$word] = 0;
+                    }
+                    $keywords[$len][$word]++;
+                }
+            }
+        }
+
+        $return = [];
+        foreach ($keywords as &$keyword) {
+            $keyword = array_filter($keyword, function ($v) use ($min) {
+                return (bool)($v > $min);
+            });
+            arsort($keyword);
+            $return = array_merge($return, $keyword);
+        }
+
+        return $return;
+    }
+
+    private function doLinkResult($document)
+    {
+        $elements = $document->querySelectorAll('a');
+        $internal = 0;
+        $external = 0;
+        $follow = 0;
+        $nofollow = 0;
+
+        $content = [];
+        $links = [];
+        foreach ($elements as $element) {
+            $content[] = $this->getTextContent($element->outerHTML);
+            $attributes = $element->getAttributes();
+            if (!isset($attributes['href'])){
+        continue;}
+                $url = $this->fixUrl($attributes['href']);
+
+                $link = [
+                    'url' => $url,
+                    'internal' => false,
+                    'nofollow' => false,
+                    'content' => $this->getTextContent($element->outerHTML),
+                ];
+                if ($this->isInternal($url)) {
+                    $link['internal'] = true;
+                    $internal++;
+                } else {
+                    $link['internal'] = false;
+                    $external++;
+                }
+
+                if (isset($attributes['rel'])) {
+                    if (strpos($attributes['rel'], 'nofollow') >= 0) {
+                        $link['nofollow'] = true;
+                        $nofollow++;
+                    } else {
+                        $follow++;
+                    }
+                } else {
+                    $follow++;
+                }
+
+                $links[] = $link;
+
+        }
+
+        $txt = implode(' ', $content);
+
+        return [
+            'count' => count($content),
+            'words' => count(str_word_count(strtolower($txt), 1)),
+            'keywords' => $this->findKeywords($txt, 1),
+            'longTailKeywords' => $this->getLongTailKeywords($content, 2, 2),
+            'internal' => $internal,
+            'external' => $external,
+            'follow' => $follow,
+            'nofollow' => $nofollow,
+            'links' => $links,
+        ];
+    }
+
+    private function fixUrl($url, $domain)
+    {
+        $baseUrl = parse_url($domain, PHP_URL_SCHEME) . '://' .
+            parse_url($domain, PHP_URL_HOST) . '/' . ltrim(parse_url($domain,
+                PHP_URL_PATH), '/');
+
+        $url = str_replace('\\?', '?', $url);
+        $url = str_replace('\\&', '&', $url);
+        $url = str_replace('\\#', '#', $url);
+        $url = str_replace('\\~', '~', $url);
+        $url = str_replace('\\;', ';', $url);
+
+        if (strpos($url, '#') !== false) {
+            $url = substr($url, 0, strpos($url, '#'));
+        }
+
+        if (strpos($url, 'http://') === 0) {
+            return $url;
+        }
+
+        if (strpos($url, 'https://') === 0) {
+            return $url;
+        }
+
+        if (strpos($url, '/') === 0) {
+            return rtrim($domain, '/') . '/' . ltrim($url, '/');
+        }
+
+        if (strpos($url, 'data:image') === 0) {
+            return $url;
+        }
+
+        if (strpos($url, 'tel') === 0) {
+            return $url;
+        }
+
+        if (strpos($url, 'mailto') === 0) {
+            return $url;
+        }
+
+        return rtrim($baseUrl, '/') . '/' . ltrim($url, '/');
+    }
+
+    private function isInternal($url)
+    {
+        if (strpos($url, $this->domainname) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function doImageResult($document)
+    {
+        $elements = $document->querySelectorAll('img');
+
+        $content = [];
+        $images = [];
+        foreach ($elements as $element) {
+            $attributes = $element->getAttributes();
+            $img = [
+                'src' => $attributes['src'] ?? null,
+                'alt' => $attributes['alt'] ?? null,
+                'title' => $attributes['title'] ?? null,
+            ];
+            if (isset($attributes['alt'])) {
+                $content[] = $this->getTextContent($attributes['alt']);
+            }
+            $img['src'] = $this->fixUrl($img['src']);
+
+            $images[] = $img;
+        }
+
+        $txt = implode(' ', $content);
+
+        return [
+            'count' => count($elements),
+            'count_alt' => count($content),
+            'words' => count(str_word_count(strtolower($txt), 1)),
+            'keywords' => $this->findKeywords($txt, 1),
+            'longTailKeywords' => $this->getLongTailKeywords($content, 2, 2),
+            'images' => $images,
+        ];
+    }
+
+    private function getWebsiteUsabelNode($nodes)
+    {
+        $node = $this->findLargestNode($nodes);
+
+        return $node;
+    }
+
+    private function findLargestNode($nodes)
+    {
+        $largestNode = null;
+        $largestTxtLength = 0;
+        foreach ($nodes as $token => $node) {
+            $length = strlen($this->getTextContent($node['node']->outerHTML));
+            if ($largestTxtLength < $length) {
+                $largestTxtLength = $length;
+                $largestNode = $node;
+            }
+        }
+        if ($largestNode === null) {
+            return $nodes;
+        }
+        $largestChildNode = $this->
+        findLargestChildNode($largestNode['childs'], $largestTxtLength);
+
+        if ($largestChildNode === false) {
+            return $largestNode;
+
+            throw new Exception("Can't find main text block.");
+        }
+
+        return $largestChildNode;
+    }
+
+    private function findLargestChildNode($nodes, $maxLength)
+    {
+        $largestNode = null;
+        $largestTxtLength = 0;
+        foreach ($nodes as $token => $node) {
+            $length = strlen($this->getTextContent($node['node']->outerHTML));
+            if ($largestTxtLength < $length) {
+                $largestTxtLength = $length;
+                $largestNode = $node;
+            }
+        }
+        if ($maxLength / 2 >= $largestTxtLength){
+
+        return false;
+    }
+            if
+            (count($largestNode['childs']) === 0) {
+                return $largestNode;
+            }
+            $possibleLargestNode = $this->findLargestChildNode($largestNode['childs'],
+                $maxLength);
+            if ($possibleLargestNode !== false) {
+                return $possibleLargestNode;
+            }
+
+            return $largestNode;
+        }
+
+    private function hasContent($node)
+    {
+        return $node->count() > 0 ? true : false;
+    }
+
+    private function parseHtml($body)
+    {
+        $dom = new HTML5DOMDocument();
+
+        $dom->loadHTML($body);
+
+        return $dom;
+    }
+
+    private function parseHtmlIntoBlocks($document)
+    {
+        $bodyNode = $document->querySelector('body');
+
+        $nodes = $this->loadChilds($bodyNode);
+
+        return $nodes;
+    }
+
+    private function loadChilds($node)
+    {
+        if ($node === null) {
+            return;
+        }
+        $parentTagName = $node->tagName;
+        $parentToken = md5($node->outerHTML);
+        $qry = $node->querySelectorAll('*');
+
+        $childs = [];
+        foreach ($qry as $child) {
+            if (!isset($node->tagName)) {
+                continue;
+            }
+            if (in_array($child->tagName, ['svg', 'script'])) {
+                continue;
+            }
+
+            if (!($parentTagName === $child->parentNode->tagName && $parentToken ===
+                md5($child->parentNode->outerHTML))){
+        continue;}
+                $loadedChilds = $this->loadChilds($child);
+                $childs[md5($child->outerHTML)] = [
+                    'node' => $child,
+                    'childs' => $loadedChilds,
+                ];
+
+        }
+
+        return $childs;
+    }
+}
