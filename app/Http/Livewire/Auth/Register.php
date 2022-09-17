@@ -148,7 +148,7 @@ class Register extends BaseComponent
             } elseif ($this->register_business == 'online_business') {
                 $this->redirect(route('register.online.business'));
             } else {
-                $this->redirect(route('dashboard'));
+                $this->redirect(route('dashboard.index'));
             }
         } else {
             $this->flash('success', 'ثبت نام با موفقیت انجام شد', [
@@ -159,7 +159,7 @@ class Register extends BaseComponent
                 'showConfirmButton' => false,
             ]);
 
-            $this->redirect(route('dashboard'));
+            $this->redirect(route('dashboard.index'));
         }
     }
 

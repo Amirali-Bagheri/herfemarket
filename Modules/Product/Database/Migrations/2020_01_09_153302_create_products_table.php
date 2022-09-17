@@ -30,19 +30,22 @@ class CreateProductsTable extends Migration
                 ->on('brands')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('business_id');
+
             $table->smallInteger('status')->default(1);
+            $table->boolean('isService')->default(false);
             $table->boolean('comment_status')->default(1);
             $table->text('images')->nullable();
-            $table->json('property_json')->nullable();
+            // $table->json('property_json')->nullable();
 
-            $table->unique('title');
-            $table->unsignedBigInteger('crawled_id')->nullable();
-            $table->unsignedBigInteger('created_by')->nullable();
+            // $table->unique('title');
+            // $table->unsignedBigInteger('crawled_id')->nullable();
+            // $table->unsignedBigInteger('created_by')->nullable();
 
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE products ADD FULLTEXT fulltext_index (title, en_title, excerpt,code)');
+        // DB::statement('ALTER TABLE products ADD FULLTEXT fulltext_index (title, en_title, excerpt,code)');
     }
 
     /**

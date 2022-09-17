@@ -1,6 +1,6 @@
 <footer class="footer_widgets">
     <!--newsletter area start-->
-    <div class="newsletter_area">
+{{--    <div class="newsletter_area">
         <div class="container">
             <div class="newsletter_inner">
                 <div class="row align-items-center">
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
     <!--newsletter area end-->
     <div class="footer_top">
         <div class="container">
@@ -131,15 +131,17 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6">
-                    <div class="copyright_area">
-                        <p>ارائه شده در وب‌سایت <a href="https://www.rtl-theme.com/" target="_blank">راست‌چین</a></p>
+                    <div class="copyright_area text-center justify-content-center">
+                        <p>
+                            تمامی حقوق برای حرفه مارکت محفوظ است
+                        </p>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="footer_payment text-right">
-                        <img src="/img/icon/payment.png" alt="">
-                    </div>
-                </div>
+{{--                <div class="col-lg-6 col-md-6">--}}
+{{--                    <div class="footer_payment text-right">--}}
+{{--                        <img src="/img/icon/payment.png" alt="">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>

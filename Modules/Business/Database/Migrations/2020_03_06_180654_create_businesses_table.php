@@ -92,6 +92,7 @@ class CreateBusinessesTable extends Migration
             $table->string('enamad_response_time')->nullable();
             $table->date('enamad_crawled_at')->nullable();
 
+            $table->unsignedBigInteger('category_id')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

@@ -3,20 +3,20 @@
 
 /*-----------------------------------------------------------------------------------
 
-    
+
     CSS INDEX
     =========================================
     01. header css here
     02. slider area css here
     03. product section css here
-    04. banner section css here 
+    04. banner section css here
     05. blog area css here
     06. newsletter area css here
     07. footer area css here
     08. shop page css here
-    09. error page css heer 
+    09. error page css heer
     10. about page css here
-    11. blog page css here 
+    11. blog page css here
     12. blog details css here
     13. cart page css here
     14. checkout page css here
@@ -32,8 +32,8 @@
     24. modal css here
     25. compare css here
     26. coming soon css here
-    
-    
+
+
 
 -----------------------------------------------------------------------------------*/
 
@@ -177,7 +177,7 @@ figure {
 	font-size: 12px;
 }
 
-/*-- 
+/*--
     - Common Classes
 -----------------------------------------*/
 
@@ -210,7 +210,7 @@ figure {
 	margin: 0;
 }
 
-/*-- 
+/*--
     - Background color
 -----------------------------------------*/
 
@@ -254,12 +254,12 @@ figure {
 	height: 100%;
 }
 
-/*-- 
+/*--
     - color
 -----------------------------------------*/
 
 
-/*-- 
+/*--
     - Input Placeholder
 -----------------------------------------*/
 
@@ -284,8 +284,8 @@ textarea:-ms-input-placeholder {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 
-/*-- 
-    Scroll Up 
+/*--
+    Scroll Up
 -----------------------------------------*/
 
 #scrollUp {
@@ -319,7 +319,7 @@ textarea:-ms-input-placeholder {
 	}
 }
 
-/*-- 
+/*--
     - Main Wrapper
 -----------------------------------------*/
 
@@ -328,7 +328,7 @@ textarea:-ms-input-placeholder {
 	margin: 0 !important;
 }
 
-/*-- 
+/*--
     - Section Padding
 -------------------------------------*/
 
@@ -8037,7 +8037,7 @@ textarea:-ms-input-placeholder {
 	font-weight: 500;
 	padding-left: 10px;
 }
-.account_login_form form > input {
+.account_login_form form input {
 	border: 1px solid #ddd;
 	background: none;
 	height: 40px;

@@ -74,7 +74,7 @@ class Login extends BaseComponent
         //         $this->redirect(route('2fa'));
         //     }
         //
-        //     $this->redirect(route('dashboard'));
+        //     $this->redirect(route('dashboard.index'));
         // }
 
         /*        if (Agent::isMobile()) {
@@ -94,7 +94,7 @@ class Login extends BaseComponent
                         if ($app->auth_status != 'logged_out') {
                             Auth::login($user);
                         }
-                        // $this->redirect(route('dashboard'));
+                        // $this->redirect(route('dashboard.index'));
                     }
                 }*/
         /*        if (Agent::isMobile()) {
@@ -111,7 +111,7 @@ class Login extends BaseComponent
                         // $bot->sendMessage(new SendMessage('105627554', json_encode("Auth::login()")));
 
                         \Illuminate\Support\Facades\Auth::login($user);
-                        $this->redirect(route('dashboard') . '?build_id=' . $build_id . '&id=' . $user_md5);
+                        $this->redirect(route('dashboard.index') . '?build_id=' . $build_id . '&id=' . $user_md5);
                     }
                 }*/
     }
@@ -155,7 +155,7 @@ class Login extends BaseComponent
             ]);
 
             // $link = $this->prevLink ?? '';
-            $this->redirect(route('dashboard'));
+            $this->redirect(route('dashboard.index'));
         } else {
             RateLimiter::hit($this->throttleKey());
             $this->alert('error', 'خطا در ورود رخ داد', [
@@ -196,7 +196,7 @@ class Login extends BaseComponent
                 ]);
             }
 
-            $this->redirect(route('dashboard') . '?build_id=' . $build_id);
+            $this->redirect(route('dashboard.index') . '?build_id=' . $build_id);
         } else {
 
         }
@@ -239,7 +239,7 @@ class Login extends BaseComponent
                         ]);
 
                         // $link = $this->prevLink ?? '';
-                        $this->redirect(route('dashboard'));
+                        $this->redirect(route('dashboard.index'));
                     } else {
                         $this->alert('error', 'کد وارد شده اشتباه است', [
                             'position'          => 'center',
@@ -253,7 +253,7 @@ class Login extends BaseComponent
                         // \session()->put('prevLink',$path);
                         //
                         // $link = $this->prevLink ?? '';
-                        // $this->redirect(route('dashboard'));
+                        // $this->redirect(route('dashboard.index'));
                     }
                 // }*/
     }

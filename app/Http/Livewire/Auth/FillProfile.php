@@ -45,7 +45,7 @@ class FillProfile extends BaseComponent
 
     public function rejectMarketing()
     {
-        $this->redirect(route('dashboard'));
+        $this->redirect(route('dashboard.index'));
     }
 
     public function submit()
@@ -100,9 +100,9 @@ class FillProfile extends BaseComponent
                 'showConfirmButton' => false,
             ]);
 
-            return redirect()->route('dashboard')->with(['marketing_modal' => true]);
+            return redirect()->route('dashboard.index')->with(['marketing_modal' => true]);
 
-//            $this->redirect(route('dashboard'));
+//            $this->redirect(route('dashboard.index'));
         }
         $this->flash('success', 'پروفایل با موفقیت تکمیل شد', [
                 'position' => 'bottom-start',
@@ -116,9 +116,9 @@ class FillProfile extends BaseComponent
         } elseif ($this->register_business == 'online_business') {
             $this->redirect(route('register.online.business'));
         } else {
-            return redirect()->route('dashboard')->with(['marketing_modal' => true]);
+            return redirect()->route('dashboard.index')->with(['marketing_modal' => true]);
 
-//                $this->redirect(route('dashboard'));
+//                $this->redirect(route('dashboard.index'));
         }
     }
 

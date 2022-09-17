@@ -76,7 +76,7 @@ class LoginWithOTP extends BaseComponent
                     'showCancelButton'  => false,
                     'showConfirmButton' => false,
                 ]);
-                $this->redirect(route('dashboard'));
+                $this->redirect(route('dashboard.index'));
             }
         } catch (\Throwable $ex) {
             $this->alert('error', 'خطایی رخ داد!', [

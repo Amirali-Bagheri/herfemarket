@@ -1,7 +1,7 @@
 <?php
 
 
-Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'sliders'], function () {
         Route::any('/', 'SliderController@index')->name('admin.sliders.index');
         Route::any('create', 'SliderController@create')->name('admin.sliders.create');

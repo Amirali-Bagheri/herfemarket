@@ -29,7 +29,7 @@
                         @enderror
                     </p>
                     <div class="login_submit">
-                        <a href="#">رمز عبور خود را فراموش کرده اید؟</a>
+                        <a href="{{route('password.request')}}">رمز عبور خود را فراموش کرده اید؟</a>
                         <label for="remember">
                             <input id="remember" type="checkbox" wire:model.defer="remember"
                                    name="remember" id="remember" value="true"

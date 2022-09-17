@@ -23,8 +23,6 @@ trait HeaderTrait
     {
         Auth::logout();
 
-        (new Authenticator(request()))->logout();
-
         request()->session()->invalidate();
 
         request()->session()->regenerateToken();

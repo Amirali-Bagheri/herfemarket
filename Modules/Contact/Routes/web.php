@@ -1,6 +1,6 @@
 <?php
 
-Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])
+Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin'])
     ->group(function () {
         Route::group(['prefix' => 'contacts'], function () {
             Route::any('/', 'ContactsController@index')->name('admin.contacts.index');

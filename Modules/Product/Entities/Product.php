@@ -49,7 +49,7 @@ class Product extends Model implements
     use SerializesModels;
     use Notifiable;
 
-    use Wishlistable;
+    // use Wishlistable;
     protected $filters = [];
 
     protected $searchable = [

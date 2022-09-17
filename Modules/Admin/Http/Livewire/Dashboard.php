@@ -91,23 +91,11 @@ class Dashboard extends BaseComponent
 //
 //        }
 
-        $businesses = \Modules\Business\Entities\Business::withCount('prices')
-//            ->withCount([
-//                'crawled_products',
-//                'crawled_products as latest_crawled_products_count' => function ($query) {
-//                    $query->where('created_at', "<", Carbon::now()->subDays(2));
-//                }])
-
-            ->orderBy('prices_count', 'desc')
-//            ->cacheFor(3600 * 24)
-            ->get()->take(5);
+        $businesses = \Modules\Business\Entities\Business::latest()->take(5)->get();
 
 //        dd($businesses->first()->latest_crawled_products_count);
 
-        $links = \Modules\Crawl\Entities\Link::whereNot('business_id', 1)->get()->sortByDesc('latest_crawled_products_count');
         return view('admin::home', [
-            'links'=>$links,
-            'contacts' => Contact::latest()->paginate(15),
             'businesses' => $businesses,
         ])->extends('admin.layouts.master', ['pageTitle' => 'پنل مدیریت']);
     }

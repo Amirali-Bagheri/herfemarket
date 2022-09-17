@@ -20,7 +20,7 @@ class VerifyMobile extends \Modules\Core\Http\Livewire\BaseComponent
         }
 
         if ($this->user->hasVerifiedPhone()) {
-            $this->redirect(route('dashboard'));
+            $this->redirect(route('dashboard.index'));
         }
     }
 
@@ -58,7 +58,7 @@ class VerifyMobile extends \Modules\Core\Http\Livewire\BaseComponent
                     'showCancelButton'  => false,
                     'showConfirmButton' => false,
                 ]);
-                $this->redirect(route('dashboard'));
+                $this->redirect(route('dashboard.index'));
             }
         } catch (\Throwable $ex) {
             $this->alert('error', 'خطایی رخ داد!', [

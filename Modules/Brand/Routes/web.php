@@ -5,7 +5,7 @@ use Modules\Brand\Http\Livewire\Admin\Datatable;
 use Modules\Brand\Http\Livewire\Admin\Show;
 use Modules\Brand\Http\Livewire\Admin\Update;
 
-Route::prefix('admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])
+Route::prefix('admin')->middleware(['web', 'auth', 'role:admin'])
     ->group(function () {
         Route::group(['prefix' => 'brands'], function () {
             Route::any('/', Datatable::class)->name('admin.brands.index');

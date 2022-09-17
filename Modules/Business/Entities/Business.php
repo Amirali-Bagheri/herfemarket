@@ -46,12 +46,12 @@ class Business extends Model
                 ->orWhere('email', 'like', '%' . $query . '%');
     }
 
-    public function hasPrices()
-    {
-        $prices = ProductPrices::where('business_id', $this->attributes['id'])->count();
-
-        return $prices > 0 ? true : false;
-    }
+    // public function hasPrices()
+    // {
+    //     $prices = ProductPrices::where('business_id', $this->attributes['id'])->count();
+    //
+    //     return $prices > 0 ? true : false;
+    // }
 
     public function scopeOfType($query, $type)
     {
@@ -79,22 +79,22 @@ class Business extends Model
         return $this->morphMany(Click::class, 'clickable');
     }
 
-    public function products_clicks()
-    {
-        return $this->prices()->whereHas('clicks', function ($query) {
-            return $query->where('status', 'new');
-        });
-//        return $this->morphMany(Click::class, 'clickable','Modules\Product\Entities\ProductPrices','clickable_id','id');
-//        return Click::where('clickable_type','Modules\Product\Entities\ProductPrices')->whereIn('clickable_id',$this->prices->pluck('id'));
-//         $this->prices->pluck('id');
-//        return $this->hasManyThrough(Click::class,ProductPrices::class,'business_id','clickable_id');
-//        return $this->hasManyThrough(Click::class,ProductPrices::class,'business_id','clickable_id');
-    }
-
-    public function prices()
-    {
-        return $this->hasMany(ProductPrices::class, 'business_id');
-    }
+//     public function products_clicks()
+//     {
+//         return $this->prices()->whereHas('clicks', function ($query) {
+//             return $query->where('status', 'new');
+//         });
+// //        return $this->morphMany(Click::class, 'clickable','Modules\Product\Entities\ProductPrices','clickable_id','id');
+// //        return Click::where('clickable_type','Modules\Product\Entities\ProductPrices')->whereIn('clickable_id',$this->prices->pluck('id'));
+// //         $this->prices->pluck('id');
+// //        return $this->hasManyThrough(Click::class,ProductPrices::class,'business_id','clickable_id');
+// //        return $this->hasManyThrough(Click::class,ProductPrices::class,'business_id','clickable_id');
+//     }
+    //
+    // public function prices()
+    // {
+    //     return $this->hasMany(ProductPrices::class, 'business_id');
+    // }
 
     public function sluggable(): array
     {
@@ -150,14 +150,7 @@ class Business extends Model
 
     public function products()
     {
-        return $this->hasManyThrough(
-            Product::class,
-            ProductPrices::class,
-            'business_id',
-            'id',
-            'id',
-            'product_id'
-        );
+        return $this->hasMany(Product::class);
     }
 
     public function getStatusNameAttribute()
@@ -352,10 +345,10 @@ class Business extends Model
         return $this->morphMany(Report::class, 'reportable');
     }
 
-    public function price_reports()
-    {
-        return $this->hasManyThrough(Report::class, ProductPrices::class, 'business_id', 'reportable_id', 'id', 'id');
-    }
+    // public function price_reports()
+    // {
+    //     return $this->hasManyThrough(Report::class, ProductPrices::class, 'business_id', 'reportable_id', 'id', 'id');
+    // }
 
     public function canPricing(): bool
     {

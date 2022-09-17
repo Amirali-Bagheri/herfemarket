@@ -122,7 +122,7 @@
                         </div>
                         <div class="p-2">
                             <a class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"
-                               href="{{ route('dashboard.profile') }}">
+                               href="{{ route('dashboard.index') }}">
                                 <i class="w-4 h-4 mr-2" data-feather="user"></i> پروفایل </a>
                             {{-- <a class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"--}}
                             {{-- href="index.html">--}}

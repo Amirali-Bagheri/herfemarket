@@ -26,7 +26,8 @@ class RolesSeeder extends Seeder
 
         $admin = User::query()->create([
 
-            'name'               => 'امیرعلی باقری',
+            'first_name'               => 'امیرعلی',
+            'last_name'               => 'باقری',
             'email'              => 'bagheriamirali2000@gmail.com',
             'password'           => 'Amirali@5080',
             'status'             => 1,

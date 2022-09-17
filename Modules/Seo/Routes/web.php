@@ -1,6 +1,6 @@
 <?php
 
-Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'seo'], function () {
         Route::any('/', 'SeoController@index')->name('admin.seo.index');
         Route::any('/google-pages', 'SeoController@google_pages')->name('admin.seo.google_pages');

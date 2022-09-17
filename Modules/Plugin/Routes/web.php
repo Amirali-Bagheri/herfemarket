@@ -1,6 +1,6 @@
 <?php
 
-Route::prefix('admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])->group(function () {
+Route::prefix('admin')->middleware(['web', 'auth', 'role:admin'])->group(function () {
     Route::any('/plugins', 'PluginController@index')->name('admin.plugins.index');
 
     Route::any('/plugins/update/{name}', 'PluginController@update')->name('admin.plugins.update');

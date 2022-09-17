@@ -1,6 +1,6 @@
 <?php
 
-Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware(['web', 'auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'ads'], function () {
         Route::any('/', 'AdsController@index')->name('admin.ads.index');
         Route::any('create', 'AdsController@create')->name('admin.ads.create');

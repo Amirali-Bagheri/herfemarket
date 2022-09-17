@@ -9,6 +9,6 @@ return [
         'web',
         'auth',
         'role:admin',
-        'verifiedphone',
+        // 'verifiedphone',
     ]
 ];

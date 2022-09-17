@@ -11,7 +11,7 @@ use Modules\Product\Http\Livewire\Admin\Products\ProductCreate;
 use Modules\Product\Http\Livewire\Admin\Products\ProductDatatable;
 use Modules\Product\Http\Livewire\Admin\Products\ProductUpdate;
 
-Route::prefix('admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])
+Route::prefix('admin')->middleware(['web', 'auth', 'role:admin'])
     ->group(function () {
         Route::group(['prefix' => 'products'], function () {
             Route::any('/', ProductDatatable::class)->name('admin.products.index');

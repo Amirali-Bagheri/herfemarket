@@ -28,7 +28,7 @@ use Modules\Business\Http\Livewire\Update;
 Route::any('/buy/{id}', [\Modules\Business\Http\Controllers\Site\BusinessController::class, 'priceLink'])->name('site.product.price.link');
 Route::any('/redirect/{md5}', [\Modules\Business\Http\Controllers\Site\BusinessController::class, 'websiteLink'])->name('site.business.website.link');
 
-Route::prefix('admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])->group(function () {
+Route::prefix('admin')->middleware(['web', 'auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'businesses'], function () {
         Route::any('/', \Modules\Business\Http\Livewire\Datatable::class)->name('admin.businesses.index');
         Route::any('create', [BusinessController::class, 'create'])->name('admin.businesses.create');

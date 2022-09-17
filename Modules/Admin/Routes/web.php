@@ -3,11 +3,11 @@
 
 //use Modules\Admin\Http\Livewire\Dashboard;
 
-//Route::prefix('admin')->middleware(['web', 'auth', 'role:admin', 'verifiedphone'])
+//Route::prefix('admin')->middleware(['web', 'auth', 'role:admin'])
 //    ->group(function () {
 
 use Modules\Admin\Http\Livewire\Dashboard;
 
-Route::any('/admin', Dashboard::class)->name('admin.index')->middleware(['web', 'auth', 'role:admin', 'verifiedphone']);
+Route::any('/admin', Dashboard::class)->name('admin.index')->middleware(['web', 'auth', 'role:admin']);
 
 //    });

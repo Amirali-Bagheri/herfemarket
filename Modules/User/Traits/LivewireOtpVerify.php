@@ -200,7 +200,7 @@ EOD
 ////                session()->forget('mobile');
 ////                Cache::forget('sms_id_code_'. (string)$this->mobile);
 //
-//                $this->redirect(route('dashboard'));
+//                $this->redirect(route('dashboard.index'));
 //            }
 //        } catch (\Throwable $ex) {
 //            $this->alert('error', 'خطایی رخ داد!', [
