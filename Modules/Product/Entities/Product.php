@@ -60,7 +60,7 @@ class Product extends Model implements
     ];
 
     protected $casts = [
-        'images' => 'array',
+        // 'images' => 'array',
         'status' => 'boolean',
     ];
     protected $hidden = [
@@ -71,7 +71,7 @@ class Product extends Model implements
         'comment_status',
         'description',
     ];
-    protected $appends = ['has_prices_with_stock','has_prices','stock', 'has_discount', 'max_price', 'min_price', 'slider_price', 'thumbnail_url', 'best_price', 'rating_avg', 'rating_count', 'visit_count', 'categories_title', 'created_at_human_ago', 'created_at_human', 'status_name'];
+    // protected $appends = ['has_prices_with_stock','has_prices','stock', 'has_discount', 'max_price', 'min_price', 'slider_price', 'thumbnail_url', 'best_price', 'rating_avg', 'rating_count', 'visit_count', 'categories_title', 'created_at_human_ago', 'created_at_human', 'status_name'];
     protected $guarded = [];
 
     public static $withoutAppends = false;
@@ -301,10 +301,10 @@ class Product extends Model implements
         return $price->discount_type and $price->discount_value ? true : false;
     }
 
-    public function prices()
-    {
-        return $this->hasMany(ProductPrices::class, 'product_id', 'id')->with('business');
-    }
+    // public function prices()
+    // {
+    //     return $this->hasMany(ProductPrices::class, 'product_id', 'id')->with('business');
+    // }
 
     public function priceOfBusiness($business)
     {
@@ -704,22 +704,22 @@ class Product extends Model implements
         return $this->ratingAvg();
     }
 
-    public function getHasPricesAttribute()
-    {
-        return $this->has('prices');
-//        $prices = ProductPrices::where('product_id', $this->attributes['id'])->count();
+//     public function getHasPricesAttribute()
+//     {
+//         return $this->has('prices');
+// //        $prices = ProductPrices::where('product_id', $this->attributes['id'])->count();
+// //
+// //        return $prices > 0 ? true : false;
+//     }
+
+//     public function getHasPricesWithStockAttribute()
+//     {
+//         return $this->whereHas('prices', function (Builder $query) {
+//             $query->where('stock', '=', 1)->orWhere('stock', '=', true);
+//         })->exists();
 //
-//        return $prices > 0 ? true : false;
-    }
-
-    public function getHasPricesWithStockAttribute()
-    {
-        return $this->whereHas('prices', function (Builder $query) {
-            $query->where('stock', '=', 1)->orWhere('stock', '=', true);
-        })->exists();
-
-//        return $this->whereHas('prices.stock',1)->exists();
-    }
+// //        return $this->whereHas('prices.stock',1)->exists();
+//     }
 
     public function hasPriceAs($business_id)
     {

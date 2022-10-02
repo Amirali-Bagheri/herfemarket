@@ -41,10 +41,10 @@ Route::middleware(['auth','role:seller'])->group(function () {
     Route::get('/dashboard/products', App\Http\Livewire\Dashboard\Products\Index::class)->name('dashboard.products.index');
     Route::get('/dashboard/products/create', App\Http\Livewire\Dashboard\Products\Create::class)->name('dashboard.products.create');
     Route::get('/dashboard/products/update/{id}', App\Http\Livewire\Dashboard\Products\Update::class)->name('dashboard.products.update');
-
+    //
     Route::get('/dashboard/services', App\Http\Livewire\Dashboard\Products\Index::class)->name('dashboard.services.index');
-    Route::get('/dashboard/services/create', App\Http\Livewire\Dashboard\Products\Create::class)->name('dashboard.services.create');
-    Route::get('/dashboard/services/update/{id}', App\Http\Livewire\Dashboard\Products\Update::class)->name('dashboard.services.update');
+    // Route::get('/dashboard/services/create', App\Http\Livewire\Dashboard\Products\Create::class)->name('dashboard.services.create');
+    // Route::get('/dashboard/services/update/{id}', App\Http\Livewire\Dashboard\Products\Update::class)->name('dashboard.services.update');
 
 });
 

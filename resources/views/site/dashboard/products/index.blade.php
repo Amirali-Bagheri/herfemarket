@@ -26,23 +26,29 @@
                                                     <th>شناسه</th>
                                                     <th>عنوان</th>
                                                     <th>قیمت</th>
+                                                    <th>دسته بندی</th>
                                                     <th>زمان</th>
+                                                    <th>گزینه ها</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse ($products as $product)
-
-
-                                                    <tr>|
+                                                    <tr>
                                                         <td>{{$product->id}}</td>
                                                         <td>
                                                             {{$product->title}}
                                                         </td>
                                                         <td>
-                                                            {{$product->price}}
+                                                            {{$product->main_price}}
+                                                        </td>
+                                                        <td>
+                                                            {{$product->categories()->first()->title}}
                                                         </td>
                                                         <td>
                                                             {{ verta($product->updated_at)->formatDifference() }}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{route('dashboard.products.update',$product->id)}}">ویرایش</a>
                                                         </td>
                                                     </tr>
                                                 @empty
