@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.27.0.
+ * Generated for Laravel 9.31.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1496,6 +1496,52 @@
                         /** @var \Illuminate\Foundation\Application $instance */
                         $instance->offsetUnset($key);
         }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+                        \Illuminate\Foundation\Application::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin, $replace = true)
+        {
+                        \Illuminate\Foundation\Application::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+                        return \Illuminate\Foundation\Application::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Foundation\Application::flushMacros();
+        }
          
     }
             /**
@@ -1529,6 +1575,30 @@
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel         
                         /** @var \App\Console\Kernel $instance */
                         $instance->terminate($input, $status);
+        }
+                    /**
+         * Register a callback to be invoked when the command lifecyle duration exceeds a given amount of time.
+         *
+         * @param \DateTimeInterface|\Carbon\CarbonInterval|float|int $threshold
+         * @param callable $handler
+         * @return void 
+         * @static 
+         */ 
+        public static function whenCommandLifecycleIsLongerThan($threshold, $handler)
+        {            //Method inherited from \Illuminate\Foundation\Console\Kernel         
+                        /** @var \App\Console\Kernel $instance */
+                        $instance->whenCommandLifecycleIsLongerThan($threshold, $handler);
+        }
+                    /**
+         * When the command being handled started.
+         *
+         * @return \Illuminate\Support\Carbon|null 
+         * @static 
+         */ 
+        public static function commandStartedAt()
+        {            //Method inherited from \Illuminate\Foundation\Console\Kernel         
+                        /** @var \App\Console\Kernel $instance */
+                        return $instance->commandStartedAt();
         }
                     /**
          * Register a Closure based command with the application.
@@ -3137,6 +3207,18 @@
                         return $instance->map($map);
         }
                     /**
+         * Specify the jobs that should be dispatched instead of faked.
+         *
+         * @param array|string $jobsToDispatch
+         * @return void 
+         * @static 
+         */ 
+        public static function except($jobsToDispatch)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        $instance->except($jobsToDispatch);
+        }
+                    /**
          * Assert if a job was dispatched based on a truth-test callback.
          *
          * @param string|\Closure $command
@@ -3312,6 +3394,17 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
                         $instance->assertBatchCount($count);
+        }
+                    /**
+         * Assert that no batched jobs were dispatched.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function assertNothingBatched()
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        $instance->assertNothingBatched();
         }
                     /**
          * Get all of the jobs matching a truth-test callback.
@@ -6019,6 +6112,18 @@
                         \Illuminate\Events\Dispatcher::flushMacros();
         }
                     /**
+         * Specify the events that should be dispatched instead of faked.
+         *
+         * @param array|string $eventsToDispatch
+         * @return \Illuminate\Support\Testing\Fakes\EventFake 
+         * @static 
+         */ 
+        public static function except($eventsToDispatch)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
+                        return $instance->except($eventsToDispatch);
+        }
+                    /**
          * Assert if an event has a listener attached to it.
          *
          * @param string $expectedEvent
@@ -7354,7 +7459,7 @@
                     /**
          * Register a stub callable that will intercept requests and be able to return stub responses.
          *
-         * @param callable|array $callback
+         * @param callable|array|null $callback
          * @return \Illuminate\Http\Client\Factory 
          * @static 
          */ 
@@ -9172,6 +9277,18 @@
                         return $instance->setApplication($app);
         }
                     /**
+         * Specify the jobs that should be queued instead of faked.
+         *
+         * @param array|string $jobsToBeQueued
+         * @return \Illuminate\Support\Testing\Fakes\QueueFake 
+         * @static 
+         */ 
+        public static function except($jobsToBeQueued)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+                        return $instance->except($jobsToBeQueued);
+        }
+                    /**
          * Assert if a job was pushed based on a truth-test callback.
          *
          * @param string|\Closure $job
@@ -9567,18 +9684,6 @@
                         return $instance->intended($default, $status, $headers, $secure);
         }
                     /**
-         * Set the intended url.
-         *
-         * @param string $url
-         * @return \Illuminate\Routing\Redirector 
-         * @static 
-         */ 
-        public static function setIntendedUrl($url)
-        {
-                        /** @var \Illuminate\Routing\Redirector $instance */
-                        return $instance->setIntendedUrl($url);
-        }
-                    /**
          * Create a new redirect response to the given path.
          *
          * @param string $path
@@ -9705,6 +9810,29 @@
         {
                         /** @var \Illuminate\Routing\Redirector $instance */
                         $instance->setSession($session);
+        }
+                    /**
+         * Get the "intended" URL from the session.
+         *
+         * @return string|null 
+         * @static 
+         */ 
+        public static function getIntendedUrl()
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->getIntendedUrl();
+        }
+                    /**
+         * Set the "intended" URL in the session.
+         *
+         * @param string $url
+         * @return \Illuminate\Routing\Redirector 
+         * @static 
+         */ 
+        public static function setIntendedUrl($url)
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->setIntendedUrl($url);
         }
                     /**
          * Register a custom macro.
@@ -14191,6 +14319,18 @@
                         return $instance->createS3Driver($config);
         }
                     /**
+         * Create a scoped driver.
+         *
+         * @param array $config
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
+         * @static 
+         */ 
+        public static function createScopedDriver($config)
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemManager $instance */
+                        return $instance->createScopedDriver($config);
+        }
+                    /**
          * Set the given disk instance.
          *
          * @param string $name
@@ -16547,7 +16687,217 @@
      
 }
 
-        namespace Awssat\Visits { 
+        namespace Ybazli\Faker\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class Faker {
+                    /**
+         * return a random first name
+         *
+         * @static 
+         */ 
+        public static function firstName()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->firstName();
+        }
+                    /**
+         * return a random last name
+         *
+         * @static 
+         */ 
+        public static function lastName()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->lastName();
+        }
+                    /**
+         * return a random email address .
+         * 
+         * it's a random and fake email address not ussable
+         * gmail , yahoo , msn , hotmail domain
+         * $count is length of email address string
+         * if not set parametr to method auto return random between 6-10 length string
+         *
+         * @static 
+         */ 
+        public static function email($count = null)
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->email($count);
+        }
+                    /**
+         * return a random of job title
+         *
+         * @static 
+         */ 
+        public static function jobTitle()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->jobTitle();
+        }
+                    /**
+         * return a random word
+         *
+         * @static 
+         */ 
+        public static function word()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->word();
+        }
+                    /**
+         * return a random sentence
+         *
+         * @static 
+         */ 
+        public static function sentence()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->sentence();
+        }
+                    /**
+         * return a random paragraph
+         *
+         * @static 
+         */ 
+        public static function paragraph()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->paragraph();
+        }
+                    /**
+         * return a random mobile phone number
+         * return random 10 legnth number with iranian mobile mobile code like : 0912 , .
+         * 
+         * ..
+         *
+         * @static 
+         */ 
+        public static function mobile()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->mobile();
+        }
+                    /**
+         * return a random tellphone number
+         *
+         * @static 
+         */ 
+        public static function tellphone()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->tellphone();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function telephone()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->telephone();
+        }
+                    /**
+         * return random city of iran
+         *
+         * @static 
+         */ 
+        public static function city()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->city();
+        }
+                    /**
+         * return random state of iran
+         *
+         * @static 
+         */ 
+        public static function state()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->state();
+        }
+                    /**
+         * return a random domain address .
+         * 
+         * $length is length of domain name
+         * if not set parametr to method auto return random between 5-8 length string
+         * tlds are like com , net , ir , co , co.ir , ...
+         * random web protocol http & https
+         *
+         * @static 
+         */ 
+        public static function domain($length = null)
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->domain($length);
+        }
+                    /**
+         * return 10 length random number
+         *
+         * @static 
+         */ 
+        public static function mellicode()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->mellicode();
+        }
+                    /**
+         * return a random birthday date
+         * year strating from 1333 - 1380
+         * $sign to sign between year mouth year
+         * default sign is '/'
+         * return year/mouth/day
+         *
+         * @static 
+         */ 
+        public static function birthday($sign = null)
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->birthday($sign);
+        }
+                    /**
+         * return a random first name and last name together
+         *
+         * @static 
+         */ 
+        public static function fullName()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->fullName();
+        }
+                    /**
+         * return random age
+         * you can use $min for minimum start age and max for maximum age
+         * if $min and $max is null return random age between 18-50 years;
+         *
+         * @static 
+         */ 
+        public static function age($min = null, $max = null)
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->age($min, $max);
+        }
+                    /**
+         * return random address
+         *
+         * @static 
+         */ 
+        public static function address()
+        {
+                        /** @var \Ybazli\Faker\Faker $instance */
+                        return $instance->address();
+        }
+         
+    }
+     
+}
+
+    namespace Awssat\Visits { 
             /**
      * 
      *
@@ -19282,6 +19632,99 @@
      
 }
 
+    namespace Imanghafoori\LaravelMicroscope\SpyClasses { 
+            /**
+     * 
+     *
+     */ 
+        class SpyRouter {
+         
+    }
+     
+}
+
+    namespace Illuminate\Routing { 
+            /**
+     * 
+     *
+     * @mixin \Illuminate\Routing\RouteRegistrar
+     */ 
+        class Router {
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::auth()
+         * @param mixed $options
+         * @static 
+         */ 
+        public static function auth($options = [])
+        {
+                        return \Illuminate\Routing\Router::auth($options);
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::resetPassword()
+         * @static 
+         */ 
+        public static function resetPassword()
+        {
+                        return \Illuminate\Routing\Router::resetPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::confirmPassword()
+         * @static 
+         */ 
+        public static function confirmPassword()
+        {
+                        return \Illuminate\Routing\Router::confirmPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::emailVerification()
+         * @static 
+         */ 
+        public static function emailVerification()
+        {
+                        return \Illuminate\Routing\Router::emailVerification();
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class Route {
+                    /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $roles
+         * @static 
+         */ 
+        public static function role($roles = [])
+        {
+                        return \Illuminate\Routing\Route::role($roles);
+        }
+                    /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $permissions
+         * @static 
+         */ 
+        public static function permission($permissions = [])
+        {
+                        return \Illuminate\Routing\Route::permission($permissions);
+        }
+         
+    }
+     
+}
+
     namespace Illuminate\Testing { 
             /**
      * 
@@ -19339,39 +19782,6 @@
         public static function assertDontSeeLivewire($component)
         {
                         return \Illuminate\Testing\TestView::assertDontSeeLivewire($component);
-        }
-         
-    }
-     
-}
-
-    namespace Illuminate\Routing { 
-            /**
-     * 
-     *
-     */ 
-        class Route {
-                    /**
-         * 
-         *
-         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
-         * @param mixed $roles
-         * @static 
-         */ 
-        public static function role($roles = [])
-        {
-                        return \Illuminate\Routing\Route::role($roles);
-        }
-                    /**
-         * 
-         *
-         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
-         * @param mixed $permissions
-         * @static 
-         */ 
-        public static function permission($permissions = [])
-        {
-                        return \Illuminate\Routing\Route::permission($permissions);
         }
          
     }
@@ -22570,7 +22980,7 @@ namespace  {
                 /**
              * Add a union statement to the query.
              *
-             * @param \Illuminate\Database\Query\Builder|\Closure $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
              * @param bool $all
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -22584,7 +22994,7 @@ namespace  {
                 /**
              * Add a union all statement to the query.
              *
-             * @param \Illuminate\Database\Query\Builder|\Closure $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -23223,6 +23633,7 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
+            class Faker extends \Ybazli\Faker\Facades\Faker {}
             class Visits extends \Awssat\Visits\Visits {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
             class Verta extends \Hekmatinasser\Verta\Verta {}

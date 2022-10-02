@@ -29,7 +29,10 @@ Route::get('/products', function () {
     return view('site.index');
 })->name('site.products');
 
-Route::get('/dashboard', App\Http\Livewire\Dashboard\Profile::class)->name('dashboard.index');
+Route::middleware(['auth','role:member'])->group(function () {
+
+    Route::get('/dashboard', App\Http\Livewire\Dashboard\Profile::class)->name('dashboard.index');
+});
 
 Route::middleware(['auth','role:seller'])->group(function () {
 

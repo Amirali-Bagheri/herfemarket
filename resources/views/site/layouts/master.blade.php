@@ -7,14 +7,17 @@
 
     {!! Meta::toHtml() !!}
 
-    @stack('head')
-
-    @stack('styles')
 
     <meta name="theme-color" content="#c40316">
 
     <link href="/css/plugins.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+
+    @stack('head')
+
+    @stack('styles')
+
+
 </head>
 <body>
     @include('general.body')
@@ -33,8 +36,11 @@
     </div>
 
     <script src="/js/plugins.js"></script>
+
     <script src="/js/main.js"></script>
+
     @include('general.scripts')
+
     @stack('scripts')
 
 </body>

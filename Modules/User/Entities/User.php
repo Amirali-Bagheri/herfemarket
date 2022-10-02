@@ -3,12 +3,14 @@
 namespace Modules\User\Entities;
 
 use App\Models\Model;
+use Database\Factories\UserFactory;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -31,6 +33,7 @@ class User extends Model implements
     use MustVerifyEmail;
     use Notifiable;
     use HasRoles;
+    use HasFactory;
 
     protected $searchable = [
         'first_name',
@@ -38,15 +41,19 @@ class User extends Model implements
         'email',
         'mobile',
     ];
-
-    protected $appends = ['avatar_url', 'full_name', 'role_name', 'status_name', 'last_login_at_human_ago', 'created_at_human_ago', 'created_at_human'];
-
+    protected $appends = [
+        'avatar_url',
+        'full_name',
+        'role_name',
+        'status_name',
+        'last_login_at_human_ago',
+        'created_at_human_ago',
+        'created_at_human',
+    ];
     protected $guarded = ['id'];
-
     protected $casts = [
         'mobile_verified_at' => 'datetime',
     ];
-
     protected $hidden = [
         'password',
         'remember_token',
@@ -57,9 +64,14 @@ class User extends Model implements
     {
         return empty($query) ? static::query()
             : static::where('name', 'like', '%' . $query . '%')
-                ->orWhere('first_name', 'like', '%' . $query . '%')
-                ->orWhere('last_name', 'like', '%' . $query . '%')
-                ->orWhere('mobile', 'like', '%' . $query . '%');
+                    ->orWhere('first_name', 'like', '%' . $query . '%')
+                    ->orWhere('last_name', 'like', '%' . $query . '%')
+                    ->orWhere('mobile', 'like', '%' . $query . '%');
+    }
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 
     public function generateRandomString($length = 10, $only_characters = false)
@@ -70,10 +82,11 @@ class User extends Model implements
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         }
         $charactersLength = strlen($characters);
-        $randomString = '';
+        $randomString     = '';
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
+
         return $randomString;
     }
 
@@ -137,7 +150,8 @@ class User extends Model implements
 
     public function getLastLoginAtHumanAgoAttribute()
     {
-        return $this->attributes['last_login_at'] !== null ? verta($this->attributes['last_login_at'])->timezone('Asia/Tehran')->formatDifference() : '-';
+        return $this->attributes['last_login_at'] !== null ? verta($this->attributes['last_login_at'])->timezone('Asia/Tehran')
+                                                                                                      ->formatDifference() : '-';
     }
 
     public function roleName()
@@ -153,17 +167,17 @@ class User extends Model implements
 
     public function hasVerifiedPhone()
     {
-        return !is_null($this->mobile_verified_at);
+        return ! is_null($this->mobile_verified_at);
     }
 
     public function hasBusiness()
     {
-        return !is_null($this->business);
+        return ! is_null($this->business);
     }
 
     public function isBusinessSeller()
     {
-        return !is_null($this->business) and $this->hasRole('seller') and $this->business->isActive();
+        return ! is_null($this->business) and $this->hasRole('seller') and $this->business->isActive();
     }
 
     public function markPhoneAsVerified()
@@ -206,17 +220,16 @@ EOD
     {
         return $this->hasOne(Business::class, 'manager_id', 'id');
     }
+
     public function businesses()
     {
         return $this->hasMany(Business::class, 'manager_id', 'id');
     }
 
-
     public function payments()
     {
         return $this->hasMany(Payment::class, 'user_id', 'id');
-
-//        return $this->morphMany(Payment::class, 'paymentable');
+        //        return $this->morphMany(Payment::class, 'paymentable');
     }
 
     public function tasks()

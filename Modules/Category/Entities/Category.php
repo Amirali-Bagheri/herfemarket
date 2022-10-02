@@ -6,8 +6,10 @@ use App\Models\Model;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Database\Factories\CategoriesFactory;
 use ElasticScoutDriverPlus\Searchable;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
@@ -27,6 +29,7 @@ use Spatie\Searchable\SearchResult;
 class Category extends Model
 {
     use Sluggable;
+    use HasFactory;
 
     protected $table = 'categories';
     protected $guarded = ['id'];
@@ -42,6 +45,11 @@ class Category extends Model
         'parent_id' => 'integer',
         'priority' => 'integer',
     ];
+
+    protected static function newFactory()
+    {
+        return CategoriesFactory::new();
+    }
 
     public function toSearchableArray(): array
     {

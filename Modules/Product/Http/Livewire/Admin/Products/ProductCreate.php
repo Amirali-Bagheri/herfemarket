@@ -20,6 +20,7 @@ class ProductCreate extends BaseComponent
     public $description;
     public $excerpt;
     public $images;
+    public $image;
     public $status = true;
     public $comment_status = true;
     public $brand_id;

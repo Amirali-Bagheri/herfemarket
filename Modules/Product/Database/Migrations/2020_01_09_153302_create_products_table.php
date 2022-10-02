@@ -20,15 +20,15 @@ class CreateProductsTable extends Migration
             $table->string('slug')->nullable();
             $table->longText('excerpt')->nullable();
             $table->longText('description')->nullable();
-//            $table->integer('price')->default(0);
+            //            $table->integer('price')->default(0);
             $table->string('code')->nullable();
-//            $table->integer('discount')->default(0);
-//            $table->unsignedInteger('quantity')->default(0);
+            //            $table->integer('discount')->default(0);
+            //            $table->unsignedInteger('quantity')->default(0);
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->foreign('brand_id')
-                ->references('id')
-                ->on('brands')
-                ->onDelete('cascade');
+                  ->references('id')
+                  ->on('brands')
+                  ->onDelete('cascade');
 
             $table->unsignedBigInteger('business_id');
 
@@ -36,6 +36,10 @@ class CreateProductsTable extends Migration
             $table->boolean('isService')->default(false);
             $table->boolean('comment_status')->default(1);
             $table->text('images')->nullable();
+
+            $table->string('main_price')->nullable();
+            $table->string('final_price')->nullable();
+
             // $table->json('property_json')->nullable();
 
             // $table->unique('title');
@@ -44,7 +48,6 @@ class CreateProductsTable extends Migration
 
             $table->timestamps();
         });
-
         // DB::statement('ALTER TABLE products ADD FULLTEXT fulltext_index (title, en_title, excerpt,code)');
     }
 

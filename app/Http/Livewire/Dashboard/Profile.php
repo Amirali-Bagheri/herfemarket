@@ -72,10 +72,14 @@ class Profile extends BaseComponent
     {
         $user              = auth()->user();
         $business          = $user->business;
-        $products          = Product::query()->where('business_id', $business->id)->where('isService', 0)->paginate(10);
+
+        if(!empty($business)){
+
+            $products          = Product::query()->where('business_id', $business->id)->where('isService', 0)->paginate(10);
+        }
 
         return view('site.dashboard.index', [
-            'products'          => $products,
+            'products'          => $products ?? [],
         ])->extends('site.layouts.master', [
             'pageTitle' => 'داشبورد',
         ]);
