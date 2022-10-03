@@ -10,6 +10,23 @@ use Modules\Product\Entities\Product;
 
 class Index extends BaseComponent
 {
+
+    public function deleteProduct($id)
+    {
+        $product = Product::find($id);
+
+        $product->delete();
+
+        $this->flash('success', 'عملیات با موفقیت انجام شد', [
+            'timer'             => 3000,
+            'showCancelButton'  => false,
+            'showConfirmButton' => false,
+            'position'          => 'center',
+        ]);
+
+        $this->redirect(route('dashboard.products.index'));
+    }
+
     public function render()
     {
         $user              = auth()->user();

@@ -175,11 +175,11 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="header_configure_area">
-                                <div class="header_wishlist">
-                                    <a href="wishlist.html"><i class="ion-android-favorite-outline"></i>
-                                        <span class="wishlist_count">3</span>
-                                    </a>
-                                </div>
+{{--                                <div class="header_wishlist">--}}
+{{--                                    <a href="wishlist.html"><i class="ion-android-favorite-outline"></i>--}}
+{{--                                        <span class="wishlist_count">3</span>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
                                 <div class="mini_cart_wrapper">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-shopping-bag"></i>

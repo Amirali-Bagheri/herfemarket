@@ -37,13 +37,13 @@
     <div class="footer_top">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-5 col-sm-7">
+                <div class="col-lg-3 col-sm-12">
                     <div class="widgets_container contact_us">
-                        <h3>دریافت برنامه</h3>
-                        <div class="aff_content">
-                            <p>برنامه <strong>آنتومی</strong> هم اکنون در گوگل پلی و اپل استور آماده دریافت است.</p>
-                        </div>
-                        <div class="app_img">
+                        <h3>دریافت اپلیکیشن</h3>
+{{--                        <div class="aff_content">--}}
+{{--                            <p>برنامه <strong>آنتومی</strong> هم اکنون در گوگل پلی و اپل استور آماده دریافت است.</p>--}}
+{{--                        </div>--}}
+                        <div class="app_img text-center">
                             <figure class="app_img">
                                 <a href="#"><img src="/img/icon/icon-appstore.png" alt=""></a>
                             </figure>
@@ -53,52 +53,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-5">
+                <div class="col-lg-3 col-sm-6">
                     <div class="widgets_container widget_menu">
-                        <h3>اطلاعات</h3>
+                        <h3>دسته بندی ها</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="about.html">درباره ما</a></li>
-                                <li><a href="#">نحوه ارسال</a></li>
-                                <li><a href="#">محصولات جدید</a></li>
-                                <li><a href="#">محصولات برتر</a></li>
-                                <li><a href="my-account.html">حساب کاربری</a></li>
-                                <li><a href="#">سابقه خرید</a></li>
+                                @foreach(\Modules\Category\Entities\Category::latest()->take(5)->get() as  $category)
+                                    <li><a href="{{ route('site.products.category',$category->slug) }}">
+                                            {{$category->title}}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="col-lg-3 col-sm-6">
                     <div class="widgets_container widget_menu">
                         <h3>حساب کاربری</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="my-account.html">حساب کاربری</a></li>
-                                <li><a href="cart.html">سبد خرید</a></li>
-                                <li><a href="wishlist.html">علاقه‌مندی‌ها</a></li>
-                                <li><a href="#">کاهش قیمت‌ها</a></li>
-                                <li><a href="#">سابقه خرید</a></li>
-                                <li><a href="#">سفارشات بین المللی</a></li>
+                                <li><a href="/register">ثبت نام</a></li>
+                                <li><a href="/register/business">ثبت نام کسب و کار</a></li>
+                                <li><a href="/login">ورود به حساب</a></li>
+                                <li><a href="/dashboard">داشبورد</a></li>
+                                <li><a href="/cart">سبد خرید</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-5 col-sm-6">
-                    <div class="widgets_container widget_menu">
-                        <h3>خدمات مشتری</h3>
-                        <div class="footer_menu">
-                            <ul>
-                                <li><a href="#">نقشه سایت</a></li>
-                                <li><a href="my-account.html">حساب کاربری</a></li>
-                                <li><a href="#">نحوه ارسال</a></li>
-                                <li><a href="#">سابقه خرید</a></li>
-                                <li><a href="wishlist.html">علاقه‌مندی‌ها</a></li>
-                                <li><a href="#">ویژه ها</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-7 col-sm-12">
+                <div class="col-lg-3 col-sm-12">
                     <div class="widgets_container">
                         <h3>اطلاعات تماس</h3>
                         <div class="footer_contact">
@@ -107,18 +91,20 @@
                                     <img src="/img/icon/icon-phone.png" alt="">
                                 </div>
                                 <div class="contact_text">
-                                    <p>تلفن تماس 24 ساعته: <br> <strong class="ltr-text">(+98) 123 456 789</strong></p>
+                                    <p>تلفن تماس 24 ساعته: <br> <strong class="ltr-text">09129286632</strong></p>
                                 </div>
                             </div>
-                            <p>تبریز، چهار راه آبرسان، فلکه دانشگاه، برج تجاری بلور، طبقه 456، واحد 45</p>
+                            <p>
+                                تهران - میدان دانشگاه - خیابان زیتون - کوچه میخک
+                            </p>
                         </div>
 
                         <div class="footer_social">
                             <ul>
-                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a class="facebook" href="#"><i class="fab fa-facebook"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fab fa-linkedin"></i></a></li>
                                 <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
                             </ul>
                         </div>
@@ -129,7 +115,7 @@
     </div>
     <div class="footer_bottom">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center justify-content-center">
                 <div class="col-lg-6 col-md-6">
                     <div class="copyright_area text-center justify-content-center">
                         <p>

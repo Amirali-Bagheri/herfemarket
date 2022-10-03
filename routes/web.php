@@ -25,9 +25,9 @@ Route::get('/', function () {
     return view('site.index');
 })->name('site.index');
 
-Route::get('/products', function () {
-    return view('site.index');
-})->name('site.products');
+Route::get('/products', \App\Http\Livewire\Site\Products\ProductIndex::class)->name('site.products');
+Route::get('/products/category/{slug}', \App\Http\Livewire\Site\Products\ProductShow::class)->name('site.products.category');
+Route::get('/products/show/{slug}', \App\Http\Livewire\Site\Products\ProductShow::class)->name('site.products.show');
 
 Route::middleware(['auth','role:member'])->group(function () {
 

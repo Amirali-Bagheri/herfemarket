@@ -42,13 +42,18 @@
                                                             {{$product->main_price}}
                                                         </td>
                                                         <td>
-                                                            {{$product->categories()->first()->title}}
+                                                            {{$product->categories()->first()->title ?? '-'}}
                                                         </td>
                                                         <td>
                                                             {{ verta($product->updated_at)->formatDifference() }}
                                                         </td>
                                                         <td>
-                                                            <a href="{{route('dashboard.products.update',$product->id)}}">ویرایش</a>
+                                                            <a  class="pr-1 pl-1" href="{{route('dashboard.products.update',$product->id)}}">
+                                                                <i class="far fa-edit"></i>
+                                                            </a>
+                                                            <a class="pr-1 pl-1" href="javascript:void(0)" wire:click="deleteProduct('{{$product->id}}')">
+                                                                <i class="far fa-trash"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 @empty
