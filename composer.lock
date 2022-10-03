@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb9554ffb59520368801b1fb6ce7c9c5",
+    "content-hash": "83697305febf6483d6a88fbc69b49f1d",
     "packages": [
         {
             "name": "awssat/laravel-visits",
@@ -295,6 +295,69 @@
                 }
             ],
             "time": "2022-01-25T02:55:58+00:00"
+        },
+        {
+            "name": "darryldecode/cart",
+            "version": "4.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/darryldecode/laravelshoppingcart.git",
+                "reference": "bc5ff0e1c7d20d621fa63b3218532f2ae7cbf841"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/darryldecode/laravelshoppingcart/zipball/bc5ff0e1c7d20d621fa63b3218532f2ae7cbf841",
+                "reference": "bc5ff0e1c7d20d621fa63b3218532f2ae7cbf841",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/translation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/validation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.2",
+                "phpunit/phpunit": "^9.0",
+                "symfony/var-dumper": "5.1.5.*@dev"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Darryldecode\\Cart\\CartServiceProvider"
+                    ],
+                    "aliases": {
+                        "Cart": "Darryldecode\\Cart\\Facades\\CartFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Darryldecode\\": "src/Darryldecode"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Darryl Fernandez",
+                    "email": "engrdarrylfernandez@gmail.com"
+                }
+            ],
+            "description": "Laravel 5 Shopping cart",
+            "keywords": [
+                "cart",
+                "laravel",
+                "shopping cart"
+            ],
+            "support": {
+                "issues": "https://github.com/darryldecode/laravelshoppingcart/issues",
+                "source": "https://github.com/darryldecode/laravelshoppingcart/tree/4.2.2"
+            },
+            "time": "2022-02-11T14:04:34+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1374,6 +1437,71 @@
                 "source": "https://github.com/hootlex/laravel-moderation/tree/master"
             },
             "time": "2018-06-08T08:18:26+00:00"
+        },
+        {
+            "name": "jackiedo/cart",
+            "version": "3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JackieDo/Laravel-Cart.git",
+                "reference": "07a62f96ad9e65ef100faf237d9d30d8f606b487"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JackieDo/Laravel-Cart/zipball/07a62f96ad9e65ef100faf237d9d30d8f606b487",
+                "reference": "07a62f96ad9e65ef100faf237d9d30d8f606b487",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^9.0|^8.0|^7.0|^6.0|^5.0",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0|^0.9",
+                "orchestra/testbench": "^7.0|^6.0|^5.0|^4.0|^3.0",
+                "phpunit/phpunit": "^9.0|^8.0|^7.0|^6.0|^5.0|^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Jackiedo\\Cart\\CartServiceProvider"
+                    ],
+                    "aliases": {
+                        "Cart": "Jackiedo\\Cart\\Facades\\Cart"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers/helpers.php"
+                ],
+                "psr-4": {
+                    "Jackiedo\\Cart\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jackie Do",
+                    "email": "anhvudo@gmail.com"
+                }
+            ],
+            "description": "A package used to create and manage carts (such as shopping, recently viewed, compared items...) in Laravel application.",
+            "keywords": [
+                "cart",
+                "laravel",
+                "shopping",
+                "shoppingcart"
+            ],
+            "support": {
+                "issues": "https://github.com/JackieDo/Laravel-Cart/issues",
+                "source": "https://github.com/JackieDo/Laravel-Cart/tree/3.0.3"
+            },
+            "time": "2022-02-28T03:56:27+00:00"
         },
         {
             "name": "jantinnerezo/livewire-alert",

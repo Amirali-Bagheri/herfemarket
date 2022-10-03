@@ -25,7 +25,7 @@
     <div id="main-wrapper">
 
 
-        @include('site.layouts.header')
+        @livewire('site.layouts.header')
 
 {{--        @include('site.layouts.errors')--}}
 

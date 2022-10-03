@@ -20,73 +20,67 @@
                                 </form>
                             </div>
                         </div>
-{{--                        <div class="column3 col-lg-3">--}}
-{{--                            <div class="header_configure_area header_configure_four">--}}
-{{--                                <div class="header_wishlist">--}}
-{{--                                    <a href="wishlist.html"><i class="ion-android-favorite-outline"></i>--}}
-{{--                                        <span class="wishlist_count">3</span>--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-{{--                                <div class="mini_cart_wrapper">--}}
-{{--                                    <a href="javascript:void(0)">--}}
-{{--                                        <i class="fa fa-shopping-bag"></i>--}}
-{{--                                        <span class="cart_price"><span>152,000 تومان</span> <i--}}
-{{--                                                class="ion-ios-arrow-down"></i></span>--}}
-{{--                                        <span class="cart_count">2</span>--}}
+                        <div class="column3 col-lg-3">
+                            <div class="header_configure_area header_configure_four">
+                                <div class="mini_cart_wrapper">
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-shopping-bag"></i>
+                                        <span class="cart_price"><span>
+                                                {{number_format($cart->getSubtotal())}} تومان
+                                            </span> <i
+                                                class="ion-ios-arrow-down"></i></span>
+                                        <span class="cart_count">
+                                            {{$cart->countItems()}}
+                                        </span>
 
-{{--                                    </a>--}}
-{{--                                    <!--mini cart-->--}}
-{{--                                    <div class="mini_cart">--}}
-{{--                                        <div class="mini_cart_inner">--}}
-{{--                                            <div class="cart_item">--}}
-{{--                                                <div class="cart_img">--}}
-{{--                                                    <a href="#"><img src="/img/s-product/product.jpg" alt=""></a>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="cart_info">--}}
-{{--                                                    <a href="#">گوشی هوشمند سامسونگ A50</a>--}}
-{{--                                                    <p>تعداد: 1 × <span> 60,000 تومان </span></p>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="cart_remove">--}}
-{{--                                                    <a href="#"><i class="ion-android-close"></i></a>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="cart_item">--}}
-{{--                                                <div class="cart_img">--}}
-{{--                                                    <a href="#"><img src="/img/s-product/product2.jpg" alt=""></a>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="cart_info">--}}
-{{--                                                    <a href="#">صندلی آشپزخانه پلاستیکی Nilper</a>--}}
-{{--                                                    <p>تعداد: 1 × <span> 60,000 تومان </span></p>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="cart_remove">--}}
-{{--                                                    <a href="#"><i class="ion-android-close"></i></a>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="mini_cart_table">--}}
-{{--                                            <div class="cart_total">--}}
-{{--                                                <span>جمع اجزا:</span>--}}
-{{--                                                <span class="price">138,000 تومان</span>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="cart_total mt-10">--}}
-{{--                                                <span>جمع کل:</span>--}}
-{{--                                                <span class="price">138,000 تومان</span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="mini_cart_footer">--}}
-{{--                                            <div class="cart_button">--}}
-{{--                                                <a href="cart.html">مشاهده سبد</a>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="cart_button">--}}
-{{--                                                <a href="checkout.html">پرداخت</a>--}}
-{{--                                            </div>--}}
+                                    </a>
+                                    <!--mini cart-->
+                                    <div class="mini_cart">
+                                        <div class="mini_cart_inner">
+                                            @forelse ($items as $hash => $item)
+                                                <div class="cart_item">
+                                                    <div class="cart_info">
+                                                        <a href="#">
+                                                            {{ $item->getTitle() }}
+                                                        </a>
+                                                        <p>تعداد: {{ $item->getQuantity() }} × <span>
+                                                            {{number_format($item->getPrice())}} تومان
+                                                            </span></p>
+                                                    </div>
+                                                    <div class="cart_remove">
+                                                        <a wire:click="removeCart('{{$hash}}')" href="#"><i
+                                                                class="ion-android-close"></i></a>
+                                                    </div>
+                                                </div>
+                                            @empty
+                                                <div class="cart_item text-center justify-content-center">
+                                                    <p>
+                                                        سبد خرید خالی است!
+                                                    </p>
+                                                </div>
 
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <!--mini cart end-->--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                                            @endforelse
+
+                                        </div>
+                                        <div class="mini_cart_table">
+                                            <div class="cart_total mt-10">
+                                                <span>جمع کل:</span>
+                                                <span class="price">
+                                                    {{number_format($cart->getSubtotal())}} تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mini_cart_footer">
+                                            <div class="cart_button">
+                                                <a href="{{route('site.cart')}}">مشاهده سبد</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--mini cart end-->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -102,136 +96,73 @@
                             <div class="main_menu menu_position text-center">
                                 <nav>
                                     <ul>
-                                        <li>
-                                            <a class="active" href="index.html">خانه<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu">
-                                                <li><a href="index.html">خانه فروشگاه 1</a></li>
-                                                <li><a href="index-2.html">خانه فروشگاه 2</a></li>
-                                                <li><a href="index-3.html">خانه فروشگاه 3</a></li>
-                                                <li><a href="index-4.html">خانه فروشگاه 4</a></li>
-                                                <li><a href="index-5.html">خانه فروشگاه 5</a></li>
-                                                <li><a href="index-6.html">خانه فروشگاه 6</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega_items"><a href="shop.html">فروشگاه<i class="fa fa-angle-down"></i></a>
-                                            <div class="mega_menu">
-                                                <ul class="mega_menu_inner">
-                                                    <li><a href="#">طرح های فروشگاه</a>
-                                                        <ul>
-                                                            <li><a href="shop-fullwidth.html">تمام عرض</a></li>
-                                                            <li><a href="shop-fullwidth-list.html">تمام عرض لیست</a></li>
-                                                            <li><a href="shop-left-sidebar.html">نوار کناری چپ </a></li>
-                                                            <li><a href="shop-left-sidebar-list.html"> نوار کناری چپ لیست</a></li>
-                                                            <li><a href="shop-list.html">نمایش لیست</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">سایر صفحات</a>
-                                                        <ul>
-                                                            <li><a href="cart.html">سبد خرید</a></li>
-                                                            <li><a href="wishlist.html">لیست علاقه‌مندی‌ها</a></li>
-                                                            <li><a href="checkout.html">پرداخت</a></li>
-                                                            <li><a href="my-account.html">حساب کاربری</a></li>
-                                                            <li><a href="404.html">خطای 404</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">انواع محصول</a>
-                                                        <ul>
-                                                            <li><a href="product-details.html">جزئیات محصول</a></li>
-                                                            <li><a href="product-sidebar.html">محصول با نوار کناری</a></li>
-                                                            <li><a href="product-grouped.html">محصول گروهبندی شده</a></li>
-                                                            <li><a href="variable-product.html">محصول متغیر</a></li>
-                                                            <li><a href="product-countdown.html">محصول شمارنده</a></li>
-
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li><a href="blog.html">بلاگ<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="blog-details.html">جزئیات مطلب بلاگ</a></li>
-                                                <li><a href="blog-fullwidth.html">بلاگ تمام عرض</a></li>
-                                                <li><a href="blog-right-sidebar.html">نوار کناری راست</a></li>
-                                                <li><a href="blog-no-sidebar.html">بلاگ بدون نوار کناری</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">صفحات <i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="about.html">درباره ما</a></li>
-                                                <li><a href="faq.html">سوالات متداول</a></li>
-                                                <li><a href="privacy-policy.html">سیاست حریم خصوصی</a></li>
-                                                <li><a href="contact.html">تماس</a></li>
-                                                <li><a href="login.html">ورود</a></li>
-                                                <li><a href="404.html">خطای 404</a></li>
-                                                <li><a href="compare.html">مقایسه</a></li>
-                                                <li><a href="coming-soon.html">به زودی</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="about.html">درباره ما</a></li>
-                                        <li><a href="contact.html"> تماس با ما</a></li>
+                                        <li><a href="/products">محصولات</a></li>
+                                        <li><a href="/services">خدمات</a></li>
+                                        <li><a href="/businesses">کسب و کار ها</a></li>
+                                        <li><a href="/dashboard">داشبورد</a></li>
+                                        <li><a href="/cart">سبد خرید</a></li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="header_configure_area">
-{{--                                <div class="header_wishlist">--}}
-{{--                                    <a href="wishlist.html"><i class="ion-android-favorite-outline"></i>--}}
-{{--                                        <span class="wishlist_count">3</span>--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="header_wishlist">--}}
+                                {{--                                    <a href="wishlist.html"><i class="ion-android-favorite-outline"></i>--}}
+                                {{--                                        <span class="wishlist_count">3</span>--}}
+                                {{--                                    </a>--}}
+                                {{--                                </div>--}}
                                 <div class="mini_cart_wrapper">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-shopping-bag"></i>
-                                        <span class="cart_price"><span>152,000 تومان</span> <i
+                                        <span class="cart_price"><span>
+                                                {{number_format($cart->getSubtotal())}} تومان
+                                            </span> <i
                                                 class="ion-ios-arrow-down"></i></span>
-                                        <span class="cart_count">2</span>
+                                        <span class="cart_count">
+                                            {{$cart->countItems()}}
+                                        </span>
 
                                     </a>
                                     <!--mini cart-->
                                     <div class="mini_cart">
                                         <div class="mini_cart_inner">
-                                            <div class="cart_item">
-                                                <div class="cart_img">
-                                                    <a href="#"><img src="/img/s-product/product.jpg" alt=""></a>
+                                            @forelse ($items as $hash => $item)
+                                                <div class="cart_item">
+                                                    <div class="cart_info">
+                                                        <a href="#">
+                                                            {{ $item->getTitle() }}
+                                                        </a>
+                                                        <p>تعداد: {{ $item->getQuantity() }} × <span>
+                                                            {{number_format($item->getPrice())}} تومان
+                                                            </span></p>
+                                                    </div>
+                                                    <div class="cart_remove">
+                                                        <a wire:click="removeCart('{{$hash}}')" href="#"><i
+                                                                class="ion-android-close"></i></a>
+                                                    </div>
                                                 </div>
-                                                <div class="cart_info">
-                                                    <a href="#">گوشی هوشمند سامسونگ A50</a>
-                                                    <p>تعداد: 1 × <span> 60,000 تومان </span></p>
+                                            @empty
+                                                <div class="cart_item text-center justify-content-center">
+                                                    <p>
+                                                        سبد خرید خالی است!
+                                                    </p>
                                                 </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="ion-android-close"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="cart_item">
-                                                <div class="cart_img">
-                                                    <a href="#"><img src="/img/s-product/product2.jpg" alt=""></a>
-                                                </div>
-                                                <div class="cart_info">
-                                                    <a href="#">صندلی آشپزخانه پلاستیکی Nilper</a>
-                                                    <p>تعداد: 1 × <span> 60,000 تومان </span></p>
-                                                </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="ion-android-close"></i></a>
-                                                </div>
-                                            </div>
+
+                                            @endforelse
+
                                         </div>
                                         <div class="mini_cart_table">
-                                            <div class="cart_total">
-                                                <span>جمع اجزا:</span>
-                                                <span class="price">138,000 تومان</span>
-                                            </div>
                                             <div class="cart_total mt-10">
                                                 <span>جمع کل:</span>
-                                                <span class="price">138,000 تومان</span>
+                                                <span class="price">
+                                                    {{number_format($cart->getSubtotal())}} تومان
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="mini_cart_footer">
                                             <div class="cart_button">
-                                                <a href="cart.html">مشاهده سبد</a>
-                                            </div>
-                                            <div class="cart_button">
-                                                <a href="checkout.html">پرداخت</a>
+                                                <a href="{{route('site.cart')}}">مشاهده سبد</a>
                                             </div>
 
                                         </div>
@@ -268,7 +199,7 @@
 
 
                                                             <li class="menu_item_children">
-                                                                <a href="#">
+                                                                <a href="{{route('site.products.category',$category->slug)}}">
                                                                     {{ $category_child->title }}
                                                                 </a>
                                                                 <ul class="categorie_sub_menu">
@@ -350,73 +281,11 @@
                             <div class="main_menu menu_four menu_position text-center">
                                 <nav>
                                     <ul>
-                                        <li><a class="active" href="index.html">خانه<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu">
-                                                <li><a href="index.html">خانه فروشگاه 1</a></li>
-                                                <li><a href="index-2.html">خانه فروشگاه 2</a></li>
-                                                <li><a href="index-3.html">خانه فروشگاه 3</a></li>
-                                                <li><a href="index-4.html">خانه فروشگاه 4</a></li>
-                                                <li><a href="index-5.html">خانه فروشگاه 5</a></li>
-                                                <li><a href="index-6.html">خانه فروشگاه 6</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega_items"><a href="shop.html">فروشگاه<i class="fa fa-angle-down"></i></a>
-                                            <div class="mega_menu">
-                                                <ul class="mega_menu_inner">
-                                                    <li><a href="#">طرح های فروشگاه</a>
-                                                        <ul>
-                                                            <li><a href="shop-fullwidth.html">تمام عرض</a></li>
-                                                            <li><a href="shop-fullwidth-list.html">تمام عرض لیست</a></li>
-                                                            <li><a href="shop-left-sidebar.html">نوار کناری چپ </a></li>
-                                                            <li><a href="shop-left-sidebar-list.html"> نوار کناری چپ لیست</a></li>
-                                                            <li><a href="shop-list.html">نمایش لیست</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">سایر صفحات</a>
-                                                        <ul>
-                                                            <li><a href="cart.html">سبد خرید</a></li>
-                                                            <li><a href="wishlist.html">لیست علاقه‌مندی‌ها</a></li>
-                                                            <li><a href="checkout.html">پرداخت</a></li>
-                                                            <li><a href="my-account.html">حساب کاربری</a></li>
-                                                            <li><a href="404.html">خطای 404</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">انواع محصول</a>
-                                                        <ul>
-                                                            <li><a href="product-details.html">جزئیات محصول</a></li>
-                                                            <li><a href="product-sidebar.html">محصول با نوار کناری</a></li>
-                                                            <li><a href="product-grouped.html">محصول گروهبندی شده</a></li>
-                                                            <li><a href="variable-product.html">محصول متغیر</a></li>
-                                                            <li><a href="product-countdown.html">محصول شمارنده</a></li>
-
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li><a href="blog.html">بلاگ<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="blog-details.html">جزئیات مطلب بلاگ</a></li>
-                                                <li><a href="blog-fullwidth.html">بلاگ تمام عرض</a></li>
-                                                <li><a href="blog-right-sidebar.html">نوار کناری راست</a></li>
-                                                <li><a href="blog-no-sidebar.html">بلاگ بدون نوار کناری</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">صفحات <i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="about.html">درباره ما</a></li>
-                                                <li><a href="faq.html">سوالات متداول</a></li>
-                                                <li><a href="privacy-policy.html">سیاست حریم خصوصی</a></li>
-                                                <li><a href="contact.html">تماس</a></li>
-                                                <li><a href="login.html">ورود</a></li>
-                                                <li><a href="404.html">خطای 404</a></li>
-                                                <li><a href="compare.html">مقایسه</a></li>
-                                                <li><a href="coming-soon.html">به زودی</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li><a href="about.html">درباره ما</a></li>
-                                        <li><a href="contact.html"> تماس با ما</a></li>
+                                        <li><a href="/products">محصولات</a></li>
+                                        <li><a href="/services">خدمات</a></li>
+                                        <li><a href="/businesses">کسب و کار ها</a></li>
+                                        <li><a href="/dashboard">داشبورد</a></li>
+                                        <li><a href="/cart">سبد خرید</a></li>
                                     </ul>
                                 </nav>
                             </div>

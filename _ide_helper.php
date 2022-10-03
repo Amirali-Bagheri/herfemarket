@@ -17445,6 +17445,759 @@
      
 }
 
+    namespace Jackiedo\Cart\Facades { 
+            /**
+     * The Cart facade.
+     *
+     * @package Jackiedo\Cart
+     * @author Jackie Do <anhvudo@gmail.com>
+     */ 
+        class Cart {
+                    /**
+         * Select a cart to work with
+         *
+         * @param string|null $name The cart name
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function name($name = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->name($name);
+        }
+                    /**
+         * Create an another cart instance with the specific name
+         *
+         * @param string|null $name The cart name
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function newInstance($name = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->newInstance($name);
+        }
+                    /**
+         * Determines whether this cart has been grouped
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasBeenGrouped()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->hasBeenGrouped();
+        }
+                    /**
+         * Determines whether this cart is in the specific group
+         *
+         * @param string $groupName The specific group name
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isInGroup($groupName)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->isInGroup($groupName);
+        }
+                    /**
+         * Get the group name of the cart
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getGroupName()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getGroupName();
+        }
+                    /**
+         * Get the current cart name
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getName()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getName();
+        }
+                    /**
+         * Get config of this cart
+         *
+         * @param string $name The config name
+         * @param mixed $default The return value if the config does not exist
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getConfig($name = null, $default = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getConfig($name, $default);
+        }
+                    /**
+         * Change whether the cart status is used for commercial or not.
+         *
+         * @param boolean $status
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function useForCommercial($status = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->useForCommercial($status);
+        }
+                    /**
+         * Enable or disable built-in tax system for the cart.
+         * 
+         * This is only possible if the cart is empty
+         *
+         * @param boolean $status
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function useBuiltinTax($status = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->useBuiltinTax($status);
+        }
+                    /**
+         * Set default action rules for the cart.
+         * 
+         * This is only possible if the cart is empty
+         *
+         * @param array $rules The default action rules
+         * @static 
+         */ 
+        public static function setDefaultActionRules($rules = [])
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->setDefaultActionRules($rules);
+        }
+                    /**
+         * Set action groups order for the cart
+         *
+         * @param array $order The action groups order
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function setActionGroupsOrder($order = [])
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->setActionGroupsOrder($order);
+        }
+                    /**
+         * Determines if the cart is empty
+         *
+         * @return boolean Returns true if the cart has no items, no taxes,
+         *                 and no action has been applied yet.
+         * @static 
+         */ 
+        public static function isEmpty()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->isEmpty();
+        }
+                    /**
+         * Determines if the cart has no items
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasNoItems()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->hasNoItems();
+        }
+                    /**
+         * Determines if the cart has no actions
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasNoActions()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->hasNoActions();
+        }
+                    /**
+         * Determines if the cart has no taxes
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasNoTaxes()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->hasNoTaxes();
+        }
+                    /**
+         * Determines if current cart is used for commcercial
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isCommercialCart()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->isCommercialCart();
+        }
+                    /**
+         * Determines if current cart is enabled built-in tax system
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isEnabledBuiltinTax()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->isEnabledBuiltinTax();
+        }
+                    /**
+         * Remove cart from session
+         *
+         * @param boolean $withEvent Enable firing the event
+         * @return boolean 
+         * @static 
+         */ 
+        public static function destroy($withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->destroy($withEvent);
+        }
+                    /**
+         * Add an item into the items container
+         *
+         * @param array $attributes The item attributes
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Item|null 
+         * @static 
+         */ 
+        public static function addItem($attributes = [], $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->addItem($attributes, $withEvent);
+        }
+                    /**
+         * Update an item in the items container
+         *
+         * @param string $itemHash The unique identifier of the item
+         * @param int|array $attributes New quantity of item or array of new attributes to update
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Item|null 
+         * @static 
+         */ 
+        public static function updateItem($itemHash, $attributes = [], $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->updateItem($itemHash, $attributes, $withEvent);
+        }
+                    /**
+         * Remove an item out of the items container
+         *
+         * @param string $itemHash The unique identifier of the item
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function removeItem($itemHash, $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->removeItem($itemHash, $withEvent);
+        }
+                    /**
+         * Delete all items in the items container
+         *
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function clearItems($withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->clearItems($withEvent);
+        }
+                    /**
+         * Get an item in the items container
+         *
+         * @param string $itemHash The unique identifier of the item
+         * @return \Jackiedo\Cart\Item 
+         * @static 
+         */ 
+        public static function getItem($itemHash)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getItem($itemHash);
+        }
+                    /**
+         * Get all items in the items container that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return array 
+         * @static 
+         */ 
+        public static function getItems($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getItems($filter, $complyAll);
+        }
+                    /**
+         * Count the number of items in the items container that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return integer 
+         * @static 
+         */ 
+        public static function countItems($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->countItems($filter, $complyAll);
+        }
+                    /**
+         * Sum the quantities of all items in the items container that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return integer 
+         * @static 
+         */ 
+        public static function sumItemsQuantity($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->sumItemsQuantity($filter, $complyAll);
+        }
+                    /**
+         * Determines if the item exists in the items container
+         *
+         * @param string $itemHash The unique identifier of the item
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasItem($itemHash)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->hasItem($itemHash);
+        }
+                    /**
+         * Set value for one or some extended informations of the cart
+         *
+         * @param string|array $information The information want to set
+         * @param mixed $value The value of information
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function setExtraInfo($information, $value = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->setExtraInfo($information, $value);
+        }
+                    /**
+         * Get value of one or some extended informations of the cart
+         * using "dot" notation
+         *
+         * @param null|string|array $information The information want to get
+         * @param mixed $default The return value if information does not exist
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getExtraInfo($information = null, $default = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getExtraInfo($information, $default);
+        }
+                    /**
+         * Remove one or some extended informations of the cart
+         * using "dot" notation
+         *
+         * @param null|string|array $information The information want to remove
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function removeExtraInfo($information = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->removeExtraInfo($information);
+        }
+                    /**
+         * Set value for one or some extended informations of the group
+         * using "dot" notation.
+         *
+         * @param string $groupName The name of the cart group
+         * @param string|array $information The information want to set
+         * @param mixed $value The value of information
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function setGroupExtraInfo($groupName, $information, $value = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->setGroupExtraInfo($groupName, $information, $value);
+        }
+                    /**
+         * Get value of one or some extended informations of the group
+         * using "dot" notation
+         *
+         * @param string $groupName The name of the cart group
+         * @param null|string|array $information The information want to get
+         * @param mixed $default The return value if information does not exist
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getGroupExtraInfo($groupName, $information = null, $default = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getGroupExtraInfo($groupName, $information, $default);
+        }
+                    /**
+         * Remove one or some extended informations of the group
+         * using "dot" notation
+         *
+         * @param string $groupName The name of the cart group
+         * @param null|string|array $information The information want to remove
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function removeGroupExtraInfo($groupName, $information = null)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->removeGroupExtraInfo($groupName, $information);
+        }
+                    /**
+         * Add a tax into the taxes container of this cart
+         *
+         * @param array $attributes The tax attributes
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Tax|null 
+         * @static 
+         */ 
+        public static function applyTax($attributes = [], $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->applyTax($attributes, $withEvent);
+        }
+                    /**
+         * Update a tax in the taxes container
+         *
+         * @param string $taxHash The unique identifire of the tax instance
+         * @param array $attributes The new attributes
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Tax|null 
+         * @static 
+         */ 
+        public static function updateTax($taxHash, $attributes = [], $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->updateTax($taxHash, $attributes, $withEvent);
+        }
+                    /**
+         * Get an applied tax in the taxes container of this cart
+         *
+         * @param string $taxHash The unique identifire of the tax instance
+         * @return \Jackiedo\Cart\Tax 
+         * @static 
+         */ 
+        public static function getTax($taxHash)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getTax($taxHash);
+        }
+                    /**
+         * Get all tax instances in the taxes container of this cart that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return array 
+         * @static 
+         */ 
+        public static function getTaxes($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getTaxes($filter, $complyAll);
+        }
+                    /**
+         * Count all taxes in the actions container that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return integer 
+         * @static 
+         */ 
+        public static function countTaxes($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->countTaxes($filter, $complyAll);
+        }
+                    /**
+         * Determines if the tax exists in the taxes container of this cart
+         *
+         * @param string $taxHash The unique identifier of the tax
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasTax($taxHash)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->hasTax($taxHash);
+        }
+                    /**
+         * Remove an applied tax from the taxes container of this cart
+         *
+         * @param string $taxHash The unique identifier of the tax instance
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function removeTax($taxHash, $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->removeTax($taxHash, $withEvent);
+        }
+                    /**
+         * Remove all apllied taxes from the taxes container of this cart
+         *
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function clearTaxes($withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->clearTaxes($withEvent);
+        }
+                    /**
+         * Get the subtotal amount of all items in the items container
+         *
+         * @return float 
+         * @static 
+         */ 
+        public static function getItemsSubtotal()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getItemsSubtotal();
+        }
+                    /**
+         * Get the sum amount of all items subtotal amount and all actions amount
+         *
+         * @return float 
+         * @static 
+         */ 
+        public static function getSubtotal()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getSubtotal();
+        }
+                    /**
+         * Calculate total taxable amounts include the taxable amount of cart and all items
+         *
+         * @return float 
+         * @static 
+         */ 
+        public static function getTaxableAmount()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getTaxableAmount();
+        }
+                    /**
+         * Get the total tax rate applied to the current cart.
+         *
+         * @return float 
+         * @static 
+         */ 
+        public static function getTaxRate()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getTaxRate();
+        }
+                    /**
+         * Get the total tax amount applied to the current cart.
+         *
+         * @return float 
+         * @static 
+         */ 
+        public static function getTaxAmount()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getTaxAmount();
+        }
+                    /**
+         * Get the total amount of the current cart.
+         *
+         * @return float 
+         * @static 
+         */ 
+        public static function getTotal()
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getTotal();
+        }
+                    /**
+         * Get all information of cart as a collection
+         *
+         * @param boolean $withItems Include details of added items in the result
+         * @param boolean $withActions Include details of applied actions in the result
+         * @param boolean $withTaxes Include details of applied taxes in the result
+         * @return \Jackiedo\Cart\Details 
+         * @static 
+         */ 
+        public static function getDetails($withItems = true, $withActions = true, $withTaxes = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getDetails($withItems, $withActions, $withTaxes);
+        }
+                    /**
+         * Get all information of cart group as a collection
+         *
+         * @param string $groupName The group part from cart name
+         * @param boolean $withCartsHaveNoItems Include carts have no items in the result
+         * @param boolean $withItems Include details of added items in the result
+         * @param boolean $withActions Include details of applied actions in the result
+         * @param boolean $withTaxes Include details of applied taxes in the result
+         * @return \Jackiedo\Cart\Details 
+         * @static 
+         */ 
+        public static function getGroupDetails($groupName = null, $withCartsHaveNoItems = false, $withItems = true, $withActions = true, $withTaxes = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getGroupDetails($groupName, $withCartsHaveNoItems, $withItems, $withActions, $withTaxes);
+        }
+                    /**
+         * Add an action into the actions container
+         *
+         * @param array $attributes The action attributes
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Action|null 
+         * @static 
+         */ 
+        public static function applyAction($attributes = [], $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->applyAction($attributes, $withEvent);
+        }
+                    /**
+         * Update an action in the actions container
+         *
+         * @param string $actionHash The unique identifier of the action
+         * @param array $attributes The new attributes
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Action|null 
+         * @static 
+         */ 
+        public static function updateAction($actionHash, $attributes = [], $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->updateAction($actionHash, $attributes, $withEvent);
+        }
+                    /**
+         * Determines if the action exists in the actions container by given action hash
+         *
+         * @param string $actionHash The unique identifier of the action
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasAction($actionHash)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->hasAction($actionHash);
+        }
+                    /**
+         * Get an action in the actions container
+         *
+         * @param string $actionHash The unique identifier of the action
+         * @return \Jackiedo\Cart\Action 
+         * @static 
+         */ 
+        public static function getAction($actionHash)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getAction($actionHash);
+        }
+                    /**
+         * Get all actions in the actions container that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return array 
+         * @static 
+         */ 
+        public static function getActions($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->getActions($filter, $complyAll);
+        }
+                    /**
+         * Remove an action from the actions container
+         *
+         * @param string $actionHash The unique identifier of the action
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function removeAction($actionHash, $withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->removeAction($actionHash, $withEvent);
+        }
+                    /**
+         * Remove all actions from the actions container
+         *
+         * @param boolean $withEvent Enable firing the event
+         * @return \Jackiedo\Cart\Cart 
+         * @static 
+         */ 
+        public static function clearActions($withEvent = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->clearActions($withEvent);
+        }
+                    /**
+         * Count all actions in the actions container that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return integer 
+         * @static 
+         */ 
+        public static function countActions($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->countActions($filter, $complyAll);
+        }
+                    /**
+         * Calculate the sum of action amounts in the actions container that match the given filter
+         *
+         * @param mixed $filter Search filter
+         * @param boolean $complyAll Indicates that the results returned must satisfy
+         *                            all the conditions of the filter at the same time
+         *                            or that only parts of the filter.
+         * @return float 
+         * @static 
+         */ 
+        public static function sumActionsAmount($filter = null, $complyAll = true)
+        {
+                        /** @var \Jackiedo\Cart\Cart $instance */
+                        return $instance->sumActionsAmount($filter, $complyAll);
+        }
+         
+    }
+     
+}
+
     namespace Hekmatinasser\Verta { 
             /**
      * 
@@ -19880,6 +20633,49 @@
      *
      */ 
         class Collection {
+         
+    }
+     
+}
+
+    namespace Jackiedo\Cart { 
+            /**
+     * The ItemsContainer class
+     * This is a container used to store cart items
+     *
+     * @package JackieDo/Cart
+     * @author Jackie Do <anhvudo@gmail.com>
+     */ 
+        class ItemsContainer {
+         
+    }
+            /**
+     * The Container class
+     *
+     * @package JackieDo/Cart
+     * @author Jackie Do <anhvudo@gmail.com>
+     */ 
+        class Container {
+         
+    }
+            /**
+     * The ActionsContainer class
+     * This is a container used to hold actions
+     *
+     * @package JackieDo/Cart
+     * @author Jackie Do <anhvudo@gmail.com>
+     */ 
+        class ActionsContainer {
+         
+    }
+            /**
+     * The TaxesContainer class
+     * This is a container used to hold tax items
+     *
+     * @package JackieDo/Cart
+     * @author Jackie Do <anhvudo@gmail.com>
+     */ 
+        class TaxesContainer {
          
     }
      
@@ -23636,6 +24432,7 @@ namespace  {
             class Faker extends \Ybazli\Faker\Facades\Faker {}
             class Visits extends \Awssat\Visits\Visits {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
+            class Cart extends \Jackiedo\Cart\Facades\Cart {}
             class Verta extends \Hekmatinasser\Verta\Verta {}
             class Livewire extends \Livewire\Livewire {}
             class Excel extends \Maatwebsite\Excel\Facades\Excel {}
