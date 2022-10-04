@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Http\Livewire\Site\Products;
+namespace App\Http\Livewire\Site\Services;
 
 use Cart;
+use Livewire\WithPagination;
 use Modules\Core\Http\Livewire\BaseComponent;
 use Modules\Product\Entities\Product;
-use Modules\Seo\Facades\Meta;
-use Modules\Setting\Entities\Setting;
 
-class ProductShow extends BaseComponent
+class ProductIndex extends BaseComponent
 {
-    public $product;
+    use WithPagination;
 
-    public function mount($slug)
-    {
-        $this->product = Product::query()->where('slug', $slug)->firstOrFail();
-    }
+    public $search;
+    protected $queryString = ['search'];
 
     public function addToCart($id)
     {
@@ -45,11 +42,10 @@ class ProductShow extends BaseComponent
 
     public function render()
     {
-        return view('site.products.show', [
-            'related_products' => $this->product->categories()->first()->products()->where('status', 1)->where('isService', 0)
-                                                ->take(6)->get(),
+        return view('site.products.index', [
+            'products' => Product::where('status', 1)->where('isService', 1)->whereLike('title', $this->search)->paginate(10),
         ])->extends('site.layouts.master', [
-            'pageTitle' => $this->product->title,
+            'pageTitle' => 'خدمات',
         ]);
     }
 }

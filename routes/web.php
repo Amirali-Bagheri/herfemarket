@@ -26,9 +26,14 @@ Route::get('/', function () {
 })->name('site.index');
 
 Route::get('/cart', \App\Http\Livewire\Site\Cart::class)->name('site.cart');
+
 Route::get('/products', \App\Http\Livewire\Site\Products\ProductIndex::class)->name('site.products');
 Route::get('/products/category/{slug}', \App\Http\Livewire\Site\Products\ProductShow::class)->name('site.products.category');
 Route::get('/products/show/{slug}', \App\Http\Livewire\Site\Products\ProductShow::class)->name('site.products.show');
+
+Route::get('/services', \App\Http\Livewire\Site\Services\ProductIndex::class)->name('site.services');
+Route::get('/services/category/{slug}', \App\Http\Livewire\Site\Services\ProductShow::class)->name('site.services.category');
+Route::get('/services/show/{slug}', \App\Http\Livewire\Site\Services\ProductShow::class)->name('site.services.show');
 
 Route::middleware(['auth','role:member'])->group(function () {
 

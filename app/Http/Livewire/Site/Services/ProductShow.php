@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Site\Products;
+namespace App\Http\Livewire\Site\Services;
 
 use Cart;
 use Modules\Core\Http\Livewire\BaseComponent;
@@ -46,7 +46,7 @@ class ProductShow extends BaseComponent
     public function render()
     {
         return view('site.products.show', [
-            'related_products' => $this->product->categories()->first()->products()->where('status', 1)->where('isService', 0)
+            'related_products' => $this->product->categories()->first()->products()->where('status', 1)->where('isService', 1)
                                                 ->take(6)->get(),
         ])->extends('site.layouts.master', [
             'pageTitle' => $this->product->title,
