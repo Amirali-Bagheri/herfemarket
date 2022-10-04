@@ -14,7 +14,7 @@ class ProductShow extends BaseComponent
 
     public function mount($slug)
     {
-        $this->product = Product::query()->where('slug', $slug)->firstOrFail();
+        $this->product = Product::query()->where('status',1)->where('isService', 0)->where('slug', $slug)->firstOrFail();
     }
 
     public function addToCart($id)

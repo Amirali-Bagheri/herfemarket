@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Livewire\Site\Services;
+namespace App\Http\Livewire\Site\Businesses;
 
 use Cart;
+use Modules\Business\Entities\Business;
 use Modules\Core\Http\Livewire\BaseComponent;
 use Modules\Product\Entities\Product;
 
-class ProductShow extends BaseComponent
+class BusinessShow extends BaseComponent
 {
-    public $product;
+    public $business;
 
     public function mount($slug)
     {
-        $this->product = Product::query()->where('status', 1)->where('isService', 1)->where('slug', $slug)->firstOrFail();
+        $this->business = Business::query()->where('status',1)->where('slug', $slug)->firstOrFail();
     }
 
     public function addToCart($id)
@@ -43,11 +44,10 @@ class ProductShow extends BaseComponent
 
     public function render()
     {
-        return view('site.products.show', [
-            'related_products' => $this->product->categories()->first()->products()->where('status', 1)->where('isService', 1)
-                                                ->take(6)->get(),
+        return view('site.businesss.show', [
+
         ])->extends('site.layouts.master', [
-            'pageTitle' => $this->product->title,
+            'pageTitle' => 'کسب و کار ' . $this->business->title,
         ]);
     }
 }

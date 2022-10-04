@@ -35,6 +35,10 @@ Route::get('/services', \App\Http\Livewire\Site\Services\ProductIndex::class)->n
 Route::get('/services/category/{slug}', \App\Http\Livewire\Site\Services\ProductShow::class)->name('site.services.category');
 Route::get('/services/show/{slug}', \App\Http\Livewire\Site\Services\ProductShow::class)->name('site.services.show');
 
+Route::get('/businesses', \App\Http\Livewire\Site\Services\ProductIndex::class)->name('site.businesses');
+Route::get('/businesses/category/{slug}', \App\Http\Livewire\Site\Services\ProductShow::class)->name('site.businesses.category');
+Route::get('/businesses/show/{slug}', \App\Http\Livewire\Site\Services\ProductShow::class)->name('site.businesses.show');
+
 Route::middleware(['auth','role:member'])->group(function () {
 
     Route::get('/dashboard', App\Http\Livewire\Dashboard\Profile::class)->name('dashboard.index');
