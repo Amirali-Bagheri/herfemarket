@@ -19,7 +19,7 @@ class ProductCategoryIndex extends BaseComponent
 
     public function render()
     {
-        return view('site.products.index', [
+        return view('site.services.index', [
             'products' => $this->category->prodcuts()->where('status', 1)->where('isService', 1)->paginate(10),
         ])->extends('site.layouts.master', [
             'pageTitle' => 'خدمات دسته '.$this->category->title,

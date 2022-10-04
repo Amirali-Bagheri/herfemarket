@@ -66,7 +66,7 @@ class Create extends BaseComponent
                 [
                     'title'       => $this->title,
                     'description' => $this->description,
-                    'status'      => $this->status,
+                    'status'      => 0,
                     'main_price'      => $this->main_price,
                     'final_price'      => $this->final_price,
                     'business_id'      => $this->business->id,

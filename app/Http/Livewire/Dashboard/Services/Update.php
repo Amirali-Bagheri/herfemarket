@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Dashboard\Products;
+namespace App\Http\Livewire\Dashboard\Services;
 
 use DB;
 use Livewire\WithFileUploads;
@@ -43,10 +43,9 @@ class Update extends BaseComponent
 
     public function mount($id)
     {
-        $this->product  = Product::query()->where('isService', 0)->where('id', $id)->firstOrFail();
+        $this->product  = Product::query()->where('isService', 1)->where('id', $id)->firstOrFail();
         $this->user     = auth()->user();
         $this->business = $this->user->business;
-        Meta::setTitleSeparator('-')->setTitle('ویرایش محصول')->prependTitle(Setting::get('seo_meta_title'));
 
         $this->title       = $this->product->title ?? null;
         $this->image_url   = '/uploads/' . $this->product->images ?? null;
@@ -69,7 +68,6 @@ class Update extends BaseComponent
             DB::beginTransaction();
 
             $user = auth()->user();
-
             $this->product->update(
                 [
                     'title'       => $this->title,
@@ -78,6 +76,7 @@ class Update extends BaseComponent
                     'main_price'  => $this->main_price,
                     'final_price' => $this->final_price,
                     'business_id' => $this->business->id,
+                    'isService'   => 1,
                 ]);
             $this->product->categories()->sync($this->category_id);
             $category = Category::find($this->category_id);
@@ -100,7 +99,7 @@ class Update extends BaseComponent
                 'position'          => 'center',
             ]);
 
-            $this->redirect(route('dashboard.products.index'));
+            $this->redirect(route('dashboard.services.index'));
         } catch (Throwable $ex) {
             DB::rollBack();
 
@@ -120,9 +119,9 @@ class Update extends BaseComponent
 
     public function render()
     {
-        return view('site.dashboard.products.create', [
+        return view('site.dashboard.services.create', [
         ])->extends('site.layouts.master', [
-            'pageTitle' => 'ویرایش محصول',
+            'pageTitle' => 'ویرایش خدمت',
         ]);
     }
 }

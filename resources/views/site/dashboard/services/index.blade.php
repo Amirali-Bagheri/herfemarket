@@ -13,10 +13,10 @@
                             <div class="tab-content dashboard_content">
                                 <div class="tab-pane fade show active">
                                     <h3 class="float-left">
-                                        محصولات
+                                        خدمات
                                     </h3>
-                                    <a href="{{route('dashboard.products.create')}}">
-                                        <button class="float-right btn m-0">ثبت محصول</button>
+                                    <a href="{{route('dashboard.services.create')}}">
+                                        <button class="float-right btn m-0">ثبت خدمت جدید</button>
                                     </a>
 
                                     <div class="table-responsive">

@@ -43,7 +43,7 @@
                                 </form>
                                 <div class="product_d_meta">
                                     <span>دسته بندی: <a
-                                            href="{{route('site.products.category',$product->categories()->first()->slug)}}">{{$product->categories()->first()->title}}</a></span>
+                                            href="{{route('site.services.category',$product->categories()->first()->slug)}}">{{$product->categories()->first()->title}}</a></span>
                                 </div>
                                 <div class="priduct_social">
                                     <ul>
