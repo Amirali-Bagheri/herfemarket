@@ -24,7 +24,8 @@
                                                     <td class="product_total">
                                                         {{ $loop->index + 1 }}
                                                     </td>
-                                                    <td class="product_name"><a href="#">
+                                                    <td class="product_name">
+                                                        <a href="#">
                                                         {{ $item->getTitle() }}
                                                         </a></td>
                                                     <td class="product-price">{{number_format($item->getPrice())}} تومان</td>

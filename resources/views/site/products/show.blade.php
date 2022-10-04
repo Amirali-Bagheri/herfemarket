@@ -12,34 +12,6 @@
                                         <img id="zoom1" src="/uploads/{{$product->images}}" data-zoom-image="/uploads/{{$product->images}}" alt="{{$product->title}}">
                                     </a>
                                 </div>
-                                <div class="single-zoom-thumb">
-                                    <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
-                                        <li>
-                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig4.jpg" data-zoom-image="assets/img/product/productbig4.jpg">
-                                                <img src="assets/img/product/productbig4.jpg" alt="zo-th-1">
-                                            </a>
-
-                                        </li>
-                                        <li>
-                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig1.jpg" data-zoom-image="assets/img/product/productbig1.jpg">
-                                                <img src="assets/img/product/productbig1.jpg" alt="zo-th-1">
-                                            </a>
-
-                                        </li>
-                                        <li>
-                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig2.jpg" data-zoom-image="assets/img/product/productbig2.jpg">
-                                                <img src="assets/img/product/productbig2.jpg" alt="zo-th-1">
-                                            </a>
-
-                                        </li>
-                                        <li>
-                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig3.jpg" data-zoom-image="assets/img/product/productbig3.jpg">
-                                                <img src="assets/img/product/productbig3.jpg" alt="zo-th-1">
-                                            </a>
-
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-6">
@@ -47,22 +19,36 @@
                                 <form action="#">
 
                                     <h3><a href="#">{{$product->title}}</a></h3>
-{{--                                    <div class="product_rating">--}}
-{{--                                        <ul>--}}
-{{--                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
-{{--                                            <li class="review"><a href="#">( 1 نقد و بررسی )</a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
+                                    <div class="product_rating">
+                                        <ul>
+                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                        </ul>
+                                    </div>
                                     <div class="price_box">
 {{--                                        <span class="old_price">80,000 تومان</span>--}}
                                         <span class="current_price">{{number_format($product->main_price)}} تومان</span>
                                     </div>
 
+                                    <div class="product_variant quantity">
+                                        <button wire:click="addToCart('{{$product->id}}')" class="button" type="button">افزودن به سبد</button>
+                                    </div>
+
                                 </form>
+                                <div class="product_d_meta">
+                                    <span>دسته بندی: <a href="{{route('site.products.category',$product->categories()->first()->slug)}}">{{$product->categories()->first()->title}}</a></span>
+                                </div>
+                                <div class="priduct_social">
+                                    <ul>
+                                        <li><a class="facebook" href="#" title="facebook"><i class="fab fa-facebook"></i> لایک</a></li>
+                                        <li><a class="twitter" href="#" title="twitter"><i class="fab fa-twitter"></i> توییت</a></li>
+                                        <li><a class="pinterest" href="#" title="pinterest"><i class="fab fa-pinterest"></i> ذخیره</a></li>
+                                        <li><a class="linkedin" href="#" title="linkedin"><i class="fab fa-linkedin"></i> لینکدین</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -109,38 +95,47 @@
                 <div class="product_carousel product_style product_column5 owl-carousel">
                     @forelse($related_products as $related_product)
 
-                    <article class="single_product">
-                        <figure>
+                        <article class="single_product">
+                            <figure>
+                                <div class="product_thumb">
+                                    <a class="primary_img" href="{{route('site.products.show',$related_product->slug)}}"><img src="/uploads/{{$related_product->images}}" alt=""></a>
+                                    {{--                                            <div class="label_product">--}}
+                                    {{--                                                <span class="label_sale">فروش</span>--}}
+                                    {{--                                            </div>--}}
+                                    {{--                                            <div class="action_links">--}}
+                                    {{--                                                <ul>--}}
+                                    {{--                                                    <li class="wishlist"><a href="wishlist.html" title="افزودن به علاقه‌مندی‌ها"><i class="ion-android-favorite-outline"></i></a></li>--}}
+                                    {{--                                                    <li class="compare"><a href="#" title="افزودن به مقایسه"><i class="ion-ios-settings-strong"></i></a></li>--}}
+                                    {{--                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="مشاهده سریع"><i class="ion-ios-search-strong"></i></a></li>--}}
+                                    {{--                                                </ul>--}}
+                                    {{--                                            </div>--}}
+                                </div>
 
-                            <div class="product_thumb">
-                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product14.jpg" alt=""></a>
-                                <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product13.jpg" alt=""></a>
-                                <div class="label_product">
-                                    <span class="label_sale">فروش</span>
-                                </div>
-                                <div class="action_links">
-                                    <ul>
-                                        <li class="wishlist"><a href="wishlist.html" title="افزودن به علاقه‌مندی‌ها"><i class="ion-android-favorite-outline"></i></a></li>
-                                        <li class="compare"><a href="#" title="افزودن به مقایسه"><i class="ion-ios-settings-strong"></i></a></li>
-                                        <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box" title="مشاهده سریع"><i class="ion-ios-search-strong"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product_content">
-                                <div class="product_content_inner">
-                                    <h4 class="product_name"><a href="product-details.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></h4>
-                                    <div class="price_box">
-                                        <span class="old_price">80,000 تومان</span>
-                                        <span class="current_price">70,000 تومان</span>
+                                <div class="product_content grid_content">
+                                    <div class="product_content_inner">
+                                        <h4 class="product_name"><a href="{{ route('site.products.show',$related_product->slug) }}">
+                                                {{$related_product->title}}
+                                            </a></h4>
+                                        {{--                                                <div class="product_rating">--}}
+                                        {{--                                                    <ul>--}}
+                                        {{--                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
+                                        {{--                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
+                                        {{--                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
+                                        {{--                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
+                                        {{--                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>--}}
+                                        {{--                                                    </ul>--}}
+                                        {{--                                                </div>--}}
+                                        <div class="price_box">
+                                            {{--                                                    <span class="old_price">80,000 تومان</span>--}}
+                                            <span class="current_price">{{number_format($related_product->main_price)}} تومان</span>
+                                        </div>
+                                    </div>
+                                    <div class="add_to_cart">
+                                        <a wire:click="addToCart('{{$related_product->id}}')" title="افزودن به سبد">افزودن به سبد</a>
                                     </div>
                                 </div>
-                                <div class="add_to_cart">
-                                    <a href="cart.html" title="افزودن به سبد">افزودن به سبد</a>
-                                </div>
-
-                            </div>
-                        </figure>
-                    </article>
+                            </figure>
+                        </article>
 
                     @empty
 

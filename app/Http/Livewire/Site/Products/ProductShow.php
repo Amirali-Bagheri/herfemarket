@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Site\Products;
 
+use Cart;
 use Modules\Core\Http\Livewire\BaseComponent;
 use Modules\Product\Entities\Product;
 use Modules\Seo\Facades\Meta;
@@ -15,6 +16,32 @@ class ProductShow extends BaseComponent
     {
         $this->product = Product::query()->where('slug', $slug)->firstOrFail();
         Meta::setTitleSeparator('-')->setTitle('ویرایش محصول')->prependTitle(Setting::get('seo_meta_title'));
+    }
+
+    public function addToCart($id)
+    {
+        $shoppingCart = Cart::name('shopping');
+
+        $product     = Product::find($id);
+        $productItem = $shoppingCart->addItem([
+            'id'         => $id,
+            'title'      => $product->title,
+            'quantity'   => 1,
+            'price'      => $product->main_price,
+            'extra_info' => [
+                'date_time' => [
+                    'added_at' => time(),
+                ],
+            ],
+        ]);
+
+        $this->alert('success', 'محصول مورد نظر به سبد خرید افزوده شد', [
+            'timer'             => 3000,
+            'showCancelButton'  => false,
+            'showConfirmButton' => false,
+            'toast'             => true,
+            'position'          => 'bottom-start',
+        ]);
     }
 
     public function render()
