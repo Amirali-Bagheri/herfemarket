@@ -97,27 +97,14 @@
                 </th>
                 <th class="text-center whitespace-no-wrap">نام مدیر</th>
                 <th class="text-center whitespace-no-wrap">نوع کسب و کار</th>
-                <th class="text-center whitespace-no-wrap">تعداد کالا</th>
-                <th class="text-center whitespace-no-wrap">موجودی کیف پول</th>
-                <th class="text-center whitespace-no-wrap">
-                    <a wire:click.prevent="sortBy('pricing_status')" role="button" href="javascript:void(0)">
-                        وضعیت قیمت گذاری
-                        @include('admin.layouts.livewire_sort_icon', ['field' => 'pricing_status'])
-                    </a>
-                </th>
+                <th class="text-center whitespace-no-wrap">تعداد محصول و خدمات</th>
+
                 <th class="text-center whitespace-no-wrap">
                     <a wire:click.prevent="sortBy('status')" role="button" href="javascript:void(0)">
                         وضعیت
                         @include('admin.layouts.livewire_sort_icon', ['field' => 'status'])
                     </a>
                 </th>
-
-                {{--                <th class="text-center whitespace-no-wrap">--}}
-                {{--                    <a wire:click.prevent="sortBy('created_at')" role="button" href="javascript:void(0)">--}}
-                {{--                        زمان--}}
-                {{--                        @include('admin.layouts.livewire_sort_icon', ['field' => 'created_at'])--}}
-                {{--                    </a>--}}
-                {{--                </th>--}}
 
                 <th class="text-center whitespace-no-wrap">
                     گزینه ها
@@ -148,12 +135,6 @@
 
                     <td class="text-center">{{$business->business_type->title ?? '-'}}</td>
                     <td class="text-center">{{$business->products()->count()}}</td>
-                    <td class="text-center">
-                        {{ number_format($business->manager->balance) ?? '-'}}
-                    </td>
-                    <td class="text-center">
-                        {{ $business->pricing_status ? 'فعال' : 'غیرفعال' }}
-                    </td>
                     <td class="text-center">
                         {{ $business->status_name }}
                     </td>

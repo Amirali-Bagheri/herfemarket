@@ -79,15 +79,6 @@ class Datatable extends BaseComponent
         }
         $business = Business::findOrFail($id);
 
-        isset($business->payments) ?? $business->payments()->delete();
-        isset($business->rating) ?? $business->rating()->delete();
-        isset($business->responses) ?? $business->responses()->delete();
-        isset($business->inquiries) ?? $business->inquiries()->delete();
-        isset($business->reports) ?? $business->reports()->delete();
-        isset($business->comments) ?? $business->comments()->delete();
-        isset($business->reports) ?? $business->reports()->delete();
-        isset($business->inquiries) ?? $business->inquiries()->delete();
-
         $business->delete();
 
         $this->alert('success', 'عملیات با موفقیت انجام شد', [
