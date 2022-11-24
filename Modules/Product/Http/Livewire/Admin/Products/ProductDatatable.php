@@ -123,7 +123,7 @@ class ProductDatatable extends BaseComponent
     {
         if (!empty($this->brand_id)) {
             $brand = Brand::find($this->brand_id);
-            return $brand->products()->withCount('visits')->withCount('prices')->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+            return $brand->products()->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
         }
 
         $query = Product::query();
@@ -176,13 +176,13 @@ class ProductDatatable extends BaseComponent
 //            })
 //           ;
 
-        return $final_query->withCount('visits')->withCount('prices')->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+        return $final_query->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
 
 //        if ($this->search) {
 //            return Product::withCount('visits')->withCount('prices')->whereLike('title', $this->search)->orWhereLike('en_title', $this->search)->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')->limit(200);
 //
 //        } else {
-//        return Product::withCount('visits')->dontCache()->withCount('prices')->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+//        return Product::withCount('visits')->withCount('prices')->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
 //        }
     }
 
@@ -269,16 +269,16 @@ class ProductDatatable extends BaseComponent
                 if (!empty($this->updateProductSearchFilterCategories)) {
 
                     foreach ($products->get() as $product) {
-                        $product->categories()->dontCache()->detach();
-                        $product->categories()->dontCache()->attach($this->updateProductSearchFilterCategories);
+                        $product->categories()->detach();
+                        $product->categories()->attach($this->updateProductSearchFilterCategories);
 
                         $parent_ids = [];
-                        foreach ($product->categories()->dontCache()->get() as $cat) {
+                        foreach ($product->categories()->get() as $cat) {
                             $parent_ids[] = $cat->id;
                             $parent_ids[] = $cat->parents->pluck('id')->toArray();
                             $parent_ids = collect($parent_ids)->collapse()->unique()->values()->toArray();
 
-                            $product->categories()->dontCache()->sync($parent_ids);
+                            $product->categories()->sync($parent_ids);
                         }
 
                         $product->save();

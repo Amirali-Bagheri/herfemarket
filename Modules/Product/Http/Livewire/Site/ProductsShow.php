@@ -229,7 +229,7 @@ class ProductsShow extends BaseComponent
 //            ->orderBy('stock', 'asc')
 //            ->orderBy('price', 'asc')
 //            ->cacheFor(3600)
-//            ->dontCache()
+//            
 //            ->orderBy('stock','asc')
 //            ->paginate(20);
             ->get()

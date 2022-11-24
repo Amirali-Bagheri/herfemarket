@@ -40,7 +40,7 @@ Route::get('/services/show/{slug}', ProductShow::class)->name('site.services.sho
 
 Route::get('/businesses', \App\Http\Livewire\Site\Businesses\BusinessIndex::class)->name('site.businesses');
 Route::get('/businesses/category/{slug}', \App\Http\Livewire\Site\Businesses\BusinessIndex::class)->name('site.businesses.category');
-Route::get('/businesses/show/{slug}', \App\Http\Livewire\Site\Businesses\BusinessShow::class)->name('site.businesses.show');
+Route::get('/businesses/show/{slug}', \App\Http\Livewire\Site\Businesses\BusinessShow::class)->name('site.businesses.single');
 
 Route::middleware(['auth', 'role:member'])->group(function () {
 

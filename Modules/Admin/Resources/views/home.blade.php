@@ -35,21 +35,35 @@
                         </a>
 
                     </div>
-                </div>
-                <div class="col-12 mt-2 text-center justify-content-center" wire:ignore>
-                    <button class="btn btn-primary mr-2 mb-2" wire:click.prevent="toolboxAction('octane_reload')">
-                        <i data-feather="activity" class="w-4 h-4 ml-2"></i> Octane Reload
-                    </button>
-                    <button class="btn btn-success mr-2 mb-2" wire:click.prevent="toolboxAction('queue_clear')">
-                        <i data-feather="calendar" class="w-4 h-4 ml-2"></i> Queue Clear
-                    </button>
-                    <button class="btn btn-danger mr-2 mb-2" wire:click.prevent="toolboxAction('cache_clear')">
-                        <i data-feather="trash" class="w-4 h-4 ml-2"></i> Cache Clear
-                    </button>
-                    <button class="btn btn-dark mr-2 mb-2" wire:click.prevent="toolboxAction('maintenance')">
-                        <i data-feather="alert-triangle" class="w-4 h-4 ml-2"></i> Maintenance
-                    </button>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                        <a href="{{route('admin.businesses.index')}}">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                                    <div class="flex">
+                                        <i class="report-box__icon text-theme-12" data-feather="users"></i>
+                                    </div>
+                                    <div
+                                        class="text-3xl font-bold leading-8 mt-6">{{\Modules\Business\Entities\Business::count() ?? 0}}</div>
+                                    <div class="text-base text-gray-600 mt-1">کسب و کار ها</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                        <a href="{{route('admin.products.index')}}">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                                    <div class="flex">
+                                        <i class="report-box__icon text-theme-12" data-feather="users"></i>
+                                    </div>
+                                    <div
+                                        class="text-3xl font-bold leading-8 mt-6">{{\Modules\Product\Entities\Product::count() ?? 0}}</div>
+                                    <div class="text-base text-gray-600 mt-1">محصولات</div>
+                                </div>
+                            </div>
+                        </a>
 
+                    </div>
                 </div>
 
             </div>
@@ -138,46 +152,6 @@
                             موردی برای نمایش وجود ندارد
                         </p>
                     @endif
-
-                </div>
-
-                <div class="intro-x flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
-                        آخرین ورود کاربران
-                    </h2>
-                </div>
-                <div class="mt-5">
-                    @if (\Modules\User\Entities\User::count() > 0)
-                        @foreach(\Modules\User\Entities\User::orderBy('last_login_at','desc')->get()->take(5) as $user)
-                            <a href="{{route('admin.users.update',$user->id)}}" target="_blank">
-                                <div class="intro-x">
-                                    <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                            <img
-                                                src="/uploads/avatars/{{$user->avatar}}">
-                                        </div>
-                                        <div class="mr-4 ml-auto">
-                                            <div class="font-medium">{{$user->full_name}}</div>
-                                            <div class="text-gray-600 text-xs">
-                                                {{ isset($user->last_login_at) ? verta($user->last_login_at)->formatDifference() : '-' }}
-                                            </div>
-                                        </div>
-                                        <div class="text-theme-1">
-                                            {{ $user->status_name }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                        <a href="{{route('admin.users.index')}}"
-                           class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-theme-15 dark:border-dark-5 text-theme-16 dark:text-gray-600">مشاهده
-                            بیشتر</a>
-                    @else
-                        <p class="text-center">
-                            موردی برای نمایش وجود ندارد
-                        </p>
-                    @endif
-
                 </div>
             </div>
         </div>

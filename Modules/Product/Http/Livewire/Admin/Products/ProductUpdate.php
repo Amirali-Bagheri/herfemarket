@@ -68,15 +68,15 @@ class ProductUpdate extends BaseComponent
         $this->image_old_url = 'https://shago.ir'.$this->product->thumbnail_url;
         $this->image_url = $this->image_old_url;
 
-//        foreach($this->product->categories()->dontCache()->pluck('title', 'id')->toArray() as $key => $value)
+//        foreach($this->product->categories()->pluck('title', 'id')->toArray() as $key => $value)
 //        {
 //            $this->removeCategory($key);
 //        }
 //
 //        dd(
-//            $this->product->categories()->dontCache()->pluck('title', 'id')->toArray()        );
-        $this->categories = $this->product->categories()->dontCache()->pluck('title', 'id')->toArray();
-        $this->new_categories = $this->product->categories()->dontCache()->get()->pluck('id')->toArray();
+//            $this->product->categories()->pluck('title', 'id')->toArray()        );
+        $this->categories = $this->product->categories()->pluck('title', 'id')->toArray();
+        $this->new_categories = $this->product->categories()->get()->pluck('id')->toArray();
 
         if (!empty($this->product->property_json) and !empty(json_decode($this->product->property_json))) {
             foreach (json_decode($this->product->property_json) as $key => $value) {
@@ -116,13 +116,13 @@ class ProductUpdate extends BaseComponent
 
     public function removeCategory($id)
     {
-        $this->product->categories()->dontCache()->detach($id);
+        $this->product->categories()->detach($id);
         unset($this->categories[$id], $this->new_categories[$id]);
-//        $this->product->categories()->dontCache()->sync($this->new_categories);
-        $this->product->categories()->dontCache()->detach($id);
+//        $this->product->categories()->sync($this->new_categories);
+        $this->product->categories()->detach($id);
         $this->product->save();
 
-        $this->categories = $this->product->categories()->dontCache()->pluck('title', 'id')->toArray();
+        $this->categories = $this->product->categories()->pluck('title', 'id')->toArray();
         $this->new_categories = [];
 
 
@@ -237,9 +237,9 @@ class ProductUpdate extends BaseComponent
 
         if ($this->new_categories) {
 //            $this->business->categories()->attach($this->categories);
-//            $this->product->categories()->dontCache()->syncWithoutDetaching($this->new_categories);
-            $this->product->categories()->dontCache()->sync($this->new_categories);
-//        $this->product->categories()->dontCache()->sync($this->new_categories);
+//            $this->product->categories()->syncWithoutDetaching($this->new_categories);
+            $this->product->categories()->sync($this->new_categories);
+//        $this->product->categories()->sync($this->new_categories);
 
             $this->product->save();
             //        $this->business->categories()->attach($this->category_parent);
@@ -249,7 +249,7 @@ class ProductUpdate extends BaseComponent
         }
         if ($this->connect_parent_categories) {
             $parent_ids = [];
-            foreach ($this->product->categories()->dontCache()->get() as $cat) {
+            foreach ($this->product->categories()->get() as $cat) {
 //                $this->product->categories()->attach($cat->parents->pluck('id')->toArray());
 
                 $parent_ids[] = $cat->id;
@@ -265,10 +265,10 @@ class ProductUpdate extends BaseComponent
 //            dump($this->product->categories);
 //            dd('test');
 //            $this->product->categories()->sync($this->new_categories);
-            $this->product->categories()->dontCache()->syncWithoutDetaching($parent_ids);
+            $this->product->categories()->syncWithoutDetaching($parent_ids);
         }
 
-//        $this->product->categories()->dontCache()->sync();
+//        $this->product->categories()->sync();
 
 //        if (!empty($this->new_categories)) {
 //
@@ -419,7 +419,7 @@ class ProductUpdate extends BaseComponent
 
     public function removeProductCategories()
     {
-        $this->product->categories()->dontCache()->detach();
+        $this->product->categories()->detach();
 
         $this->flash('success', 'عملیات با موفقیت انجام شد', [
             'timer' => 3000,

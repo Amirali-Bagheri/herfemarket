@@ -649,7 +649,7 @@ class Products extends Component
 //                ->when(!empty($products_has_prices_ids_ordered), function ($query) use ($products_has_prices_ids_ordered) {
 //                    $query->orderByRaw(DB::raw("FIELD(id, $products_has_prices_ids_ordered) desc"));
 //                })
-//                ->dontCache()
+//                
         ;
 //        $products_ids = $query->get(['id'])->pluck('id')->unique()->toArray();
 
@@ -678,7 +678,7 @@ class Products extends Component
 ////            }
                 })
                 ->orderBy('title')
-//                ->dontCache()
+//                
 //                ->cacheFor(3600 * 7 * 24)
                 ->get();
         }
@@ -715,7 +715,7 @@ class Products extends Component
                 ->whereHas('products', function ($q2) use ($products_ids) {
                     return $q2->whereIn('id', $products_ids);
                 })
-                ->dontCache()
+                
 //                ->cacheFor(3600 * 7 * 24)
                 ->get();
         } else {
@@ -916,7 +916,7 @@ class Products extends Component
 //            ->get();
 ////
 //        $products = collect($products)
-//            ->dontCache()
+//            
             ->paginate($this->perPage);
 
 //        if (!empty($sort_field)) {

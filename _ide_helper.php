@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.31.0.
+ * Generated for Laravel 9.40.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1687,6 +1687,17 @@
                         $instance->bootstrap();
         }
                     /**
+         * Bootstrap the application without booting service providers.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function bootstrapWithoutBootingProviders()
+        {            //Method inherited from \Illuminate\Foundation\Console\Kernel         
+                        /** @var \App\Console\Kernel $instance */
+                        $instance->bootstrapWithoutBootingProviders();
+        }
+                    /**
          * Set the Artisan application instance.
          *
          * @param \Illuminate\Console\Application $artisan
@@ -2252,6 +2263,17 @@
         {
                         /** @var \Illuminate\Auth\SessionGuard $instance */
                         return $instance->setRequest($request);
+        }
+                    /**
+         * Get the timebox instance used by the guard.
+         *
+         * @return \Illuminate\Support\Timebox 
+         * @static 
+         */ 
+        public static function getTimebox()
+        {
+                        /** @var \Illuminate\Auth\SessionGuard $instance */
+                        return $instance->getTimebox();
         }
                     /**
          * Determine if the current user is authenticated. If not, throw an exception.
@@ -2838,9 +2860,9 @@
             /**
      * 
      *
-     * @method static \Illuminate\Broadcasting\Broadcasters\Broadcaster channel(string $channel, callable|string  $callback, array $options = [])
+     * @method static \Illuminate\Broadcasting\Broadcasters\Broadcaster channel(string $channel, callable|string $callback, array $options = [])
      * @method static mixed auth(\Illuminate\Http\Request $request)
-     * @method static void resolveAuthenticatedUserUsing(Closure $callback)
+     * @method static void resolveAuthenticatedUserUsing(\Closure $callback)
      * @see \Illuminate\Contracts\Broadcasting\Factory
      */ 
         class Broadcast {
@@ -3492,6 +3514,18 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
                         return $instance->hasDispatchedAfterResponse($command);
+        }
+                    /**
+         * Dispatch an empty job batch for testing.
+         *
+         * @param string $name
+         * @return \Illuminate\Bus\Batch 
+         * @static 
+         */ 
+        public static function dispatchFakeBatch($name = '')
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        return $instance->dispatchFakeBatch($name);
         }
                     /**
          * Record the fake pending batch dispatch.
@@ -4831,7 +4865,7 @@
                     /**
          * Return all of the created connections.
          *
-         * @return \Illuminate\Database\array<string, \Illuminate\Database\Connection>
+         * @return array<string, \Illuminate\Database\Connection> 
          * @static 
          */ 
         public static function getConnections()
@@ -8290,7 +8324,6 @@
      * @method static void alwaysReplyTo(string $address, string|null $name = null)
      * @method static void alwaysReturnPath(string $address)
      * @method static void alwaysTo(string $address, string|null $name = null)
-     * @method static \Illuminate\Mail\PendingMail cc($users)
      * @method static \Illuminate\Mail\SentMessage|null plain(string $view, array $data, $callback)
      * @method static \Illuminate\Mail\SentMessage|null html(string $html, $callback)
      * @method static mixed laterOn(string $queue, \DateTimeInterface|\DateInterval|int $delay, \Illuminate\Contracts\Mail\Mailable|string|array $view)
@@ -8577,6 +8610,18 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
                         return $instance->to($users);
+        }
+                    /**
+         * Begin the process of mailing a mailable class instance.
+         *
+         * @param mixed $users
+         * @return \Illuminate\Mail\PendingMail 
+         * @static 
+         */ 
+        public static function cc($users)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+                        return $instance->cc($users);
         }
                     /**
          * Begin the process of mailing a mailable class instance.
@@ -11336,6 +11381,40 @@
                         return $instance->isFromTrustedProxy();
         }
                     /**
+         * Filter the given array of rules into an array of rules that are included in precognitive headers.
+         *
+         * @param array $rules
+         * @return array 
+         * @static 
+         */ 
+        public static function filterPrecognitiveRules($rules)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->filterPrecognitiveRules($rules);
+        }
+                    /**
+         * Determine if the request is attempting to be precognitive.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function isAttemptingPrecognition()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->isAttemptingPrecognition();
+        }
+                    /**
+         * Determine if the request is precognitive.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function isPrecognitive()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->isPrecognitive();
+        }
+                    /**
          * Determine if the request is sending JSON.
          *
          * @return bool 
@@ -11747,12 +11826,39 @@
                         return $instance->boolean($key, $default);
         }
                     /**
+         * Retrieve input as an integer value.
+         *
+         * @param string $key
+         * @param int $default
+         * @return int 
+         * @static 
+         */ 
+        public static function integer($key, $default = 0)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->integer($key, $default);
+        }
+                    /**
+         * Retrieve input as a float value.
+         *
+         * @param string $key
+         * @param float $default
+         * @return float 
+         * @static 
+         */ 
+        public static function float($key, $default = 0.0)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->float($key, $default);
+        }
+                    /**
          * Retrieve input from the request as a Carbon instance.
          *
          * @param string $key
          * @param string|null $format
          * @param string|null $tz
          * @return \Illuminate\Support\Carbon|null 
+         * @throws \Carbon\Exceptions\InvalidFormatException
          * @static 
          */ 
         public static function date($key, $format = null, $tz = null)
@@ -11763,9 +11869,10 @@
                     /**
          * Retrieve input from the request as an enum.
          *
+         * @template TEnum
          * @param string $key
-         * @param string $enumClass
-         * @return mixed|null 
+         * @param \Illuminate\Http\class-string<TEnum> $enumClass
+         * @return \Illuminate\Http\TEnum|null 
          * @static 
          */ 
         public static function enum($key, $enumClass)
@@ -12298,6 +12405,7 @@
      * @method static \Illuminate\Routing\RouteRegistrar scopeBindings()
      * @method static \Illuminate\Routing\RouteRegistrar where(array $where)
      * @method static \Illuminate\Routing\RouteRegistrar withoutMiddleware(array|string $middleware)
+     * @method static \Illuminate\Routing\RouteRegistrar withoutScopedBindings()
      * @see \Illuminate\Routing\Router
      */ 
         class Route {
@@ -12560,13 +12668,13 @@
          *
          * @param array $attributes
          * @param \Closure|array|string $routes
-         * @return void 
+         * @return \Imanghafoori\LaravelMicroscope\SpyClasses\SpyRouter 
          * @static 
          */ 
         public static function group($attributes, $routes)
         {            //Method inherited from \Illuminate\Routing\Router         
                         /** @var \Imanghafoori\LaravelMicroscope\SpyClasses\SpyRouter $instance */
-                        $instance->group($attributes, $routes);
+                        return $instance->group($attributes, $routes);
         }
                     /**
          * Merge the given array with the last group stack.
@@ -12821,6 +12929,19 @@
         {            //Method inherited from \Illuminate\Routing\Router         
                         /** @var \Imanghafoori\LaravelMicroscope\SpyClasses\SpyRouter $instance */
                         return $instance->pushMiddlewareToGroup($group, $middleware);
+        }
+                    /**
+         * Remove the given middleware from the specified group.
+         *
+         * @param string $group
+         * @param string $middleware
+         * @return \Imanghafoori\LaravelMicroscope\SpyClasses\SpyRouter 
+         * @static 
+         */ 
+        public static function removeMiddlewareFromGroup($group, $middleware)
+        {            //Method inherited from \Illuminate\Routing\Router         
+                        /** @var \Imanghafoori\LaravelMicroscope\SpyClasses\SpyRouter $instance */
+                        return $instance->removeMiddlewareFromGroup($group, $middleware);
         }
                     /**
          * Flush the router's middleware groups.
@@ -13344,6 +13465,16 @@
         public static function morphUsingUuids()
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
                         \Illuminate\Database\Schema\MySqlBuilder::morphUsingUuids();
+        }
+                    /**
+         * Set the default morph key type for migrations to ULIDs.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function morphUsingUlids()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        \Illuminate\Database\Schema\MySqlBuilder::morphUsingUlids();
         }
                     /**
          * Determine if the given table has a given column.
@@ -14193,6 +14324,18 @@
                         return $instance->getHandler();
         }
                     /**
+         * Set the underlying session handler implementation.
+         *
+         * @param \SessionHandlerInterface $handler
+         * @return void 
+         * @static 
+         */ 
+        public static function setHandler($handler)
+        {
+                        /** @var \Illuminate\Session\Store $instance */
+                        $instance->setHandler($handler);
+        }
+                    /**
          * Determine if the session handler needs a request.
          *
          * @return bool 
@@ -14722,6 +14865,18 @@
         {
                         /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
                         return $instance->size($path);
+        }
+                    /**
+         * Get the checksum for a file.
+         *
+         * @return string|false 
+         * @throws UnableToProvideChecksum
+         * @static 
+         */ 
+        public static function checksum($path, $options = [])
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
+                        return $instance->checksum($path, $options);
         }
                     /**
          * Get the mime-type of a given file.
@@ -15475,6 +15630,18 @@
         {
                         /** @var \Illuminate\Routing\UrlGenerator $instance */
                         return $instance->setKeyResolver($keyResolver);
+        }
+                    /**
+         * Clone a new instance of the URL generator with a different encryption key resolver.
+         *
+         * @param callable $keyResolver
+         * @return \Illuminate\Routing\UrlGenerator 
+         * @static 
+         */ 
+        public static function withKeyResolver($keyResolver)
+        {
+                        /** @var \Illuminate\Routing\UrlGenerator $instance */
+                        return $instance->withKeyResolver($keyResolver);
         }
                     /**
          * Get the root controller namespace.
@@ -16316,6 +16483,65 @@
         {
                         /** @var \Illuminate\View\Factory $instance */
                         $instance->callCreator($view);
+        }
+                    /**
+         * Start injecting content into a fragment.
+         *
+         * @param string $fragment
+         * @return void 
+         * @static 
+         */ 
+        public static function startFragment($fragment)
+        {
+                        /** @var \Illuminate\View\Factory $instance */
+                        $instance->startFragment($fragment);
+        }
+                    /**
+         * Stop injecting content into a fragment.
+         *
+         * @return string 
+         * @throws \InvalidArgumentException
+         * @static 
+         */ 
+        public static function stopFragment()
+        {
+                        /** @var \Illuminate\View\Factory $instance */
+                        return $instance->stopFragment();
+        }
+                    /**
+         * Get the contents of a fragment.
+         *
+         * @param string $name
+         * @param string|null $default
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getFragment($name, $default = null)
+        {
+                        /** @var \Illuminate\View\Factory $instance */
+                        return $instance->getFragment($name, $default);
+        }
+                    /**
+         * Get the entire array of rendered fragments.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getFragments()
+        {
+                        /** @var \Illuminate\View\Factory $instance */
+                        return $instance->getFragments();
+        }
+                    /**
+         * Flush all of the fragments.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushFragments()
+        {
+                        /** @var \Illuminate\View\Factory $instance */
+                        $instance->flushFragments();
         }
                     /**
          * Start injecting content into a section.
@@ -19421,7 +19647,7 @@
                     /**
          * 
          *
-         * @return \Spatie\FlareClient\array<int, FlareMiddleware|class-string<FlareMiddleware>>
+         * @return array<int, FlareMiddleware|class-string<FlareMiddleware>> 
          * @static 
          */ 
         public static function getMiddleware()
@@ -19482,7 +19708,7 @@
                     /**
          * 
          *
-         * @param \Spatie\FlareClient\FlareMiddleware\FlareMiddleware|\Spatie\FlareClient\array<FlareMiddleware>|\Spatie\FlareClient\class-string<FlareMiddleware> $middleware
+         * @param \Spatie\FlareClient\FlareMiddleware\FlareMiddleware|array<FlareMiddleware>|\Spatie\FlareClient\class-string<FlareMiddleware> $middleware
          * @return \Spatie\FlareClient\Flare 
          * @static 
          */ 
@@ -19494,7 +19720,7 @@
                     /**
          * 
          *
-         * @return \Spatie\FlareClient\array<int,FlareMiddleware|\Spatie\FlareClient\class-string<FlareMiddleware>> 
+         * @return array<int,FlareMiddleware|class-string<FlareMiddleware>> 
          * @static 
          */ 
         public static function getMiddlewares()
@@ -19654,7 +19880,7 @@
          *
          * @param string $groupName
          * @param mixed $default
-         * @return \Spatie\FlareClient\array<int, mixed>
+         * @return array<int, mixed> 
          * @static 
          */ 
         public static function getGroup($groupName = 'context', $default = [])
@@ -22361,7 +22587,7 @@ namespace  {
                 /**
              * Set the table which the query is targeting.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $table
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $table
              * @param string|null $as
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -23872,6 +24098,20 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->toSql();
+            }
+             
+                /**
+             * Get a single expression value from the first result of a query.
+             *
+             * @param string $expression
+             * @param array $bindings
+             * @return mixed 
+             * @static 
+             */ 
+            public static function rawValue($expression, $bindings = [])
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->rawValue($expression, $bindings);
             }
              
                 /**

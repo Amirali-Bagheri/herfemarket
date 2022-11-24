@@ -222,16 +222,6 @@ class Product extends Model implements
         })->exists();
     }
 
-    public function getVisitCountAttribute()
-    {
-        return visits($this)->count();
-    }
-
-    public function visits()
-    {
-        return visits($this)->relation();
-    }
-
     public function sluggable(): array
     {
         return [
@@ -527,11 +517,6 @@ class Product extends Model implements
     public function getLinkAttribute()
     {
         return route('site.products.single', $this->attributes['slug']);
-    }
-
-    public function setViewCountAttribute()
-    {
-        $this->attributes['view_count'] = visits($this)->count();
     }
 
     public function scopeFilter($query, $params, $perPage = null)

@@ -1,6 +1,6 @@
 <nav class="side-nav">
     <a class="intro-x text-center flex items-center pl-5 pt-4" href="{{route('site.index')}}">
-        <img class="ml-1 text-center" src="/uploads/logo-text-white.png">
+        <img class="ml-1 text-center" src="/uploads/logo.png">
     </a>
     <div class="side-nav__devider my-6"></div>
     <ul>

@@ -57,15 +57,15 @@ class Create extends BaseComponent
     {
         $validatedDate = $this->validate([
             'name' => 'required',
-//            'manager_first_name' => 'required|max:255',
-//            'manager_last_name' => 'required|max:255',
-//            'manager_email' => 'nullable|email',
-//            'manager_mobile' => 'required|min:11|max:11|regex:/[0-9]{10}/|digits:11|unique:users,mobile',
-//            'password' => 'required|min:6|confirmed',
-//            'category_parent' => 'required',
-//            'manager_id' => 'required',
-//            'has_enamad' => 'required',
-//            'accept_rules' => 'required|boolean',
+            //            'manager_first_name' => 'required|max:255',
+            //            'manager_last_name' => 'required|max:255',
+            //            'manager_email' => 'nullable|email',
+            //            'manager_mobile' => 'required|min:11|max:11|regex:/[0-9]{10}/|digits:11|unique:users,mobile',
+            //            'password' => 'required|min:6|confirmed',
+            //            'category_parent' => 'required',
+            //            'manager_id' => 'required',
+            //            'has_enamad' => 'required',
+            //            'accept_rules' => 'required|boolean',
         ]);
 
 
@@ -109,7 +109,7 @@ class Create extends BaseComponent
         $rating->rating = 5;
         $business->rating()->save($rating);
 
-//        $business->categories()->attach($this->category_parent);
+        //        $business->categories()->attach($this->category_parent);
         $business->categories()->sync($this->categories);
 
         $business->save();

@@ -122,7 +122,7 @@ class BusinessSingle extends BaseComponent
 
 //                ->orderBy('stock', 'desc')
 //                ->cacheFor(3600)
-//                ->dontCache()
+//                
                 ->get()
                 ->sortByDesc('stock');
             $prices = collect($prices)->paginate(10);

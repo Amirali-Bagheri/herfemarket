@@ -77,13 +77,13 @@ class Update extends BaseComponent
 
     public function removeCategory($id)
     {
-        $this->business->categories()->dontCache()->detach($id);
+        $this->business->categories()->detach($id);
         unset($this->categories[$id], $this->new_categories[$id]);
-//        $this->business->categories()->dontCache()->sync($this->new_categories);
-        $this->business->categories()->dontCache()->detach($id);
+//        $this->business->categories()->sync($this->new_categories);
+        $this->business->categories()->detach($id);
         $this->business->save();
 
-        $this->categories = $this->business->categories()->dontCache()->pluck('title', 'id')->toArray();
+        $this->categories = $this->business->categories()->pluck('title', 'id')->toArray();
         $this->new_categories = [];
 
 
@@ -138,7 +138,7 @@ class Update extends BaseComponent
 //        $this->categories = $business->categories->pluck('title', 'id')->toArray();
 //        $this->new_categories = $business->categories->pluck('id')->toArray();
 
-        $this->categories = $business->categories()->dontCache()->pluck('title', 'id')->toArray();
+        $this->categories = $business->categories()->pluck('title', 'id')->toArray();
         $this->new_categories = $business->categories->pluck('id')->toArray();
     }
 
@@ -167,6 +167,7 @@ class Update extends BaseComponent
                 'name' => $this->name,
                 'has_enamad' => $this->has_enamad,
                 'description' => $this->description,
+                'slug' => $this->slug,
                 'phone' => $this->phone,
                 'fax' => $this->fax,
                 'email' => $this->email,
@@ -217,7 +218,7 @@ class Update extends BaseComponent
             }
 
             if ($this->new_categories) {
-                $this->business->categories()->dontCache()->sync($this->new_categories);
+                $this->business->categories()->sync($this->new_categories);
 
 //            $this->business->categories()->attach($this->categories);
 //                $this->business->categories()->sync($this->new_categories);

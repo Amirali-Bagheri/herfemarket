@@ -7,7 +7,7 @@
                     <div class="row align-items-center">
                         <div class="column1 col-lg-3 col-md-6">
                             <div class="logo">
-                                <a href="index.html"><img src="/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img src="/uploads/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="column2 col-lg-6 col-md-12">
@@ -89,7 +89,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2 col-md-6">
                             <div class="logo">
-                                <a href="index.html"><img src="/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img src="/uploads/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-12">

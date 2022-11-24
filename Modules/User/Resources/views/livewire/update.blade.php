@@ -53,35 +53,12 @@
                         </div>
                         <div class="p-5">
                             <div>
-                                <label for="first_name">تاریخ تولد</label>
-                                <select style="width: 100px;" name="birth-day" class="form-control ">
-                                    <option value="{{old('birth-day')}}">{{old('birth-day','روز')}}</option>
-                                    @for($i = 1; $i <= 31; $i++)
-                                        <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
-                                </select>
-                                <select style="width: 100px;" name="birth-month" class="form-control ">
-                                    <option value="{{old('birth-month')}}">{{old('birth-month','ماه')}}</option>
-                                    @for($i = 1; $i <= 12; $i++)
-                                        <option value="{{$i}}">{{verta()->month($i)->format('F')}}
-                                        </option>
-                                    @endfor
-                                </select>
-                                <select style="width: 100px;" name="birth-year" class="form-control ">
-                                    <option value="{{old('birth-year')}}">{{old('birth-year','سال')}}</option>
-                                    @for($i = verta()->year; $i >= verta()->subYears(100)->year; $i--)
-                                        <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
-                                </select>
-                            </div>
-
-                            <div class="mt-3">
                                 <label for="avatar">آواتار</label>
 
                                 <div class="border border-gray-200 rounded-md p-5 mt-4">
                                     <div class="w-20 h-20 relative image-fit cursor-pointer zoom-in mx-auto">
                                         <img class="rounded-md" alt=""
-                                             src="{{ $avatar && $avatar->temporaryUrl() ? $avatar->temporaryUrl() : $user->avatar_url }}">
+                                             src="{{ $avatar && $avatar->temporaryUrl() ? $avatar->temporaryUrl() : (isset($user) ? $user->avatar_url : '/uploads/avatars/avatar.png') }}">
                                     </div>
                                     <div class="w-40 mx-auto cursor-pointer relative mt-5">
                                         <button type="button" class="button w-full bg-theme-1 text-white">انتخاب
@@ -192,7 +169,7 @@
                                     class="tom-select w-full" multiple>
 
                                 @foreach (\Modules\Acl\Entities\Role::all() as $role)
-                                    <option @if ($user->hasRole($role->name))
+                                    <option @if (isset($user) and $user->hasRole($role->name))
                                             selected
                                             @endif value="{{$role->name}}">{{$role->title}}</option>
                                 @endforeach
