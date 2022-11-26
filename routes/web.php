@@ -32,11 +32,11 @@ Route::get('/cart', \App\Http\Livewire\Site\Cart::class)->name('site.cart');
 
 Route::get('/products', \App\Http\Livewire\Site\Products\ProductIndex::class)->name('site.products');
 Route::get('/products/category/{slug}', \App\Http\Livewire\Site\Products\ProductIndex::class)->name('site.products.category');
-Route::get('/products/show/{slug}', \App\Http\Livewire\Site\Products\ProductShow::class)->name('site.products.show');
+Route::get('/products/show/{slug}', \App\Http\Livewire\Site\Products\ProductShow::class)->name('site.products.single');
 
 Route::get('/services', ProductIndex::class)->name('site.services');
 Route::get('/services/category/{slug}', ProductIndex::class)->name('site.services.category');
-Route::get('/services/show/{slug}', ProductShow::class)->name('site.services.show');
+Route::get('/services/show/{slug}', ProductShow::class)->name('site.services.single');
 
 Route::get('/businesses', \App\Http\Livewire\Site\Businesses\BusinessIndex::class)->name('site.businesses');
 Route::get('/businesses/category/{slug}', \App\Http\Livewire\Site\Businesses\BusinessIndex::class)->name('site.businesses.category');

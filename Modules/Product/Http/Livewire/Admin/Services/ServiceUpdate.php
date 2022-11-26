@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Product\Http\Livewire\Admin\Products;
+namespace Modules\Product\Http\Livewire\Admin\Services;
 
 use App\Jobs\RemoveFullProduct;
 use Livewire\WithFileUploads;
@@ -13,7 +13,7 @@ use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
 use App\Traits\Uploadable;
 
-class ProductUpdate extends BaseComponent
+class ServiceUpdate extends BaseComponent
 {
     use WithFileUploads;
     use Uploadable;
@@ -146,6 +146,7 @@ class ProductUpdate extends BaseComponent
 //
     ////        dd('test',$this->new_categories);
 //    }
+
 
     public function destroy(ProductRepositoryInterface $productRepository)
     {
@@ -403,27 +404,11 @@ class ProductUpdate extends BaseComponent
             'position' => 'center'
         ]);
 
-        $this->redirect(route('admin.products.update', $this->product->id));
+        $this->redirect(route('admin.services.update', $this->product->id));
     }
-
-    public function removeProductCategories()
-    {
-        $this->product->categories()->detach();
-
-        $this->flash('success', 'عملیات با موفقیت انجام شد', [
-            'timer' => 3000,
-            'showCancelButton' => false,
-            'showConfirmButton' => false,
-            'position' => 'center'
-        ]);
-
-        $this->redirect(route('admin.products.update', $this->product->id));
-
-    }
-
     public function render()
     {
-        return view('product::admin.products.livewire.update')->extends('admin.layouts.master', [
+        return view('product::admin.services.update')->extends('admin.layouts.master', [
             'pageTitle' => 'ویرایش محصول ' . $this->title
         ]);
     }

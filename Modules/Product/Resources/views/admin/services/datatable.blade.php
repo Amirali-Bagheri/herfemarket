@@ -128,10 +128,10 @@
                     <td class="text-center">{{ $product->created_at_human_ago }}</td>
                     <td class="text-center">{{ $product->updated_at_human_ago }}</td>
                     <td class="table-report__action w-40 text-center">
-                        <a target="_blank" href="{{ route('site.products.single', $product->slug ?? '#') }}" style="margin: 5px;">
+                        <a target="_blank" href="{{ route('site.services.single', $product->slug ?? '#') }}" style="margin: 5px;">
                             <i class="fa fa-link"></i>
                         </a>
-                        <a style="margin: 5px;" href="{{ route('admin.products.update', $product->id) }}">
+                        <a style="margin: 5px;" href="{{ route('admin.services.update', $product->id) }}">
                             <i class="fa-regular fa-pen-to-square"></i>
 
                         </a>

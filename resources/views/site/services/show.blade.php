@@ -107,7 +107,7 @@
                         <article class="single_product">
                             <figure>
                                 <div class="product_thumb">
-                                    <a class="primary_img" href="{{route('site.products.show',$related_product->slug)}}"><img
+                                    <a class="primary_img" href="{{route('site.products.single',$related_product->slug)}}"><img
                                             src="/uploads/{{$related_product->images}}" alt=""></a>
                                     {{--                                            <div class="label_product">--}}
                                     {{--                                                <span class="label_sale">فروش</span>--}}
@@ -124,7 +124,7 @@
                                 <div class="product_content grid_content">
                                     <div class="product_content_inner">
                                         <h4 class="product_name"><a
-                                                href="{{ route('site.products.show',$related_product->slug) }}">
+                                                href="{{ route('site.products.single',$related_product->slug) }}">
                                                 {{$related_product->title}}
                                             </a></h4>
                                         {{--                                                <div class="product_rating">--}}

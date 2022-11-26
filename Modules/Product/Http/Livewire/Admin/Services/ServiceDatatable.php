@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Product\Http\Livewire\Admin\Products;
+namespace Modules\Product\Http\Livewire\Admin\Services;
 
 use App\Exports\DatatableExport;
 use App\Jobs\RemoveFullProduct;
@@ -18,7 +18,7 @@ use Modules\Product\Imports\ProductsImport;
 use Modules\Product\Repository\Eloquent\ProductRepository;
 use const Throwable;
 
-class ProductDatatable extends BaseComponent
+class ServiceDatatable extends BaseComponent
 {
     use WithFileUploads;
 
@@ -123,7 +123,7 @@ class ProductDatatable extends BaseComponent
     {
 
 
-        $query = Product::query()->where('isService',0);
+        $query = Product::query()->where('isService',1);
         $final_query = $query;
 
 
@@ -179,7 +179,7 @@ class ProductDatatable extends BaseComponent
 
     public function render()
     {
-        return view('product::admin.products.livewire.datatable', [
+        return view('product::admin.services.datatable', [
             'products' => !empty($this->items) ? $this->items : $this->getQuery()->take(500)->paginate($this->perPage),
         ])->extends('admin.layouts.master', [
             'pageTitle' => 'مدیریت محصولات'
