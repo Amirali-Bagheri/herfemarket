@@ -48,7 +48,7 @@
                                                             {{ verta($product->updated_at)->formatDifference() }}
                                                         </td>
                                                         <td>
-                                                            <a  class="pr-1 pl-1" href="{{route('dashboard.products.update',$product->id)}}">
+                                                            <a  class="pr-1 pl-1" href="{{route('dashboard.services.update',$product->id)}}">
                                                                 <i class="far fa-edit"></i>
                                                             </a>
                                                             <a class="pr-1 pl-1" href="javascript:void(0)" wire:click="deleteProduct('{{$product->id}}')">

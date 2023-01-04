@@ -27,8 +27,7 @@
                                         <i class="fa fa-shopping-bag"></i>
                                         <span class="cart_price"><span>
                                                 {{number_format($cart->getSubtotal())}} تومان
-                                            </span> <i
-                                                class="ion-ios-arrow-down"></i></span>
+                                            </span> <i class="ion-ios-arrow-down"></i></span>
                                         <span class="cart_count">
                                             {{$cart->countItems()}}
                                         </span>
@@ -38,26 +37,25 @@
                                     <div class="mini_cart">
                                         <div class="mini_cart_inner">
                                             @forelse ($items as $hash => $item)
-                                                <div class="cart_item">
-                                                    <div class="cart_info">
-                                                        <a href="#">
-                                                            {{ $item->getTitle() }}
-                                                        </a>
-                                                        <p>تعداد: {{ $item->getQuantity() }} × <span>
+                                            <div class="cart_item">
+                                                <div class="cart_info">
+                                                    <a href="#">
+                                                        {{ $item->getTitle() }}
+                                                    </a>
+                                                    <p>تعداد: {{ $item->getQuantity() }} × <span>
                                                             {{number_format($item->getPrice())}} تومان
-                                                            </span></p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a wire:click="removeCart('{{$hash}}')" href="#"><i
-                                                                class="ion-android-close"></i></a>
-                                                    </div>
+                                                        </span></p>
                                                 </div>
+                                                <div class="cart_remove">
+                                                    <a wire:click="removeCart('{{$hash}}')" href="#"><i class="ion-android-close"></i></a>
+                                                </div>
+                                            </div>
                                             @empty
-                                                <div class="cart_item text-center justify-content-center">
-                                                    <p>
-                                                        سبد خرید خالی است!
-                                                    </p>
-                                                </div>
+                                            <div class="cart_item text-center justify-content-center">
+                                                <p>
+                                                    سبد خرید خالی است!
+                                                </p>
+                                            </div>
 
                                             @endforelse
 
@@ -101,24 +99,24 @@
                                         <li><a href="/businesses">کسب و کار ها</a></li>
                                         <li><a href="/dashboard">داشبورد</a></li>
                                         <li><a href="/cart">سبد خرید</a></li>
+                                        <li><a href="/register/business">ثبت نام کسب و کار</a></li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="header_configure_area">
-                                {{--                                <div class="header_wishlist">--}}
-                                {{--                                    <a href="wishlist.html"><i class="ion-android-favorite-outline"></i>--}}
-                                {{--                                        <span class="wishlist_count">3</span>--}}
-                                {{--                                    </a>--}}
-                                {{--                                </div>--}}
+                                {{-- <div class="header_wishlist">--}}
+                                {{-- <a href="wishlist.html"><i class="ion-android-favorite-outline"></i>--}}
+                                {{-- <span class="wishlist_count">3</span>--}}
+                                {{-- </a>--}}
+                                {{-- </div>--}}
                                 <div class="mini_cart_wrapper">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-shopping-bag"></i>
                                         <span class="cart_price"><span>
                                                 {{number_format($cart->getSubtotal())}} تومان
-                                            </span> <i
-                                                class="ion-ios-arrow-down"></i></span>
+                                            </span> <i class="ion-ios-arrow-down"></i></span>
                                         <span class="cart_count">
                                             {{$cart->countItems()}}
                                         </span>
@@ -128,26 +126,25 @@
                                     <div class="mini_cart">
                                         <div class="mini_cart_inner">
                                             @forelse ($items as $hash => $item)
-                                                <div class="cart_item">
-                                                    <div class="cart_info">
-                                                        <a href="#">
-                                                            {{ $item->getTitle() }}
-                                                        </a>
-                                                        <p>تعداد: {{ $item->getQuantity() }} × <span>
+                                            <div class="cart_item">
+                                                <div class="cart_info">
+                                                    <a href="#">
+                                                        {{ $item->getTitle() }}
+                                                    </a>
+                                                    <p>تعداد: {{ $item->getQuantity() }} × <span>
                                                             {{number_format($item->getPrice())}} تومان
-                                                            </span></p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a wire:click="removeCart('{{$hash}}')" href="#"><i
-                                                                class="ion-android-close"></i></a>
-                                                    </div>
+                                                        </span></p>
                                                 </div>
+                                                <div class="cart_remove">
+                                                    <a wire:click="removeCart('{{$hash}}')" href="#"><i class="ion-android-close"></i></a>
+                                                </div>
+                                            </div>
                                             @empty
-                                                <div class="cart_item text-center justify-content-center">
-                                                    <p>
-                                                        سبد خرید خالی است!
-                                                    </p>
-                                                </div>
+                                            <div class="cart_item text-center justify-content-center">
+                                                <p>
+                                                    سبد خرید خالی است!
+                                                </p>
+                                            </div>
 
                                             @endforelse
 
@@ -188,41 +185,41 @@
                                     <ul>
 
                                         @foreach(\Modules\Category\Entities\Category::where('parent_id',0)->get() as $category)
-                                            @if ($category->has('children'))
+                                        @if ($category->has('children'))
+                                        <li class="menu_item_children">
+                                            <a href="#">
+                                                {{ $category->title }}
+                                                <i class="fa fa-angle-left"></i>
+                                            </a>
+                                            <ul class="categories_mega_menu">
+                                                @foreach($category->children as $category_child)
+
+
                                                 <li class="menu_item_children">
-                                                    <a href="#">
-                                                        {{ $category->title }}
-                                                        <i class="fa fa-angle-left"></i>
+                                                    <a href="{{route('site.products.category',$category->slug)}}">
+                                                        {{ $category_child->title }}
                                                     </a>
-                                                    <ul class="categories_mega_menu">
-                                                        @foreach($category->children as  $category_child)
-
-
-                                                            <li class="menu_item_children">
-                                                                <a href="{{route('site.products.category',$category->slug)}}">
-                                                                    {{ $category_child->title }}
-                                                                </a>
-                                                                <ul class="categorie_sub_menu">
-                                                                    @foreach($category_child->children->take(6) as $category_child_child)
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                {{ $category_child_child->title }}
-                                                                            </a>
-                                                                        </li>
-                                                                    @endforeach
-
-                                                                </ul>
-                                                            </li>
+                                                    <ul class="categorie_sub_menu">
+                                                        @foreach($category_child->children->take(6) as $category_child_child)
+                                                        <li>
+                                                            <a href="#">
+                                                                {{ $category_child_child->title }}
+                                                            </a>
+                                                        </li>
                                                         @endforeach
+
                                                     </ul>
                                                 </li>
-                                            @else
-                                                <li>
-                                                    <a href="#">
-                                                        {{$category->title}}
-                                                    </a>
-                                                </li>
-                                            @endif
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                        @else
+                                        <li>
+                                            <a href="#">
+                                                {{$category->title}}
+                                            </a>
+                                        </li>
+                                        @endif
                                         @endforeach
 
 
@@ -266,8 +263,8 @@
                                                                                     </ul>
                                                                                 </li>
                                         --}}
-                                        {{--                                        <li><a href="#"> قطعات موتور</a></li>--}}
-                                        {{--        <li id="cat_toggle" class="has-sub"><a href="#"> دسته های بیشتر</a>
+                                        {{-- <li><a href="#"> قطعات موتور</a></li>--}}
+                                        {{-- <li id="cat_toggle" class="has-sub"><a href="#"> دسته های بیشتر</a>
                                                     <ul class="categorie_sub">
                                                         <li><a href="#">دسته های پنهان</a></li>
                                                     </ul>

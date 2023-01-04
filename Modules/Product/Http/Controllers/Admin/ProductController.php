@@ -70,10 +70,10 @@ class ProductController extends Controller
 
         foreach ($request->file('images') as $image) {
             $basename = $image->getClientOriginalName(); // get the original filename + extension
-                $extension = $image->getClientOriginalExtension(); // get the original extension without the dot
-                $filename = basename($basename, '.' . $extension); // get the original filename only
-                $slug = Str::slug($filename, '-'); // slug the original filename
-                $upload_success = $image->move('uploads', $slug . '.' . $extension);
+            $extension = $image->getClientOriginalExtension(); // get the original extension without the dot
+            $filename = basename($basename, '.' . $extension); // get the original filename only
+            $slug = Str::slug($filename, '-'); // slug the original filename
+            $upload_success = $image->move('uploads', $slug . '.' . $extension);
             $full_filename = $slug . '.' . $extension;
             $this->createThumbnail('uploads/' . $full_filename, 256, 256, 'uploads/thumbnails/tn_' . $full_filename);
             array_push($data, $full_filename);

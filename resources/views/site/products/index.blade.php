@@ -9,8 +9,9 @@
                             <div class="col-lg-3 col-md-4 col-12 ">
                                 <article class="single_product">
                                     <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="{{route('site.products.single',$product->slug)}}"><img src="/uploads/{{$product->images}}" alt=""></a>
+                                        <div class="product_thumb text-center justify-items-center">
+                                            <a class="primary_img" href="{{route('site.products.single',$product->slug)}}">
+                                                <img width="200" src="/uploads/{{$product->images}}" alt=""></a>
 {{--                                            <div class="label_product">--}}
 {{--                                                <span class="label_sale">فروش</span>--}}
 {{--                                            </div>--}}

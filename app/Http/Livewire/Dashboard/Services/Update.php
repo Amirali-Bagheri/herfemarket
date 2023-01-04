@@ -77,11 +77,14 @@ class Update extends BaseComponent
                     'final_price' => $this->final_price,
                     'business_id' => $this->business->id,
                     'isService'   => 1,
-                ]);
+                ]
+            );
+
             $this->product->categories()->sync($this->category_id);
-            $category = Category::find($this->category_id);
-            $new_ids  = array_merge($category->parents->pluck('id')->toArray(), [$this->category_id]);
-            $this->product->categories()->sync($new_ids);
+            // $category = Category::find($this->category_id);
+            // $new_ids  = array_merge($category->parents->pluck('id')->toArray(), [$this->category_id]);
+            // $this->product->categories()->sync($new_ids);
+            $this->product->categories()->sync($this->category_id);
 
             if ($this->images) {
                 $filename = 'product_' . time() . '.' . $this->images->extension();
@@ -119,10 +122,8 @@ class Update extends BaseComponent
 
     public function render()
     {
-        return view('site.dashboard.services.create', [
-        ])->extends('site.layouts.master', [
+        return view('site.dashboard.services.create', [])->extends('site.layouts.master', [
             'pageTitle' => 'ویرایش خدمت',
         ]);
     }
 }
-

@@ -19,8 +19,8 @@ class CreateInvoicesTable extends Migration
             $table->integer('invoicable_id')->unsigned()->nullable();
             $table->string('invoicable_type')->nullable();
             $table->string('invoice_number')->nullable();
-            $table->float('tax')->default(0)->description('in irt');
-            $table->float('total')->default(0)->description('in irt');
+            $table->unsignedBigInteger('tax')->default(0)->description('in irt');
+            $table->unsignedBigInteger('total')->default(0)->description('in irt');
             $table->char('currency', 3)->default('IRT');
             $table->char('reference', 17)->nullable();
             $table->unsignedSmallInteger('status')->default(0);

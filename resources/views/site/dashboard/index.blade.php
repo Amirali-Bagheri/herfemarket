@@ -58,8 +58,7 @@
 
                                                         <div class=" col-md-6 col-sm-12">
                                                             <label>نام خانوادگی</label>
-                                                            <input type="text" wire:model.defer="last_name"
-                                                                   class="form-control">
+                                                            <input type="text" wire:model.defer="last_name" class="form-control">
                                                             @error('last_name')
                                                             <em style="color: red">
                                                                 {{ $message }}
@@ -69,8 +68,7 @@
                                                             @enderror
 
                                                             <label>تلفن همراه</label>
-                                                            <input type="text" wire:model.defer="mobile" disabled="disabled"
-                                                                   class="form-control">
+                                                            <input type="text" wire:model.defer="mobile" disabled="disabled" class="form-control">
 
 
 

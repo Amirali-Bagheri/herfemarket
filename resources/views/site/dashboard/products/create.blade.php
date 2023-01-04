@@ -28,66 +28,47 @@
                                                             <div class="form-group pt-2">
                                                                 <label>عنوان:</label>
                                                                 <div class="ls-inputicon-box">
-                                                                    <input type="text" id="title" name="title"
-                                                                           wire:model.defer="title"
-                                                                           placeholder="عنوان"
-                                                                           class="form-control wt-form-control  @error('title') is-invalid @enderror">
-                                                                    @error('title') <span
-                                                                        class="text-danger error">{{ $message }}</span>@enderror
+                                                                    <input type="text" id="title" name="title" wire:model.defer="title" placeholder="عنوان" class="form-control wt-form-control  @error('title') is-invalid @enderror">
+                                                                    @error('title') <span class="text-danger error">{{ $message }}</span>@enderror
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group pt-2">
                                                                 <label>توضیحات:</label>
-                                                                <textarea
-                                                                    id="description"
-                                                                    rows="5"
-                                                                    class="form-control wt-form-control  @error('description') is-invalid @enderror"
-                                                                    wire:model.defer="description"
-                                                                    name="description"
-                                                                >
+                                                                <textarea id="description" rows="5" class="form-control wt-form-control  @error('description') is-invalid @enderror" wire:model.defer="description" name="description">
 
                                                     </textarea>
-                                                                @error('description') <span
-                                                                    class="text-danger error">{{ $message }}</span>@enderror
+                                                                @error('description') <span class="text-danger error">{{ $message }}</span>@enderror
                                                             </div>
 
                                                         </div>
                                                         <div class="col-md-6 col-sm-12">
                                                             @push ('scripts')
-                                                                <script
-                                                                    src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.2.0/js/tom-select.complete.min.js"
-                                                                    integrity="sha512-VGLFiLQssGs/+DPPemqCV5/nauqzFpR2c+zOShSBbgBRYSYkiM+LmjZQ1ErjKIgfYvlfVWhHL7BCOKmIvtuT7A=="
-                                                                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                                                                <link rel="stylesheet"
-                                                                      href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.2.0/css/tom-select.min.css"
-                                                                      integrity="sha512-BrNXB6PRnf32ZqstFiYQT/L7aVZ45FGojXbBx8nybK/NBhxFQPHsr36jH11I2YoUaA5UFqTRF14xt3VVMWfCOg=="
-                                                                      crossorigin="anonymous" referrerpolicy="no-referrer"/>
-                                                                <script>
-                                                                    new TomSelect('.tom-select', {
-                                                                        // create: true,
-                                                                        // sortField: {
-                                                                        //     field: "text",
-                                                                        //     direction: "asc"
-                                                                        // }
-                                                                    });
-                                                                </script>
+                                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.2.0/js/tom-select.complete.min.js" integrity="sha512-VGLFiLQssGs/+DPPemqCV5/nauqzFpR2c+zOShSBbgBRYSYkiM+LmjZQ1ErjKIgfYvlfVWhHL7BCOKmIvtuT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.2.0/css/tom-select.min.css" integrity="sha512-BrNXB6PRnf32ZqstFiYQT/L7aVZ45FGojXbBx8nybK/NBhxFQPHsr36jH11I2YoUaA5UFqTRF14xt3VVMWfCOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                                                            <script>
+                                                                new TomSelect('.tom-select', {
+                                                                    // create: true,
+                                                                    // sortField: {
+                                                                    //     field: "text",
+                                                                    //     direction: "asc"
+                                                                    // }
+                                                                });
+
+                                                            </script>
                                                             @endpush
 
                                                             <div class="form-group pt-2">
                                                                 <div class="select_form_select">
                                                                     <label for="category_id">دسته بندی: <span>*</span></label>
-                                                                    <select class="form-control" id="category_id"
-                                                                            wire:model.defer="category_id">
+                                                                    <select class="form-control" id="category_id" wire:model.defer="category_id">
                                                                         <option value="">انتخاب کنید</option>
 
-                                                                    @foreach (\Modules\Category\Entities\Category::orderBy('title','asc')->get() as $category)
-                                                                            <option
-                                                                                value="{{$category->id}}">{{$category->title}}</option>
+                                                                        @foreach ($categories as $category)
+                                                                        <option value="{{$category->id}}">{{$category->title}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    @error('category_id') <span
-                                                                        class="text-danger error">{{ $message }}</span>@enderror
+                                                                    @error('category_id') <span class="text-danger error">{{ $message }}</span>@enderror
 
                                                                 </div>
 
@@ -97,8 +78,7 @@
                                                                 <div class="select_form_select">
                                                                     <label for="main_price">قیمت <span>*</span></label>
                                                                     <input type="text" wire:model.defer="main_price">
-                                                                    @error('main_price') <span
-                                                                        class="text-danger error">{{ $message }}</span>@enderror
+                                                                    @error('main_price') <span class="text-danger error">{{ $message }}</span>@enderror
 
                                                                 </div>
 
@@ -107,19 +87,16 @@
                                                             <div class="form-group pt-2">
                                                                 <label>تصویر:</label>
                                                                 <div class="ls-inputicon-box">
-                                                                    <input type="file" id="images" name="images"
-                                                                           wire:model="images"
-                                                                           class="form-control wt-form-control  @error('images') is-invalid @enderror">
-                                                                    @error('images') <span
-                                                                        class="text-danger error">{{ $message }}</span>@enderror
+                                                                    <input type="file" id="images" name="images" wire:model="images" class="form-control wt-form-control  @error('images') is-invalid @enderror">
+                                                                    @error('images') <span class="text-danger error">{{ $message }}</span>@enderror
                                                                 </div>
 
                                                                 @if ($images)
-                                                                    پیشنمایش:
-                                                                    <img width="100" src="{{ $images->temporaryUrl() }}">
+                                                                پیشنمایش:
+                                                                <img width="100" src="{{ $images->temporaryUrl() }}">
                                                                 @elseif(!empty($image_url))
-                                                                    پیشنمایش:
-                                                                    <img width="100" src="{{ $image_url }}">
+                                                                پیشنمایش:
+                                                                <img width="100" src="{{ $image_url }}">
                                                                 @endif
                                                             </div>
 

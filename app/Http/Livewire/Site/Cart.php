@@ -30,26 +30,32 @@ class Cart extends BaseComponent
             'isPaymentable'  => true,
             'status'         => 1,
             'currency'       => 'IRR',
-            'total'          => price_t2r((int) $cart->getSubtotal()),
+            'total'          => price_t2r((int) number_clean_format($cart->getSubtotal())),
             'tax'            => 0,
             'invoice_number' => $invoice_number,
+            'user_id' => auth()->id(),
         ]);
 
         foreach (\Cart::name('shopping')->getItems() as $item) {
             $invoice->lines()->create([
                 'amount'      => price_t2r((int) $item->getPrice()),
                 'description' => $item->getTitle(),
+                'product_id' => $item->getId(),
             ]);
         }
 
-        $this->alert('success', 'سفارش شما با موفقیت ثبت شد.', [
-            'position'          => 'center',
-            'timer'             => 3000,
-            'toast'             => true,
-            'text'              => 'شماره سفارش شما: ' . $invoice_number,
-            'showConfirmButton' => true,
-            'onConfirmed'       => '',
-        ]);
+        \Cart::name('shopping')->clearItems();
+
+        $this->redirect(route('dashboard.orders.show', $invoice->invoice_number));
+
+        // $this->alert('success', 'سفارش شما با موفقیت ثبت شد.', [
+        //     'position'          => 'center',
+        //     'timer'             => 3000,
+        //     'toast'             => true,
+        //     'text'              => 'شماره سفارش شما: ' . $invoice_number,
+        //     'showConfirmButton' => true,
+        //     'onConfirmed'       => '',
+        // ]);
     }
 
     public function render()

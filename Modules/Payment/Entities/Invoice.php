@@ -3,8 +3,9 @@
 namespace Modules\Payment\Entities;
 
 use App\Models\Model;
-use Modules\Payment\Traits\InvoiceTrait;
 use Modules\User\Entities\User;
+use Modules\Product\Entities\Product;
+use Modules\Payment\Traits\InvoiceTrait;
 
 class Invoice extends Model
 {
@@ -40,7 +41,7 @@ class Invoice extends Model
         // });
     }
 
-    public function getStatusNameAttribute()
+    public function getStatusTitleAttribute()
     {
         switch ($this->status) {
             case 0:
@@ -84,5 +85,10 @@ class Invoice extends Model
         } else {
             return number_format($this->total);
         }
+    }
+
+    public function getBusinessAttribute()
+    {
+        return Product::find($this->attributes['invoicable_id'])->business ?? null;
     }
 }

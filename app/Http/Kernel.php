@@ -188,6 +188,7 @@ class Kernel extends HttpKernel
         // 'cacheable'=>\App\Http\Middleware\CacheResponse::class,
         //
         // 'cacheable' => CacheWithVarnish::class,
+        'fill_profile' => FillProfile::class,
 
     ];
 }

@@ -45,11 +45,6 @@ class Register extends BaseComponent
 
     public function render()
     {
-        if (Agent::isMobile()) {
-            return view('auth.register')->extends('mobile.layouts.master', [
-                'pageTitle' => 'ثبت نام',
-            ]);
-        }
         return view('auth.register')->extends('site.layouts.master', [
                 'pageTitle' => 'ثبت نام',
             ]);
@@ -87,38 +82,6 @@ class Register extends BaseComponent
             'mobile' => 'required|max:12|regex:/[0-9]{10}/|digits:11|unique:users,mobile',
 //            'mobile' => 'required|max:12|regex:/[0-9]{10}/|digits:11|unique:users,mobile,NULL,id,deleted_at,NULL',
         ]);
-
-        /*    $validator = Validator::make(
-                [
-                    // 'name'                  => $this->name,
-                    // 'first_name'            => $this->first_name,
-                    // 'last_name'             => $this->last_name,
-                    'mobile'                => $this->mobile,
-                    // 'password'              => $this->password,
-                    // 'password_confirmation' => $this->password_confirmation,
-                    // 'recaptcha'             => $this->recaptcha,
-                    // 'recaptcha' => 'arcaptcha',
-
-                ],
-                [
-                    // 'name'     => 'required|max:255',
-                    // 'first_name' => 'required|max:255',
-                    // 'last_name'  => 'required|max:255',
-                    'mobile'     => 'required|max:12|regex:/[0-9]{10}/|digits:11|unique:users,mobile,NULL,id,deleted_at,NULL',
-                    // 'accept' => 'required',
-                    // 'password'   => 'required|min:6|confirmed',
-
-                    // 'recaptcha' => ['required', new ReCaptchaRule()],
-                ]
-            );
-
-            if ($validator->fails()) {
-                $this->setErrorBag($validator->errors());
-
-                // $this->emit('resetReCaptcha');
-                return null;
-            }*/
-        // $this->emit('swal_loading');
 
         $user = User::create([
             // 'name'     => $this->name,
@@ -163,18 +126,4 @@ class Register extends BaseComponent
         }
     }
 
-//    public function googleSignin()
-//    {
-//        $this->redirect(Socialite::driver('google')->redirectUrl('https://panel.yekilink.com/login/google/callback')->redirect()
-//                                 ->getTargetUrl());
-//    }
-//
-//    public function facebookSignin()
-//    {
-//        config(['services.facebook.redirect' => env('FACEBOOK_LOGIN_REDIRECT_URI')]);
-//
-//        $this->redirect(Socialite::driver('facebook')->redirectUrl('https://panel.yekilink.com/login/facebook/callback/')
-//                                 ->redirect()
-//                                 ->getTargetUrl());
-//    }
 }

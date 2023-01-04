@@ -1,5 +1,5 @@
 <div>
-    @include('dashboard.layouts.livewire_loading')
+    {{--  @include('dashboard.layouts.livewire_loading')  --}}
 
     <section class="contact-page-wrap bg--accent">
         <form style="padding-bottom:100px;">

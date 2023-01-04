@@ -4,8 +4,6 @@ namespace Modules\Product\Entities;
 
 use App\Models\Model;
 use App\MyIndexConfigurator;
-use App\Search\ProductsSearchRule;
-use Illuminate\Support\Facades\Cache;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,17 +13,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use JeroenG\Explorer\Application\Aliased;
-use JeroenG\Explorer\Application\BePrepared;
-use JeroenG\Explorer\Application\Explored;
-use JeroenG\Explorer\Application\IndexSettings;
-use JeroenG\Explorer\Domain\Analysis\Analysis;
-use JeroenG\Explorer\Domain\Analysis\Analyzer\StandardAnalyzer;
-use JeroenG\Explorer\Domain\Analysis\Filter\SynonymFilter;
-use Kyslik\ColumnSortable\Sortable;
-use Laravel\Scout\Searchable;
-use Mehradsadeghi\FilterQueryString\FilterQueryString;
 use Modules\Brand\Entities\Brand;
 use Modules\Category\Entities\Category;
 use Modules\Comments\Entities\Comment;
@@ -37,13 +26,10 @@ use Modules\Seo\Contracts\MetaTags\SeoMetaTagsInterface;
 use Modules\Setting\Entities\Setting;
 use Modules\User\Entities\User;
 use Modules\Wishlist\Traits\Wishlistable;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\Searchable\SearchResult;
 use Throwable;
 
-class Product extends Model implements
-    SeoMetaTagsInterface,
-    RobotsTagsInterface
+class Product extends Model implements SeoMetaTagsInterface, RobotsTagsInterface
 {
     use Sluggable;
     use SerializesModels;
@@ -55,14 +41,15 @@ class Product extends Model implements
     protected $searchable = [
         'title',
         'en_title',
-//        'code',
-        'brand.title'
+        //        'code',
+        'brand.title',
     ];
 
     protected $casts = [
         // 'images' => 'array',
         'status' => 'boolean',
     ];
+
     protected $hidden = [
         'view_count',
         //        'buy_count',
@@ -71,6 +58,7 @@ class Product extends Model implements
         'comment_status',
         'description',
     ];
+
     // protected $appends = ['has_prices_with_stock','has_prices','stock', 'has_discount', 'max_price', 'min_price', 'slider_price', 'thumbnail_url', 'best_price', 'rating_avg', 'rating_count', 'visit_count', 'categories_title', 'created_at_human_ago', 'created_at_human', 'status_name'];
     protected $guarded = [];
 
@@ -82,15 +70,16 @@ class Product extends Model implements
 
         return $query;
     }
+
     protected function getArrayableAppends()
     {
-        if (self::$withoutAppends){
+        if (self::$withoutAppends) {
             return [];
         }
 
         return parent::getArrayableAppends();
     }
-//    protected $indexConfigurator = MyIndexConfigurator::class;
+    //    protected $indexConfigurator = MyIndexConfigurator::class;
 
     protected $searchRules = [
         //
@@ -110,10 +99,10 @@ class Product extends Model implements
                 'fields' => [
                     'raw' => [
                         'type' => 'keyword',
-                    ]
-                ]
+                    ],
+                ],
             ],
-        ]
+        ],
     ];
 
     public static function count()
@@ -127,33 +116,30 @@ class Product extends Model implements
     {
         parent::boot();
 
-//        static::retrieved(function ($instance) {
-//            if (Cache::driver('database')->has('products.' . $instance->slug)){
-//                Cache::driver('database')->get('products.' . $instance->slug, $instance);
-//            }else{
-//                Cache::driver('database')->put('products.' . $instance->slug, $instance);
-//            }
-//        });
-//
-//        static::updating(function ($instance) {
-//            Cache::driver('database')->put('products.' . $instance->slug, $instance);
-//        });
-//
-//        static::deleting(function ($instance) {
-//            Cache::driver('database')->forget('products.' . $instance->slug);
-//        });
+        //        static::retrieved(function ($instance) {
+        //            if (Cache::driver('database')->has('products.' . $instance->slug)){
+        //                Cache::driver('database')->get('products.' . $instance->slug, $instance);
+        //            }else{
+        //                Cache::driver('database')->put('products.' . $instance->slug, $instance);
+        //            }
+        //        });
+        //
+        //        static::updating(function ($instance) {
+        //            Cache::driver('database')->put('products.' . $instance->slug, $instance);
+        //        });
+        //
+        //        static::deleting(function ($instance) {
+        //            Cache::driver('database')->forget('products.' . $instance->slug);
+        //        });
     }
-//
-//
-//    public static function search($query)
-//    {
-//        return empty($query) ? static::query()
-//            : static::where('title', 'like', '%' . $query . '%')
-//                ->orWhere('en_title', 'like', '%' . $query . '%')
-//                ->orWhere('code', 'like', '%' . $query . '%')
-//            ->cacheFor(3600 * 24)
-//            ;
-//    }
+    //
+    //
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('title', 'like', '%' . $query . '%')
+            ->orWhere('en_title', 'like', '%' . $query . '%');
+    }
 
     public static function paginate(Collection $results, $pageSize)
     {
@@ -226,8 +212,8 @@ class Product extends Model implements
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 
@@ -265,20 +251,10 @@ class Product extends Model implements
         foreach ($images as $slide) {
             $slides[] = empty($slide) ? '<img id="js-image-zoom" class="img-fluid" style="width: 300px;" src="/uploads/product.png">' : '<img id="js-image-zoom" class="img-fluid" style="width: 300px;" src="/uploads/' . $slide . '">';
         }
+
         return $slides;
     }
 
-    public function property_values()
-    {
-        return $this->hasMany(PropertyValue::class, 'product_id', 'id');
-    }
-
-    public function properties()
-    {
-        return $this->hasManyThrough(Property::class, PropertyValue::class, 'product_id', 'id', 'id', 'property_id');
-
-//        return $this->HasMany(PropertyValue::class, 'product_id', 'id');
-    }
 
     public function scopeActive($query)
     {
@@ -288,6 +264,7 @@ class Product extends Model implements
     public function hasDiscountWithBusiness($business)
     {
         $price = $this->prices()->where('business_id', $business->id)->first();
+
         return $price->discount_type and $price->discount_value ? true : false;
     }
 
@@ -332,7 +309,7 @@ class Product extends Model implements
     {
         return Cache::rememberForever('rating_count_' . $this->id, function () {
 
-//            return $this->rating()->count() - 1;
+            //            return $this->rating()->count() - 1;
             return $this->rating()->count();
         });
     }
@@ -349,7 +326,7 @@ class Product extends Model implements
 
     public function getMaxPriceAttribute()
     {
-//        return Cache::remember($this->id . '_max_price', 3600, function () {
+        //        return Cache::remember($this->id . '_max_price', 3600, function () {
         return $this->prices()
             ->whereHas('business', function ($q) {
                 $q->where('status', 1);
@@ -357,10 +334,9 @@ class Product extends Model implements
             })
             ->where('stock', 1)
             ->whereNotNull('price')->whereNotIn('price', [0])
-//            ->cacheFor(3600)
+            //            ->cacheFor(3600)
             ->get()->max('final_price');
-//        });
-
+        //        });
 
         // return $this->prices()->orderBy('price', 'desc')->get()->final_price;
     }
@@ -369,7 +345,7 @@ class Product extends Model implements
     {
         // return $this->prices()->orderBy('price', 'asc')->get()->final_price;
 
-//        return Cache::remember($this->id . '_min_price', 3600, function () {
+        //        return Cache::remember($this->id . '_min_price', 3600, function () {
         return $this->prices()
             ->whereHas('business', function ($q) {
                 $q->where('status', 1);
@@ -377,10 +353,10 @@ class Product extends Model implements
             })
             ->where('stock', 1)
             ->whereNotNull('price')->whereNotIn('price', [0])
-//            ->cacheFor(3600)
+            //            ->cacheFor(3600)
             ->get()
             ->min('final_price');
-//        });
+        //        });
     }
 
     public function getBestPriceAttribute()
@@ -394,10 +370,11 @@ class Product extends Model implements
                 })
                 ->where('stock', 1)
                 ->whereNotNull('price')->whereNotIn('price', [0])
-//                ->cacheFor(3600)
+                //                ->cacheFor(3600)
                 ->get()->sortBy('final_price')->first();
+
             return $price->business->name ?? null;
-//        });
+            //        });
         } catch (Throwable $ex) {
             return null;
         }
@@ -444,27 +421,28 @@ class Product extends Model implements
             return $text;
         } catch (Throwable $ex) {
             throw $ex;
-//            return null;
+            //            return null;
         }
     }
 
     public function hasPrices()
     {
         return $this->has('prices');
-//        $prices = ProductPrices::where('product_id', $this->attributes['id'])->count();
-//
-//        return $prices > 0 ? true : false;
+        //        $prices = ProductPrices::where('product_id', $this->attributes['id'])->count();
+        //
+        //        return $prices > 0 ? true : false;
     }
 
     public function getThumbnailAttribute()
     {
         try {
-            $image = str_replace(' ', '%20', Str::of($this->images[0]));
-            if (!(isset($this->images[0]) and !in_array($image, ['tn_', '[', ']', '[]', '[""]']))) {
-                return 'product.png';
-            }
-            $this->images = ['product.png'];
-            return 'product.png';
+            // $image = str_replace(' ', '%20', Str::of($this->images[0]));
+            // if (!(isset($this->images[0]) and !in_array($image, ['tn_', '[', ']', '[]', '[""]']))) {
+            //     return 'product.png';
+            // }
+            return $this->images[0] ?? 'product.png';
+            // $this->images = ['product.png'];
+            // return 'product.png';
 
             // return str_replace(' ', '%20', '/uploads/' . Str::of(empty($this->images[0])));
 
@@ -488,6 +466,7 @@ class Product extends Model implements
         if (empty($this->created_by)) {
             return 'خودکار';
         }
+
         return $this->created_by_user->full_name ?? '-';
     }
 
@@ -496,6 +475,7 @@ class Product extends Model implements
         if (empty($this->created_by)) {
             return null;
         }
+
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
@@ -563,10 +543,9 @@ class Product extends Model implements
 
             case 'discounts':
 
-
-//                $query->whereHas('prices', function ($q) {
-//                    $q->orderBy(DB::raw('discount_value IS NOT NULL, discount_value'), 'desc');
-//                });
+                //                $query->whereHas('prices', function ($q) {
+                //                    $q->orderBy(DB::raw('discount_value IS NOT NULL, discount_value'), 'desc');
+                //                });
 
                 $query->paginate($perPage)->sortByDesc('prices.discount_value');
 
@@ -577,92 +556,91 @@ class Product extends Model implements
                 break;
         }
 
-//        if ((isset($params['min_price']) && trim($params['min_price']) != '') or (isset($params['max_price']) && trim($params['max_price']) == '')) {
-//
-//            $query->whereHas('prices', function (Builder $q) use ($params) {
-//                if (isset($params['min_price'])) {
-//                    $q->where('price', '>=', $params['min_price']);
-//                }
-//                if (isset($params['max_price'])) {
-//                    $q->where('price', '<=', $params['max_price']);
-//                }
-//
-//            });
-//        }
-//
-//        if (isset($params['view']) && trim($params['view'] !== '')) {
-//            $query->orderByViews();
-//        }
+        //        if ((isset($params['min_price']) && trim($params['min_price']) != '') or (isset($params['max_price']) && trim($params['max_price']) == '')) {
+        //
+        //            $query->whereHas('prices', function (Builder $q) use ($params) {
+        //                if (isset($params['min_price'])) {
+        //                    $q->where('price', '>=', $params['min_price']);
+        //                }
+        //                if (isset($params['max_price'])) {
+        //                    $q->where('price', '<=', $params['max_price']);
+        //                }
+        //
+        //            });
+        //        }
+        //
+        //        if (isset($params['view']) && trim($params['view'] !== '')) {
+        //            $query->orderByViews();
+        //        }
 
-//        if (isset($params['title']) && trim($params['title'] !== '')) {
-//            $query->orderBy('title', trim($params['title']));
-//        }
+        //        if (isset($params['title']) && trim($params['title'] !== '')) {
+        //            $query->orderBy('title', trim($params['title']));
+        //        }
 
-//        if (isset($params['available']) && trim($params['available'] !== '')) {
-//
-//            if ($params['available'] == 1) {
-//                $query->whereHas('prices');
-//            }
-//        }
-//        if (isset($params['brand']) && trim($params['brand'] !== '')) {
-//            $brandArray = explode(',', $params['brand']);
-//            $query->whereIn('brand_id', $brandArray);
-//        }
+        //        if (isset($params['available']) && trim($params['available'] !== '')) {
+        //
+        //            if ($params['available'] == 1) {
+        //                $query->whereHas('prices');
+        //            }
+        //        }
+        //        if (isset($params['brand']) && trim($params['brand'] !== '')) {
+        //            $brandArray = explode(',', $params['brand']);
+        //            $query->whereIn('brand_id', $brandArray);
+        //        }
 
-//        if (!empty($params['property'])) {
+        //        if (!empty($params['property'])) {
         //            $propertyArray = explode(',', $params['property']);
         //            return $query->whereHas('property_values', function (Builder $query) use ($propertyArray) {
         //                $query->whereIn('property_id', $propertyArray);
         //            });
         //        }
 
-//        if (isset($params['discounted']) && trim($params['discounted'] !== '')) {
-//
-//            if ($params['discounted'] == 1) {
-//                $query->whereHas('prices', function (Builder $query) {
-//                    $query->whereNotNull(['discount_value', 'discount_type']);
-//                });
-//            }
-//        }
-//
+        //        if (isset($params['discounted']) && trim($params['discounted'] !== '')) {
+        //
+        //            if ($params['discounted'] == 1) {
+        //                $query->whereHas('prices', function (Builder $query) {
+        //                    $query->whereNotNull(['discount_value', 'discount_type']);
+        //                });
+        //            }
+        //        }
+        //
 
-
-//        if (isset($params['q']) && trim($params['q'] !== '')) {
+        //        if (isset($params['q']) && trim($params['q'] !== '')) {
         // dd($params['q']);
         // $query->whereLike('title', $params['q'])->orWhereLike('en_title', $params['q'])
         //     ->orWhereLike('code', $params['q'])
         // ;
 
-//            $query
-//                ->where('title', 'LIKE', "%{$params['q']}%")
-//                ->orWhere('en_title', 'LIKE', "%{$params['q']}%")
-//                ->orWhere('code', 'LIKE', "%{$params['q']}%");
+        //            $query
+        //                ->where('title', 'LIKE', "%{$params['q']}%")
+        //                ->orWhere('en_title', 'LIKE', "%{$params['q']}%")
+        //                ->orWhere('code', 'LIKE', "%{$params['q']}%");
         //    $query->search($params['q']);
-//        }
+        //        }
         $query->with('prices')
-//            ->withCount('prices')->orderBy('prices_count', 'desc');
+            //            ->withCount('prices')->orderBy('prices_count', 'desc');
 
             ->whereHas('prices', function (Builder $query) {
                 $query->orderBy('stock', 'ASC');
             })
-//            ->join('product_prices', 'products.id', '=', 'product_prices.id')
-//            ->orderBy('product_prices.stock', 'desc')
+            //            ->join('product_prices', 'products.id', '=', 'product_prices.id')
+            //            ->orderBy('product_prices.stock', 'desc')
 
-//            ->join('product_prices', 'products.id', '=', 'product_prices.product_id')
-//            ->orderBy('product_prices.stock', 'ASC')
-//                ->sortBy('prices.stock')
+            //            ->join('product_prices', 'products.id', '=', 'product_prices.product_id')
+            //            ->orderBy('product_prices.stock', 'ASC')
+            //                ->sortBy('prices.stock')
         ;
-//        $query->orderBy('prices.stock', 'desc');
+        //        $query->orderBy('prices.stock', 'desc');
 
-//        $query->whereHas('prices', function (Builder $query) {
-//
-//            $query->orderBy('stock', 'asc');
-//        });
-
+        //        $query->whereHas('prices', function (Builder $query) {
+        //
+        //            $query->orderBy('stock', 'asc');
+        //        });
 
         if (!isset($perPage)) {
             return $query;
         }
+
         return $query->paginate($perPage);
     }
 
@@ -689,22 +667,22 @@ class Product extends Model implements
         return $this->ratingAvg();
     }
 
-//     public function getHasPricesAttribute()
-//     {
-//         return $this->has('prices');
-// //        $prices = ProductPrices::where('product_id', $this->attributes['id'])->count();
-// //
-// //        return $prices > 0 ? true : false;
-//     }
+    //     public function getHasPricesAttribute()
+    //     {
+    //         return $this->has('prices');
+    // //        $prices = ProductPrices::where('product_id', $this->attributes['id'])->count();
+    // //
+    // //        return $prices > 0 ? true : false;
+    //     }
 
-//     public function getHasPricesWithStockAttribute()
-//     {
-//         return $this->whereHas('prices', function (Builder $query) {
-//             $query->where('stock', '=', 1)->orWhere('stock', '=', true);
-//         })->exists();
-//
-// //        return $this->whereHas('prices.stock',1)->exists();
-//     }
+    //     public function getHasPricesWithStockAttribute()
+    //     {
+    //         return $this->whereHas('prices', function (Builder $query) {
+    //             $query->where('stock', '=', 1)->orWhere('stock', '=', true);
+    //         })->exists();
+    //
+    // //        return $this->whereHas('prices.stock',1)->exists();
+    //     }
 
     public function hasPriceAs($business_id)
     {
@@ -721,57 +699,57 @@ class Product extends Model implements
     public function mappableAs(): array
     {
         return [
-//            'suggest' => [
-//                'type' => 'completion'
-//            ],
-//            'id' => 'keyword',
+            //            'suggest' => [
+            //                'type' => 'completion'
+            //            ],
+            //            'id' => 'keyword',
             'title' => [
                 'type' => 'text',
-//                'analyzer' => 'parsi',
-//                'analyzer' => 'persian_analyzer',
-//                'analyzer' => 'parsi_no_stem',
-//                'analyzer' => [
-//                    "parsi_no_stem" => [
-//                        "type" => "custom",
-//                        "tokenizer" => "standard",
-//                        "char_filter" => [
-//                            "zwnj_filter"
-//                        ],
-//                        "filter" => [
-//                            "parsi_normalizer",
-//                            "parsi_stop_filter"
-//                        ]
-//                    ]
-//                ],
-//                'analyzer' => 'frameworks',
+                //                'analyzer' => 'parsi',
+                //                'analyzer' => 'persian_analyzer',
+                //                'analyzer' => 'parsi_no_stem',
+                //                'analyzer' => [
+                //                    "parsi_no_stem" => [
+                //                        "type" => "custom",
+                //                        "tokenizer" => "standard",
+                //                        "char_filter" => [
+                //                            "zwnj_filter"
+                //                        ],
+                //                        "filter" => [
+                //                            "parsi_normalizer",
+                //                            "parsi_stop_filter"
+                //                        ]
+                //                    ]
+                //                ],
+                //                'analyzer' => 'frameworks',
                 'analyzer' => 'rebuilt_persian',
             ],
             'en_title' => [
                 'type' => 'text',
-//                'analyzer' => 'standard',
+                //                'analyzer' => 'standard',
 
-//                'analyzer' => [
-//                    "parsi_no_stem" => [
-//                        "type" => "custom",
-//                        "tokenizer" => "standard",
-//                        "char_filter" => [
-//                            "zwnj_filter"
-//                        ],
-//                        "filter" => [
-//                            "parsi_normalizer",
-//                            "parsi_stop_filter"
-//                        ]
-//                    ]
-//                ],
-//                'analyzer' => 'parsi',
-//                'analyzer' => 'frameworks',
+                //                'analyzer' => [
+                //                    "parsi_no_stem" => [
+                //                        "type" => "custom",
+                //                        "tokenizer" => "standard",
+                //                        "char_filter" => [
+                //                            "zwnj_filter"
+                //                        ],
+                //                        "filter" => [
+                //                            "parsi_normalizer",
+                //                            "parsi_stop_filter"
+                //                        ]
+                //                    ]
+                //                ],
+                //                'analyzer' => 'parsi',
+                //                'analyzer' => 'frameworks',
             ],
-//            'status' => 'boolean',
-//            'created_at' => 'date',
-//            'brand' => 'nested',
-//
-//            "tokenizer" => "standard",
-//            "filter" => ["ngram"],
+            //            'status' => 'boolean',
+            //            'created_at' => 'date',
+            //            'brand' => 'nested',
+            //
+            //            "tokenizer" => "standard",
+            //            "filter" => ["ngram"],
         ];
     }
 
@@ -785,51 +763,50 @@ class Product extends Model implements
         $array = [
             'title' => $this->title,
             'en_title' => $this->en_title,
-//            'code' => $this->code,
-            'prices_count' => $this->prices()->where('status',1)->where('stock',1)->count(),
+            //            'code' => $this->code,
+            'prices_count' => $this->prices()->where('status', 1)->where('stock', 1)->count(),
             'has_prices' => $this->prices()->count() > 0,
-//            'brand_id' => $this->brand_id,
-//            'category_ids' => $this->categories->pluck('id')->toArray(),
-//            'description' => $this->description
+            //            'brand_id' => $this->brand_id,
+            //            'category_ids' => $this->categories->pluck('id')->toArray(),
+            //            'description' => $this->description
             'brand_title' => $this->brand->title ?? null,
-//            'category_title' => $this->categories->last()->title ?? null,
+            //            'category_title' => $this->categories->last()->title ?? null,
         ];
-//                return $q->whereHas('prices', function ($q) {
-//                    $q->where('stock', 1);
-//                });
         //                return $q->whereHas('prices', function ($q) {
-//                    $q->where('stock', 1);
-//                });
-//        $array = $this
+        //                    $q->where('stock', 1);
+        //                });
+        //                return $q->whereHas('prices', function ($q) {
+        //                    $q->where('stock', 1);
+        //                });
+        //        $array = $this
         ////            ->whereHas('prices', function ($q) {
         ////                $q->where('stock', 1);
         ////            })
-//            ->with("brand")
-//            ->with("categories")
-//            ->where("id", $this->id)->first()
-//            ->toArray();
+        //            ->with("brand")
+        //            ->with("categories")
+        //            ->where("id", $this->id)->first()
+        //            ->toArray();
 
         return $array;
     }
-//    public function shouldBeSearchable()
-//    {
-//        return $this->active();
-//    }
-
+    //    public function shouldBeSearchable()
+    //    {
+    //        return $this->active();
+    //    }
 
     public function prepare($searchable): array
     {
-//        if ($searchable['title'] === 'Sicily') {
-//            $searchable['title'] = ['Italy', 'Sicily'];
-//        }
+        //        if ($searchable['title'] === 'Sicily') {
+        //            $searchable['title'] = ['Italy', 'Sicily'];
+        //        }
 
         return $searchable;
     }
 
     public function getDescription(): ?string
     {
-        return 'لیست قیمت و فروشندگان کالای '.$this->title;
-//        return $this->title . '. ' . $this->en_title;
+        return 'لیست قیمت و فروشندگان کالای ' . $this->title;
+        //        return $this->title . '. ' . $this->en_title;
     }
 
     public function getKeywords()
@@ -837,6 +814,7 @@ class Product extends Model implements
         if ($this->tags) {
             return $this->tags;
         }
+
         return Setting::get('seo_meta_keywords');
     }
 
@@ -846,6 +824,7 @@ class Product extends Model implements
     {
         return 'index, follow';
     }
+
     public function searchableAs()
     {
         return 'products';

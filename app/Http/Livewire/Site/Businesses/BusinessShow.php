@@ -3,18 +3,24 @@
 namespace App\Http\Livewire\Site\Businesses;
 
 use Cart;
+use Livewire\WithPagination;
+use Modules\Product\Entities\Product;
 use Modules\Business\Entities\Business;
 use Modules\Core\Http\Livewire\BaseComponent;
-use Modules\Product\Entities\Product;
 
 class BusinessShow extends BaseComponent
 {
+    use WithPagination;
+    
     public $business;
+    public $search;
+    protected $queryString = ['search'];
 
     public function mount($slug)
     {
-        $this->business = Business::query()->where('status',1)->where('slug', $slug)->firstOrFail();
+        $this->business = Business::query()->where('status', 1)->where('slug', $slug)->firstOrFail();
     }
+
 
     public function addToCart($id)
     {
@@ -44,8 +50,8 @@ class BusinessShow extends BaseComponent
 
     public function render()
     {
-        return view('site.businesss.show', [
-
+        return view('site.products.index', [
+            'products' => $this->business->products()->where('status', 1)->whereLike('title', $this->search)->paginate(10),
         ])->extends('site.layouts.master', [
             'pageTitle' => 'کسب و کار ' . $this->business->title,
         ]);

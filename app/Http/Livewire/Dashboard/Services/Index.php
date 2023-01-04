@@ -2,12 +2,8 @@
 
 namespace App\Http\Livewire\Dashboard\Services;
 
-use Carbon\Carbon;
-use Hekmatinasser\Verta\Verta;
 use Modules\Core\Http\Livewire\BaseComponent;
-use Modules\Core\Http\Livewire\Layouts\HeaderTrait;
 use Modules\Product\Entities\Product;
-
 class Index extends BaseComponent
 {
 

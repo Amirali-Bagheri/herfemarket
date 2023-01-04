@@ -42,8 +42,10 @@ class ProductIndex extends BaseComponent
 
     public function render()
     {
+        $products = Product::where('status', 1)->where('isService', 1)->paginate(10);
+
         return view('site.services.index', [
-            'products' => Product::where('status', 1)->where('isService', 1)->whereLike('title', $this->search)->paginate(10),
+            'products' => $products
         ])->extends('site.layouts.master', [
             'pageTitle' => 'خدمات',
         ]);

@@ -7,8 +7,7 @@ use Livewire\WithFileUploads;
 use Modules\Category\Entities\Category;
 use Modules\Core\Http\Livewire\BaseComponent;
 use Modules\Product\Entities\Product;
-use Modules\Seo\Facades\Meta;
-use Modules\Setting\Entities\Setting;
+
 use Throwable;
 
 class Create extends BaseComponent
@@ -56,9 +55,9 @@ class Create extends BaseComponent
         ]);
 
         try {
-            DB::beginTransaction();
+            // DB::beginTransaction();
 
-            $user = auth()->user();
+            // $user = auth()->user();
 
             $product = Product::create(
                 [
@@ -69,10 +68,13 @@ class Create extends BaseComponent
                     'final_price'      => $this->final_price,
                     'business_id'      => $this->business->id,
                     'isService'      => 1,
-                ]);
-            $product->categories()->attach($this->category_id);
-            $category = Category::find($this->category_id);
-            $product->categories()->attach($category->parents->pluck('id')->toArray());
+                ]
+            );
+            $product->categories()->sync($this->category_id);
+            // $category = Category::find($this->category_id);
+            // $new_ids  = array_merge($category->parents->pluck('id')->toArray(), [$this->category_id]);
+            // $this->product->categories()->sync($new_ids);
+            $product->categories()->sync($this->category_id);
 
             if ($this->images) {
                 $filename = 'product_' . time() . '.' . $this->images->extension();
@@ -81,7 +83,7 @@ class Create extends BaseComponent
             }
             $product->save();
 
-            DB::commit();
+            // DB::commit();
 
             $this->flash('success', 'عملیات با موفقیت انجام شد', [
                 'timer'             => 3000,
@@ -92,7 +94,7 @@ class Create extends BaseComponent
 
             $this->redirect(route('dashboard.services.index'));
         } catch (Throwable $ex) {
-            DB::rollBack();
+            // DB::rollBack();
 
             $this->alert('error', 'خطایی رخ داد', [
                 'position'          => 'center',
@@ -111,8 +113,7 @@ class Create extends BaseComponent
     public function render()
     {
 
-        return view('site.dashboard.services.create', [
-        ])->extends('site.layouts.master', [
+        return view('site.dashboard.services.create', [])->extends('site.layouts.master', [
             'pageTitle' => 'ثبت خدمت جدید',
         ]);
     }

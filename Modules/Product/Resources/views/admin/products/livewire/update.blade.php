@@ -46,25 +46,14 @@
                             <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
                         </div>
 
-                        <div class="mt-3">
-                            <label for="en_title">نام انگلیسی</label>
-                            <input type="text" class="form-control w-full border mt-2 @error('en_title') border-theme-6 @enderror" id="en_title" placeholder="نام انگلیسی" wire:model="en_title">
-                            @error('en_title')
-                            <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
-                        </div>
+
                         <div class="mt-3">
                             <label for="slug">نام نمایشی</label>
                             <input type="text" class="form-control w-full border mt-2 @error('slug') border-theme-6 @enderror" id="slug" placeholder="نام نمایشی" wire:model="slug">
                             @error('slug')
                             <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
                         </div>
-                        <div class="mt-3">
-                            <label for="excerpt">توضیحات کوتاه</label>
-                            <textarea class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none  @error('excerpt') border-theme-6 @enderror" rows="4" id="excerpt" placeholder="توضیحات کوتاه" wire:model="excerpt"></textarea>
 
-                            @error('excerpt')
-                            <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
-                        </div>
 
                     </div>
                 </div>
@@ -112,7 +101,7 @@
                                 @if (isset($category_search_list) and count($category_search_list) > 0)
                                 @foreach($category_search_list as $key_category_search => $value_category_search)
                                 <div class="flex col-span-6 items-center text-gray-700 mt-2">
-                                    <input type="checkbox" class="form-control border mr-2" wire:key="{{$key_category_search}}" value="{{$key_category_search}}" id="{{$key_category_search}}" wire:model.defer="new_categories" {{--                                                   @if (isset($categories[$key_category_search]))--}} {{--                                                       {{ dd(isset($categories[$key_category_search]),$categories,$key_category_search,$value_category_search) }}--}} {{--                                                   checked--}} {{--                                                   @endif--}}>
+                                    <input type="checkbox" class="border mr-2" wire:key="{{$key_category_search}}" value="{{$key_category_search}}" id="{{$key_category_search}}" wire:model.defer="new_categories" {{--                                                   @if (isset($categories[$key_category_search]))--}} {{--                                                       {{ dd(isset($categories[$key_category_search]),$categories,$key_category_search,$value_category_search) }}--}} {{--                                                   checked--}} {{--                                                   @endif--}}>
                                     <label class="cursor-pointer select-none" for="{{$key_category_search}}"> {{$value_category_search}}</label>
                                 </div>
 
@@ -125,7 +114,7 @@
                             <div class="text-theme-6 mt-2">{{ $message }}</div>
                             @enderror
 
-                            <div class="mt-3">
+                            {{-- <div class="mt-3">
                                 <div class="flex flex-col sm:flex-row mt-2">
                                     <div class="flex items-center text-gray-700 mr-2">
                                         <input type="checkbox" class="form-check-input mr-1 ml-1" id="connect_parent_categories" name="connect_parent_categories" wire:model="connect_parent_categories" value="1">
@@ -135,90 +124,106 @@
                                 </div>
                                 @error('connect_parent_categories')
                                 <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-
-                        <div class="mt-3">
-                            <label>وضعیت</label>
-                            <div class="flex flex-col sm:flex-row mt-2">
-                                <div class="flex items-center text-gray-700 mr-2">
-                                    <input type="radio" class="form-check-input mr-1 ml-1" id="status_true" name="status" wire:model="status" value="1">
-                                    <label class="cursor-pointer select-none" for="status_true">فعال</label>
-                                </div>
-                                <div class="flex items-center text-gray-700 mr-2">
-                                    <input type="radio" class="form-check-input mr-1 ml-1" id="status_false" name="status" wire:model="status" value="0">
-                                    <label class="cursor-pointer select-none" for="enamad_false">غیرفعال</label>
-                                </div>
-                            </div>
-                            @error('status')
-                            <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
-                        </div>
-                    </div>
+                    </div> --}}
                 </div>
 
+                <div class="mt-3">
+                    <label>وضعیت</label>
+                    <div class="flex flex-col sm:flex-row mt-2">
+                        <div class="flex items-center text-gray-700 mr-2">
+                            <input type="radio" class="form-check-input mr-1 ml-1" id="status_true" name="status" wire:model="status" value="1">
+                            <label class="cursor-pointer select-none" for="status_true">فعال</label>
+                        </div>
+                        <div class="flex items-center text-gray-700 mr-2">
+                            <input type="radio" class="form-check-input mr-1 ml-1" id="status_false" name="status" wire:model="status" value="0">
+                            <label class="cursor-pointer select-none" for="enamad_false">غیرفعال</label>
+                        </div>
+                    </div>
+                    @error('status')
+                    <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
+                </div>
             </div>
-            <div class="intro-y col-span-12 lg:col-span-6">
-                <div class="intro-y box">
-                    <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
-                        <h2 class="font-medium text-base ml-auto">
-                            تصویر
-                        </h2>
-                    </div>
-                    <div class="p-5">
+        </div>
 
-                        <div class="mt-3">
-                            <label for="image">تصویر</label>
-
-                            <div class="border border-gray-200 rounded-md p-5 mt-4">
-                                <div class="w-20 h-20 relative image-fit cursor-pointer zoom-in mx-auto">
-                                    <img class="rounded-md" alt="" src="{!! $image && $image->temporaryUrl() ? $image->temporaryUrl() : $this->image_url !!}">
-                                </div>
-                                <div class="w-40 mx-auto cursor-pointer relative mt-5">
-                                    <button type="button" class="button w-full bg-theme-1 text-white">انتخاب</button>
-                                    <input wire:model="image" type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
-                                </div>
-
-                                <div class="mt-3">
-                                    <label for="slug">لینک تصویر (برای تغییر تصویر لینک آن را جایگذاری کنید)</label>
-                                    <input type="text" class="form-control w-full border mt-2" id="slug" wire:model="image_url">
-                                </div>
-                            </div>
-
-                            @error('image')
-                            <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
-                        </div>
-
-                    </div>
+</div>
+<div class="intro-y col-span-12 lg:col-span-6">
+    <div class="intro-y box">
+        <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+            <h2 class="font-medium text-base ml-auto">
+                تصویر
+            </h2>
+        </div>
+        <div class="p-5">
+            <div class="border border-gray-200 rounded-md p-5 mt-4">
+                <div class="w-20 h-20 relative image-fit cursor-pointer zoom-in mx-auto">
+                    <img class="rounded-md" alt="" src="{!! $image && $image->temporaryUrl() ? $image->temporaryUrl() : '/uploads/'.$product->images !!}">
                 </div>
+                <div class="w-40 mx-auto cursor-pointer relative mt-5">
+                    <button type="button" class="button w-full bg-theme-1 text-white">انتخاب</button>
+                    <input wire:model="image" type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
+                </div>
+
 
             </div>
 
-            <div class="intro-y col-span-12 lg:col-span-12">
-                <div class="intro-y box">
-                    <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
-                        <h2 class="font-medium text-base ml-auto">
-                            توضیحات
-                        </h2>
-                    </div>
-                    <div class="p-5">
-                        <div class="mt-3">
-                            <label for="description">توضیحات</label>
-                            <textarea class="summernote w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none  @error('description') border-theme-6 @enderror" rows="4" id="description" placeholder="توضیحات" wire:model="description"></textarea>
+            @error('image')
+            <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
+        </div>
+    </div>
 
-                            @error('description')
-                            <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
-                        </div>
-                    </div>
-                </div>
 
+    <div class="intro-y box mt-4">
+        <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+            <h2 class="font-medium text-base ml-auto">
+                قیمت
+            </h2>
+        </div>
+        <div class="p-5">
+            <div>
+                <label for="main_price">قیمت پایه</label>
+                <input type="text" class="form-control w-full border mt-2 @error('main_price') border-theme-6 @enderror" id="main_price" placeholder="قیمت پایه" wire:model="main_price">
+                @error('main_price')
+                <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
+            </div>
+            <div class="mt-3">
+
+                <label for="final_price">قیمت نهایی</label>
+                <input type="text" class="form-control w-full border mt-2 @error('final_price') border-theme-6 @enderror" id="final_price" placeholder="قیمت نهایی" wire:model="final_price">
+                @error('final_price')
+                <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
             </div>
 
         </div>
-        <div class="text-center mt-5">
-            <a href="{{ route('admin.products.index') }}" class="btn btn-danger w-24 border text-white-700 mr-1 ml-2">لغو</a>
-            <button type="submit" class="btn btn-success w-24 text-white">ذخیره</button>
+    </div>
+
+</div>
+
+<div class="intro-y col-span-12 lg:col-span-12">
+    <div class="intro-y box">
+        <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+            <h2 class="font-medium text-base ml-auto">
+                توضیحات
+            </h2>
         </div>
+        <div class="p-5">
+            <div class="mt-3">
+                <label for="description">توضیحات</label>
+                <textarea class="summernote w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none  @error('description') border-theme-6 @enderror" rows="4" id="description" placeholder="توضیحات" wire:model="description"></textarea>
+
+                @error('description')
+                <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+<div class="text-center mt-5">
+    <a href="{{ route('admin.products.index') }}" class="btn btn-danger w-24 border text-white-700 mr-1 ml-2">لغو</a>
+    <button type="submit" class="btn btn-success w-24 text-white">ذخیره</button>
+</div>
 
 
-    </form>
+</form>
 </div>

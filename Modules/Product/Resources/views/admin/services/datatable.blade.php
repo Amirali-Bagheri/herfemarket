@@ -9,27 +9,14 @@
     @include('admin.layouts.livewire_loading')
 
     <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2 ltr">
-        <div class="dropdown relative">
-            <button class="dropdown-toggle btn px-2 box text-gray-700">
-                <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4 fas fa-plus"></i>
-                </span>
-            </button>
-            <div class="dropdown-menu w-40">
-                <div class="dropdown-menu__content box p-2">
-
-                    @if (count($selected) > 0) <a href="javascript:void(0)" data-toggle="modal" data-target="#delete-selected-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-                        <i class="w-4 h-4 ml-2 fal fa-trash"></i> حذف موارد انتخاب شده </a>
-                    @endif
-
-                    <a href="javascript:void(0)" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-                        <i class="w-4 h-4 ml-2 fal fa-print"></i> چاپ </a>
-
-                    <a href="javascript:void(0)" wire:click='export' class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-                        <i class="w-4 h-4 ml-2 fal fa-file-excel"></i> خروجی اکسل </a>
-
-                </div>
-            </div>
-        </div>
+        @if (count($selected) > 0)
+        <a href="javascript:void(0)" class="mr-2 ml-2" data-toggle="modal" data-target="#delete-selected-modal">
+            <i class="far fa-trash"></i>
+        </a>
+        @endif
+        <a wire:click='export' href="javascript:void(0)">
+            <i class="far fa-file-export"></i>
+        </a>
         <div class="modal" id="delete-selected-modal" wire:ignore>
             <div class="modal-dialog">
                 <div class="modal-content">

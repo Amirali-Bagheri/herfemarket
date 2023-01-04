@@ -124,18 +124,6 @@
                             @error('categories')
                             <div class="text-theme-6 mt-2">{{ $message }}</div>
                             @enderror
-
-                            <div class="mt-3">
-                                <div class="flex flex-col sm:flex-row mt-2">
-                                    <div class="flex items-center text-gray-700 mr-2">
-                                        <input type="checkbox" class="form-check-input mr-1 ml-1" id="connect_parent_categories" name="connect_parent_categories" wire:model="connect_parent_categories" value="1">
-                                        <p>اتصال دسته بندی های بالاتر</p>
-
-                                    </div>
-                                </div>
-                                @error('connect_parent_categories')
-                                <div class="text-theme-6 mt-2">{{ $message }}</div> @enderror
-                            </div>
                         </div>
 
                         <div class="mt-3">
@@ -176,11 +164,6 @@
                                 <div class="w-40 mx-auto cursor-pointer relative mt-5">
                                     <button type="button" class="button w-full bg-theme-1 text-white">انتخاب</button>
                                     <input wire:model="image" type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
-                                </div>
-
-                                <div class="mt-3">
-                                    <label for="slug">لینک تصویر (برای تغییر تصویر لینک آن را جایگذاری کنید)</label>
-                                    <input type="text" class="form-control w-full border mt-2" id="slug" wire:model="image_url">
                                 </div>
                             </div>
 
