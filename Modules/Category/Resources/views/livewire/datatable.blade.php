@@ -1,20 +1,5 @@
 <div>
-    @include('admin.layouts.livewire_loading')
-
-    <div class="pos intro-y grid grid-cols-12 gap-5 mt-5">
-
-        <div class="intro-y col-span-12 lg:col-span-8">
-
-            <div class="grid grid-cols-12 gap-5 mt-5">
-                <div wire:click="clearCache" class="col-span-12 sm:col-span-4 xxl:col-span-3 box p-5 cursor-pointer zoom-in">
-                    <div class="font-medium text-base text-center">
-                        پاک کردن کش
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    {{--  @include('admin.layouts.livewire_loading')  --}}
 
     <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2 ltr">
         <a href="{{ route('admin.categories.create') }}" class="btn btn-primary shadow-md mr-2">دسته بندی
